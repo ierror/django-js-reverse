@@ -27,7 +27,7 @@ class JSReverseViewTestCase(TestCase):
     def test_view_two_url_args(self):
         client = Client()
         response = client.post('/jsreverse/')
-        self.assertContains(response, "ttest_two_url_args', ['test_one_url_args/%(arg_one)s\u002D%(arg_two)s/', ['arg_one','arg_two']]")
+        self.assertContains(response, "test_two_url_args', ['test_one_url_args/%(arg_one)s\u002D%(arg_two)s/', ['arg_one','arg_two']]")
 
 if __name__ == '__main__':
     unittest.main()
