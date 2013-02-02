@@ -12,6 +12,7 @@ setup(
     version=version,
     license='MIT',
     description='Javascript url handling for Django that doesn\'t hurt.',
+    long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
     author='Bernhard Janetzki',
     author_email='boerni@gmail.com',
     url='https://github.com/version2/django-js-reverse',
