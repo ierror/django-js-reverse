@@ -61,6 +61,11 @@ Include javascript in your template
 
     <script src="{% url js_reverse %}" type="text/javascript"></script>
 
+Optional you can overwrite the default javascript variable 'Urls' used to access the named urls by django setting
+
+    JS_REVERSE_JS_VAR_NAME = 'Urls'
+
+
 ## License
 
 [MIT](https://raw.github.com/version2/django-js-reverse/development/LICENSE)
