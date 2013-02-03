@@ -29,11 +29,11 @@ Result:
 
 ## Installation
 
-Install using `pip`, including any optional packages you want...
+Install using `pip` ...
 
     pip install django-js-reverse
 
-...or clone the project from github.
+... or clone the project from github.
 
     git clone git@github.com:version2/django-js-reverse.git
 
@@ -44,7 +44,7 @@ Add `'django_js_reverse'` to your `INSTALLED_APPS` setting.
         'django_js_reverse',        
     )
 
-Include none-cached view...
+Include none-cached view ...
 
     urlpatterns = patterns('',
         url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
@@ -54,7 +54,7 @@ Include none-cached view...
 
     from django_js_reverse.views import urls_js
     urlpatterns = patterns('',
-        url(r'^jsreverse/$', cache_page(settings.CACHE_TIME_DEFAULT)(urls_js), name='js_reverse'),
+        url(r'^jsreverse/$', cache_page(3600)(urls_js), name='js_reverse'),
     )
     
 Include javascript in your template
