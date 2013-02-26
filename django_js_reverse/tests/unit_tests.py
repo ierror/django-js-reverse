@@ -36,7 +36,7 @@ class JSReverseViewTestCase(TestCase):
         response = self.client.post('/jsreverse/')
         self.assertContains(response, 'exports.Foo = (function () {')
 
-    @override_settings(JS_REVERSE_JS_VAR_NAME='l')
+    @override_settings(JS_REVERSE_JS_VAR_NAME='1test')
     def test_js_var_name_changed_invalid(self):
         from django.core.exceptions import ImproperlyConfigured
         with self.assertRaises(ImproperlyConfigured):

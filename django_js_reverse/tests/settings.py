@@ -10,3 +10,4 @@ USE_TZ = True
 INSTALLED_APPS = (
     'django_js_reverse',
 )
+ALLOWED_HOSTS = ['testserver']
