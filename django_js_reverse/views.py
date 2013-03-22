@@ -15,6 +15,7 @@ def urls_js(request):
     return render_to_response('django_js_reverse/urls_js.tpl',
         {
             'urls': url_list,
+            'url_prefix': urlresolvers.get_script_prefix(),
             'js_var_name': JS_VAR_NAME
         },
         context_instance=RequestContext(request), mimetype='application/javascript'
