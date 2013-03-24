@@ -18,7 +18,7 @@ exports.{{ js_var_name }} = (function () {
                 url_arg = url_args[index];
                 url = url.replace("%(" + url_arg + ")s", arguments[index] || '');
             }
-            return "/" + url;
+            return {{url_prefix|escapejs}} + url;
         };
     };
 

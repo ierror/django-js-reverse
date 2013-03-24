@@ -8,7 +8,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from django.test.client import Client
 from django.utils import unittest
 from django.test import TestCase
-from django.conf import settings
 from django.test.utils import override_settings
 
 
@@ -29,7 +28,8 @@ class JSReverseViewTestCase(TestCase):
 
     def test_view_two_url_args(self):
         response = self.client.post('/jsreverse/')
-        self.assertContains(response, "test_two_url_args', ['test_two_url_args/%(arg_one)s\u002D%(arg_two)s/', ['arg_one','arg_two']]")
+        self.assertContains(
+            response, "test_two_url_args', ['test_two_url_args/%(arg_one)s\u002D%(arg_two)s/', ['arg_one','arg_two']]")
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='Foo')
     def test_js_var_name_changed_valid(self):
