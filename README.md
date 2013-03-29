@@ -66,7 +66,7 @@ Optional you can overwrite the default javascript variable 'Urls' used to access
 
 ## Usage
 
-If your url names are valid javascript identifiers ([$A-Z_][\dA-Z_$]*) you can access them by the Dot notation:
+If your url names are valid javascript identifiers ([$A-Z_][\dA-Z_$]*)i you can access them by the Dot notation:
 
     Urls.betterliving_get_house('house', 12)
 
