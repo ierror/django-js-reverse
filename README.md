@@ -72,7 +72,7 @@ If your url names are valid javascript identifiers ([$A-Z_][\dA-Z_$]*)i you can 
 
 If the named url contains invalid identifiers use the Square bracket notation instead:
 
-    Urls['django-admindocs-filters']()
+    Urls['django-admindocs-filters']('house', 12)
 
 ## License
 
