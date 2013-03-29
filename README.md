@@ -21,7 +21,6 @@ Result:
 
     /betterliving/house/12/
 
-
 ## Requirements
 
 * Python (2.6, 2.7, 3.1, 3.3)
@@ -65,6 +64,15 @@ Optional you can overwrite the default javascript variable 'Urls' used to access
 
     JS_REVERSE_JS_VAR_NAME = 'Urls'
 
+## Usage
+
+If your url names are valid javascript identifiers ([$A-Z_][\dA-Z_$]*) you can access them by the Dot notation:
+
+    Urls.betterliving_get_house('house', 12)
+
+If the named url contains invalid identifiers use the Square bracket notation instead:
+
+    Urls['django-admindocs-filters']()
 
 ## License
 
