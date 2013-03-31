@@ -1,9 +1,5 @@
 #-*- coding: utf-8 -*-
-try:
-    # The patterns method moved in Django 1.4.
-    from django.conf.urls import patterns, url
-except ImportError:
-    from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns('',
@@ -13,4 +9,4 @@ urlpatterns = patterns('',
     url(r'^test_no_url_args/$', 'foo', name='test_no_url_args'),
     url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', 'foo', name='test_one_url_args'),
     url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', 'foo', name='test_two_url_args'),
-)
+                             )
