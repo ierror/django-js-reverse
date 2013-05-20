@@ -15,7 +15,7 @@ def urls_js(request):
 
     url_patterns = list(urlresolvers.get_resolver(None).reverse_dict.items())
     url_list = [(url_name, url_pattern[0][0]) for url_name, url_pattern in url_patterns if
-                isinstance(url_name, str)]
+                (isinstance(url_name, str) or isinstance(url_name, unicode))]
 
     return render_to_response('django_js_reverse/urls_js.tpl',
                               {
