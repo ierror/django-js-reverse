@@ -1,7 +1,4 @@
-var {{ js_var_name }}, exports;
-exports = this;
-
-exports.{{ js_var_name }} = (function () {
+this.{{ js_var_name }} = (function () {
 
     function Urls() {}
 
@@ -44,6 +41,6 @@ exports.{{ js_var_name }} = (function () {
     return Urls;
 })();
 
-exports.{{ js_var_name }}.init();
+this.{{ js_var_name }}.init();
 
 
