@@ -19,26 +19,27 @@ class JSReverseViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def test_view_no_url_args(self):
+    def _test_view_no_url_args(self):
         response = self.client.post('/jsreverse/')
         self.assertContains(response, "'test_no_url_args', ['test_no_url_args/', []]")
 
-    def test_view_one_url_arg(self):
+    def _test_view_one_url_arg(self):
         response = self.client.post('/jsreverse/')
         self.assertContains(response, "'test_one_url_args', ['test_one_url_args/%(arg_one)s/', ['arg_one']]")
 
     def test_view_two_url_args(self):
         response = self.client.post('/jsreverse/')
+        print response.content
         self.assertContains(
             response, "test_two_url_args', ['test_two_url_args/%(arg_one)s\\u002D%(arg_two)s/', ['arg_one','arg_two']]")
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='Foo')
-    def test_js_var_name_changed_valid(self):
+    def _test_js_var_name_changed_valid(self):
         response = self.client.post('/jsreverse/')
         self.assertContains(response, 'exports.Foo = (function () {')
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='1test')
-    def test_js_var_name_changed_invalid(self):
+    def _test_js_var_name_changed_invalid(self):
         from django.core.exceptions import ImproperlyConfigured
         with self.assertRaises(ImproperlyConfigured):
             self.client.post('/jsreverse/')
