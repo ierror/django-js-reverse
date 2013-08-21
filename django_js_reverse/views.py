@@ -1,6 +1,11 @@
 #-*- coding: utf-8 -*-
-from __future__ import unicode_literals
 import re
+import sys
+if sys.version < '3':
+    text_type = unicode
+else:
+    text_type = str
+
 from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -15,7 +20,7 @@ def urls_js(request):
 
     url_patterns = list(urlresolvers.get_resolver(None).reverse_dict.items())
     url_list = [(url_name, url_pattern[0][0]) for url_name, url_pattern in url_patterns if
-                (isinstance(url_name, str) or isinstance(url_name, unicode))]
+                (isinstance(url_name, str) or isinstance(url_name, text_type))]
 
     return render_to_response('django_js_reverse/urls_js.tpl',
                               {
