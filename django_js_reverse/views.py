@@ -28,4 +28,4 @@ def urls_js(request):
                                   'url_prefix': urlresolvers.get_script_prefix(),
                                   'js_var_name': JS_VAR_NAME
                               },
-                              context_instance=RequestContext(request), mimetype='application/javascript')
+                              context_instance=RequestContext(request), content_type='application/javascript')
