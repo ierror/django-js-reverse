@@ -23,7 +23,7 @@ Result:
 
 ## Requirements
 
-* Python (2.6, 2.7, 3.1, 3.3)
+* Python (2.6, 2.7, 3.1, 3.3, 3.4, PyPy)
 * Django (1.4, 1.5, 1.6)
 
 ## Installation
