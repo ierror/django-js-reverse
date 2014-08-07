@@ -1,6 +1,15 @@
 #-*- coding: utf-8 -*-
 from django.conf.urls import patterns, url, include
 
+import sys
+if sys.version < '3':
+    import codecs
+    def u(x):
+        return codecs.unicode_escape_decode(x)[0]
+else:
+    def u(x):
+        return x
+
 
 pattern_ns_1 = patterns('',
                         url(r'^ns1_1/$', 'foo', name='ns1_1'),
@@ -25,7 +34,7 @@ urlpatterns = patterns('',
                        url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', 'foo',
                            name='test_two_url_args'),
                        url(r'^test_unicode_url_name/$', 'foo',
-                           name=u'test_unicode_url_name'),
+                           name=u('test_unicode_url_name')),
                        # test namespace
                        url(r'^ns/$', include(pattern_ns_2,  namespace='ns2'))
 )
