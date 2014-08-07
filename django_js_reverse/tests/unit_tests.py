@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import os
 import sys
+import warnings
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
@@ -11,6 +12,10 @@ from django.utils import unittest
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.core.exceptions import ImproperlyConfigured
+
+
+# Raise errors on DeprecationWarnings
+warnings.simplefilter('error', DeprecationWarning)
 
 
 class JSReverseViewTestCase(TestCase):
