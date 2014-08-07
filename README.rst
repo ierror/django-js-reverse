@@ -1,5 +1,20 @@
 Django JS Reverse
 =================
+.. image:: https://badge.fury.io/py/django-js-reverse.png
+   :target: http://badge.fury.io/py/django-js-reverse
+
+.. image:: https://travis-ci.org/version2/django-js-reverse.png
+   :target: http://travis-ci.org/version2/django-js-reverse
+
+.. image:: https://pypip.in/d/django-js-reverse/badge.png
+   :target: https://crate.io/packages/django-js-reverse?version=latest
+
+.. image:: https://coveralls.io/repos/version2/django-js-reverse?version/badge.png?branch=development
+   :alt: Coverage Status
+   :target: https://coveralls.io/r/version2/django-js-reverse
+
+.. image:: https://pypip.in/license/django-js-reverse/badge.svg
+    :target: https://pypi.python.org/pypi/django-js-reverse/
 
 **Javascript url handling for Django that doesn’t hurt.**
 
@@ -120,7 +135,7 @@ License
 Contact
 -------
 
-[@i\_error](https://twitter.com/i\_error)
+`@i_error <https://twitter.com/i_error>`_
 
 --------------
 
