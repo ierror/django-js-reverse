@@ -31,6 +31,7 @@ def urls_js(request):
     url_patterns = list(urlresolvers.get_resolver(None).reverse_dict.items())
     url_list = [(url_name, url_pattern[0][0]) for url_name, url_pattern in url_patterns if
                 (isinstance(url_name, str) or isinstance(url_name, text_type))]
+    url_list = [(("REST_%s" % url_name.replace("-","_"), url_pattern) if '-' in url_name else (url_name, url_pattern)) for url_name, url_pattern in url_list]
 
     view_kwargs = {
         'context_instance': RequestContext(request),
