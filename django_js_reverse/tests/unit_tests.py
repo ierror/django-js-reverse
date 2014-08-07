@@ -10,6 +10,7 @@ from django.test.client import Client
 from django.utils import unittest
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.core.exceptions import ImproperlyConfigured
 
 
 class JSReverseViewTestCase(TestCase):
@@ -44,10 +45,9 @@ class JSReverseViewTestCase(TestCase):
         self.assertContains(response, 'this.Foo = (function () {')
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='1test')
-    def _test_js_var_name_changed_invalid(self):
+    def test_js_var_name_changed_invalid(self):
         # This test overrides JS_REVERSE_JS_VAR_NAME permanent, so it's disabled by default.
         # Needs to by tested as single test case
-        from django.core.exceptions import ImproperlyConfigured
         with self.assertRaises(ImproperlyConfigured):
             self.client.post('/jsreverse/')
 
