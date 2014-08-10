@@ -9,9 +9,9 @@ Django JS Reverse
 .. image:: https://pypip.in/d/django-js-reverse/badge.png
    :target: https://crate.io/packages/django-js-reverse?version=latest
 
-.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png 
+.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=development
    :alt: Coverage Status
-   :target: https://coveralls.io/r/ierror/django-js-reverse
+   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=development
 
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
