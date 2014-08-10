@@ -1,5 +1,15 @@
 language: python
 install:
-  - pip install tox
+  - pip install -q --use-mirrors tox coveralls
+
 script:
+  - coverage erase
   - tox
+
+after_success:
+  - coverage combine
+  - coveralls
+
+notifications:
+  email:
+    - boerni@gmail.com
