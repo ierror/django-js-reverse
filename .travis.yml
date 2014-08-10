@@ -1,26 +1,11 @@
 language: python
-env:
-  - TOX_ENV=py27-django16
-  - TOX_ENV=py27-django15
-  - TOX_ENV=py27-django14
-  - TOX_ENV=py26-django16
-  - TOX_ENV=py26-django15
-  - TOX_ENV=coverage-py26-django14
-  - TOX_ENV=py32-django16
-  - TOX_ENV=py32-django15
-  - TOX_ENV=py33-django16
-  - TOX_ENV=py33-django15
-  - TOX_ENV=coverage-py34-django16
-  - TOX_ENV=py34-django15
-  - TOX_ENV=pypy23-django16
-  - TOX_ENV=pypy23-django15
 
 install:
   - pip install -q tox coverage coveralls
-  - coverage erase
 
 script:
-  - tox -e $TOX_ENV
+  - coverage erase
+  - tox
 
 after_success:
   - coverage combine
