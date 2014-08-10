@@ -1,0 +1,3 @@
+[run]
+include=django_js_reverse*
+omit=include=django_js_reverse/tests*
