@@ -5,3 +5,5 @@ dist/
 build/
 django_js_reverse.egg-info/
 .tox/
+.coverage*
+htmlcov/
