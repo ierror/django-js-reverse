@@ -3,15 +3,15 @@ Django JS Reverse
 .. image:: https://badge.fury.io/py/django-js-reverse.png
    :target: http://badge.fury.io/py/django-js-reverse
 
-.. image:: https://travis-ci.org/version2/django-js-reverse.png
-   :target: http://travis-ci.org/version2/django-js-reverse
+.. image:: https://travis-ci.org/ierror/django-js-reverse.png
+   :target: http://travis-ci.org/ierror/django-js-reverse
 
 .. image:: https://pypip.in/d/django-js-reverse/badge.png
    :target: https://crate.io/packages/django-js-reverse?version=latest
 
-.. image:: https://coveralls.io/repos/version2/django-js-reverse?version/badge.png?branch=development
+.. image:: https://coveralls.io/repos/ierror/django-js-reverse?version/badge.png?branch=development
    :alt: Coverage Status
-   :target: https://coveralls.io/r/version2/django-js-reverse
+   :target: https://coveralls.io/r/ierror/django-js-reverse
 
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
@@ -63,7 +63,7 @@ Install using ``pip`` …
 
 ::
 
-    git clone git@github.com:version2/django-js-reverse.git
+    git clone git@github.com:ierror/django-js-reverse.git
 
 Add ``'django_js_reverse'`` to your ``INSTALLED_APPS`` setting.
 
@@ -142,4 +142,4 @@ Contact
 Enjoy!
 
 .. _named urls: https://docs.djangoproject.com/en/dev/topics/http/urls/#naming-url-patterns
-.. _MIT: https://raw.github.com/version2/django-js-reverse/development/LICENSE
+.. _MIT: https://raw.github.com/ierror/django-js-reverse/development/LICENSE
