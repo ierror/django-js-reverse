@@ -43,7 +43,7 @@ class JSReverseViewTestCase(TestCase):
         self.assertContains(response, "'test_unicode_url_name', ['test_unicode_url_name/', []]")
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='Foo')
-    def _test_js_var_name_changed_valid(self):
+    def test_js_var_name_changed_valid(self):
         # This test overrides JS_REVERSE_JS_VAR_NAME permanent, so it's disabled by default.
         # Needs to by tested as single test case
         response = self.client.post('/jsreverse/')
