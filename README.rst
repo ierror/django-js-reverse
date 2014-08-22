@@ -6,10 +6,7 @@ Django JS Reverse
 .. image:: https://travis-ci.org/ierror/django-js-reverse.png
    :target: http://travis-ci.org/ierror/django-js-reverse
 
-.. image:: https://pypip.in/d/django-js-reverse/badge.png
-   :target: https://crate.io/packages/django-js-reverse?version=latest
-
-.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=development
+.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=develop
    :alt: Coverage Status
    :target: https://coveralls.io/r/ierror/django-js-reverse?branch=development
 
