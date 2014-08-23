@@ -41,6 +41,15 @@ Result:
 
     /betterliving/house/12/
 
+Changelog
+_________
+    0.3.0
+        Test support for pypy, python 3.4, django 1.6
+
+        Refactored include of JS_REVERSE_JS_VAR_NAME js var name
+
+        Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead
+
 Requirements
 ------------
 
