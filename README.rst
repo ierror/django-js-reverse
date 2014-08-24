@@ -43,12 +43,17 @@ Result:
 
 Changelog
 _________
+    0.3.1
+        Added support for namespaces
+
+
     0.3.0
         Test support for pypy, python 3.4, django 1.6
 
         Refactored include of JS_REVERSE_JS_VAR_NAME js var name
 
-        Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead
+        Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead"
+
 
 Requirements
 ------------
@@ -132,6 +137,7 @@ notation instead:
 ::
 
     Urls['betterliving-get-house']('house', 12)
+    Urls['namespace:betterliving-get-house']('house', 12)
 
 License
 -------

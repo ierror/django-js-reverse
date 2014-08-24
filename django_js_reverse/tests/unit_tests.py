@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import os
 import sys
@@ -55,6 +55,13 @@ class JSReverseViewTestCase(TestCase):
         # Needs to by tested as single test case
         with self.assertRaises(ImproperlyConfigured):
             self.client.post('/jsreverse/')
+
+    def test_namespaces(self):
+        response = self.client.post('/jsreverse/')
+        self.assertContains(response, "'ns1:test_two_url_args', "
+                                      "['ns1/test_two_url_args/%(arg_one)s\\u002D%(arg_two)s/', ['arg_one','arg_two']]")
+        self.assertContains(response, "'ns2:test_two_url_args', "
+                                      "['ns2/test_two_url_args/%(arg_one)s\\u002D%(arg_two)s/', ['arg_one','arg_two']]")
 
 
 if __name__ == '__main__':
