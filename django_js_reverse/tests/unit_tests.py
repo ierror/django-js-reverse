@@ -63,6 +63,10 @@ class JSReverseViewTestCase(TestCase):
         self.assertContains(response, "'ns2:test_two_url_args', "
                                       "['ns2/test_two_url_args/%(arg_one)s\\u002D%(arg_two)s/', ['arg_one','arg_two']]")
 
+    def test_content_type(self):
+        response = self.client.post('/jsreverse/')
+        self.assertEqual(response['Content-Type'], 'application/javascript')
+
 
 if __name__ == '__main__':
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)

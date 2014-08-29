@@ -54,7 +54,7 @@ def urls_js(request):
 
     view_kwargs = {
         'context_instance': RequestContext(request),
-        content_type_keyword_name: content_type_keyword_name
+        content_type_keyword_name: 'application/javascript'
     }
 
     return render_to_response('django_js_reverse/urls_js.tpl',
