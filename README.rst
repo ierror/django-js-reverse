@@ -8,7 +8,7 @@ Django JS Reverse
 
 .. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=develop
    :alt: Coverage Status
-   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=development
+   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=develop
 
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
@@ -167,4 +167,4 @@ Contact
 Enjoy!
 
 .. _named urls: https://docs.djangoproject.com/en/dev/topics/http/urls/#naming-url-patterns
-.. _MIT: https://raw.github.com/ierror/django-js-reverse/development/LICENSE
+.. _MIT: https://raw.github.com/ierror/django-js-reverse/develop/LICENSE
