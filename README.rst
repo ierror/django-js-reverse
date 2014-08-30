@@ -43,6 +43,13 @@ Result:
 
 Changelog
 _________
+    0.3.2
+        New: Default minification of the generated javascript file
+
+        Fix: content type of the jsreverse script. Thank you @emcsween
+
+        Testing: Use selenium for better testing
+
     0.3.1
         Added support for namespaces
 
@@ -53,7 +60,6 @@ _________
         Refactored include of JS_REVERSE_JS_VAR_NAME js var name
 
         Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead"
-
 
 Requirements
 ------------
@@ -120,6 +126,13 @@ to access the named urls by django setting
 ::
 
     JS_REVERSE_JS_VAR_NAME = 'Urls'
+
+Optional you can disable the minfication of the generated javascript file
+by django setting
+
+::
+
+    JS_REVERSE_JS_MINIFY = False
 
 Usage
 -----

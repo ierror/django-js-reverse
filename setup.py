@@ -38,6 +38,7 @@ setup(
         ]
     },
     install_requires=[
-        'Django >= 1.4',
+        'Django>=1.4',
+        'slimit==0.8.1.'
     ]
 )

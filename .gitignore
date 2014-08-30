@@ -8,3 +8,4 @@ django_js_reverse.egg-info/
 .coverage.*
 .coverage
 htmlcov/
+ghostdriver.log

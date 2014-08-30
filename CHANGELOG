@@ -1,3 +1,10 @@
+0.3.2
+    New: Default minification of the generated javascript file
+
+    Fix: content type of the jsreverse script. Thank you @emcsween
+
+    Testing: Use selenium for better testing
+
 0.3.1
     Added support for namespaces
 
@@ -8,6 +15,4 @@
     Refactored include of JS_REVERSE_JS_VAR_NAME js var name
 
     Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead"
-
-
 

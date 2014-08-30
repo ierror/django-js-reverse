@@ -1,2 +1,2 @@
 #-*- coding: utf-8 -*-
-from unit_tests import JSReverseViewTestCase
+from unit_tests import JSReverseViewTestCaseMinified, JSReverseViewTestCaseNotMinified
