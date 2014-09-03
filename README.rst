@@ -43,6 +43,9 @@ Result:
 
 Changelog
 _________
+    0.3.3
+        New: Django 1.7 support
+
     0.3.2
         New: Default minification of the generated javascript file
 
@@ -65,7 +68,7 @@ Requirements
 ------------
 
 -  Python (2.6, 2.7, 3.1, 3.3, 3.4, PyPy)
--  Django (1.4, 1.5, 1.6)
+-  Django (1.4, 1.5, 1.6, 1.7)
 
 Installation
 ------------

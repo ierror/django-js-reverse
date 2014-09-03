@@ -7,6 +7,7 @@ import warnings
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
+import django
 from django.test.client import Client
 from django.utils import unittest
 from django.utils.encoding import smart_str
@@ -27,6 +28,9 @@ class JSReverseViewTestCaseMinified(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        if hasattr(django, 'setup'):
+            # for django >= 1.7
+            django.setup()
         cls.selenium = WebDriver()
         super(JSReverseViewTestCaseMinified, cls).setUpClass()
 
