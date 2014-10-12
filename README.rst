@@ -43,6 +43,12 @@ Result:
 
 Changelog
 _________
+
+    0.4.0
+        Add ability to save in file
+        <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
+        to do this run ./manage.py collectstatic
+
     0.3.3
         New: Django 1.7 support
 
