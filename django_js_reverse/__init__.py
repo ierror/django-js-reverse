@@ -22,5 +22,5 @@ def save_js_file():
     file = fs.save(file, ContentFile(content))
 
 
-if sys.argv[1] in ['collectstatic']: # , 'runserver'
+if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic']: # , 'runserver'
     save_js_file()
