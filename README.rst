@@ -47,7 +47,7 @@ _________
     0.4.1
         Add JS_REVERSE_EXCLUDE_NAMESPACES option
         to exclude namespaces from import
-        default is ['admin:', 'djdt:'] (admin and Django Debug Tool Bar)
+        default is ['admin', 'djdt'] (admin and Django Debug Tool Bar)
         admin's namespaces takes about half of file size.
         To include all urls use
         ::
@@ -184,7 +184,7 @@ you can reset this by
     JS_REVERSE_EXCLUDE_NAMESPACES = []
 Or add some other things to exclude
 ::
-    JS_REVERSE_EXCLUDE_NAMESPACES = ['admin:', 'djdt:', ...]
+    JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
 
 
 
