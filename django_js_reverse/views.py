@@ -16,7 +16,7 @@ from django.conf import settings
 from django import get_version
 
 from slimit import minify
-from . js_reverse_settings import JS_VAR_NAME, JS_MINIFY
+from . js_reverse_settings import JS_VAR_NAME, JS_MINIFY, JS_EXCLUDE_NAMESPACES
 
 
 content_type_keyword_name = 'content_type'
@@ -68,6 +68,10 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     """
     returns list of tuples [(<url_name>, <namespace_path>, <url_patern_tuple> ), ...]
     """
+    exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
+    if namespace in exclude_ns:
+        return []
+
     prepared_list = []
     for url_name, url_pattern in urlresolver.reverse_dict.items():
         if isinstance(url_name, text_type) or isinstance(url_name, str):

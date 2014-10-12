@@ -44,6 +44,13 @@ Result:
 Changelog
 _________
 
+    0.4.1
+        Add JS_REVERSE_EXCLUDE_NAMESPACES option
+        to exclude namespaces from import
+        default is ['admin:', 'djdt:'] (admin and Django Debug Tool Bar)
+        To include all urls use
+        JS_REVERSE_EXCLUDE_NAMESPACES = []
+
     0.4.0
         Add ability to save in file
         <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
