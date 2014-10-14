@@ -109,9 +109,9 @@ class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
         path = join(package_path, 'static', 'django_js_reverse', 'js', 'reverse.js')
         f = open(path)
         f_content = f.read()
-        print f_content
         r2 = self.client.get('/jsreverse/')
-        self.assertEqual(f_content, r2.content, "Static file don't match http response content")
+        self.assertEqual(len(f_content), len(r2.content), "Static file don't match http response content_1")
+        self.assertEqual(f_content, r2.content, "Static file don't match http response content_2")
 
 
 
