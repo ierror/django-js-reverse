@@ -5,6 +5,7 @@ from copy import copy
 from django.conf.urls import patterns, url, include
 
 
+
 if sys.version < '3':
     import codecs
 
@@ -13,6 +14,7 @@ if sys.version < '3':
 else:
     def u(x):
         return x
+
 
 basic_patterns = patterns('',
                           url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
@@ -29,6 +31,12 @@ basic_patterns = patterns('',
 
 urlpatterns = copy(basic_patterns)
 
+# test exclude namespaces urls
+urlexclude = patterns('',
+                    url(r'^test_exclude_namespace/$', 'foo',
+                            name='test_exclude_namespace_url1'))
+
+
 # test namespace
 pattern_ns_1 = patterns('',
                         url(r'', include(basic_patterns)))
@@ -38,4 +46,6 @@ pattern_ns_2 = patterns('',
 
 urlpatterns += patterns('',
                         url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
-                        url(r'^ns2/', include(pattern_ns_2, namespace='ns2')))
+                        url(r'^ns2/', include(pattern_ns_2, namespace='ns2')),
+                        url(r'^ns_ex/', include(urlexclude, namespace='exclude_namespace')),
+                        )

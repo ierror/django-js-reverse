@@ -22,6 +22,21 @@ from selenium.webdriver.phantomjs.webdriver import WebDriver
 warnings.simplefilter('error', DeprecationWarning)
 
 
+
+class JSReverseNamespaceExcludeTest(TestCase):
+    urls = 'django_js_reverse.tests.test_urls'
+
+    def test_namespace_in_urls(self):
+        response = self.client.get('/jsreverse/')
+        self.assertContains(response, 'exclude_namespace', status_code=200)
+
+    @override_settings(JS_REVERSE_EXCLUDE_NAMESPACES=['exclude_namespace'])
+    def test_namespace_not_in_response(self):
+        response = self.client.get('/jsreverse/')
+        self.assertNotContains(response, 'exclude_namespace', status_code=200)
+
+
+
 class JSReverseViewTestCaseMinified(TestCase):
     client = None
     urls = 'django_js_reverse.tests.test_urls'
