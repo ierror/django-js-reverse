@@ -110,12 +110,12 @@ class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
         f = open(path)
         content1 = f.read()
         if hasattr(content1, 'decode'):
-            content1 = content1.decode(encoding='UTF-8')
+            content1 = content1.decode()
 
         r2 = self.client.get('/jsreverse/')
         content2 = r2.content
         if hasattr(content2, 'decode'):
-            content2 = content2.decode(encoding='UTF-8')
+            content2 = content2.decode()
 
         self.assertEqual(len(content1), len(content2), "Static file don't match http response content_1")
         self.assertEqual(content1, content2, "Static file don't match http response content_2")
