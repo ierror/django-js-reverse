@@ -35,7 +35,7 @@ def urls_js(request=None):
         raise ImproperlyConfigured(
             'JS_REVERSE_JS_MINIFY setting "%s" is not a valid. Needs to be set to True or False.' % (minfiy))
 
-    default_urlresolver = urlresolvers.get_resolver(None)
+    default_urlresolver = urlresolvers.get_resolver(getattr(request, 'urlconf', None))
 
     # prepare data for namespeced urls
     exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
