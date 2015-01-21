@@ -60,7 +60,15 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
 
     for inner_ns, (inner_ns_path, inner_urlresolver) in \
             urlresolver.namespace_dict.items():
-        for x in prepare_url_list(inner_urlresolver,
-                                  namespace_path + inner_ns_path,
-                                  namespace + inner_ns + ':'):
+        inner_ns_path = namespace_path + inner_ns_path
+        inner_ns = namespace + inner_ns + ':'
+
+        # if we have inner_ns_path, reconstruct a new resolver so that we can
+        # handle regex substitutions within the regex of a namespace.
+        if inner_ns_path:
+            inner_urlresolver = urlresolvers.get_ns_resolver(inner_ns_path,
+                                                             inner_urlresolver)
+            inner_ns_path = ''
+
+        for x in prepare_url_list(inner_urlresolver, inner_ns_path, inner_ns):
             yield x
