@@ -37,20 +37,10 @@ def urls_js(request):
 
     default_urlresolver = urlresolvers.get_resolver(None)
 
-    # prepare data for namespeced urls
-    named_urlresolves = [
-        (n_urlresolver, namespace_path, namespace + ':')
-        for namespace, (namespace_path, n_urlresolver) in default_urlresolver.namespace_dict.items()
-    ]
-    url_lists = [prepare_url_list(*args) for args in named_urlresolves]
-
-    # add urls without namespaces
-    url_lists.append((prepare_url_list(default_urlresolver)))
-
     response_body = loader.render_to_string(
         'django_js_reverse/urls_js.tpl',
         {
-            'urls': chain(*url_lists),
+            'urls': list(prepare_url_list(default_urlresolver)),
             'url_prefix': urlresolvers.get_script_prefix(),
             'js_var_name': js_var_name
         },
@@ -64,8 +54,13 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     """
     returns list of tuples [(<url_name>, <namespace_path>, <url_patern_tuple> ), ...]
     """
-    prepared_list = []
     for url_name, url_pattern in urlresolver.reverse_dict.items():
-        if isinstance(url_name, text_type) or isinstance(url_name, str):
-            prepared_list.append([namespace + url_name, namespace_path, url_pattern[0][0]])
-    return prepared_list
+        if isinstance(url_name, (text_type, str)):
+            yield [namespace + url_name, namespace_path, url_pattern[0][0]]
+
+    for inner_ns, (inner_ns_path, inner_urlresolver) in \
+            urlresolver.namespace_dict.items():
+        for x in prepare_url_list(inner_urlresolver,
+                                  namespace_path + inner_ns_path,
+                                  namespace + inner_ns + ':'):
+            yield x
