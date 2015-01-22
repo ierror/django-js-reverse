@@ -56,6 +56,12 @@ class JSReverseViewTestCaseMinified(TestCase):
     def test_view_two_url_args(self):
         self.assertEqualJSUrlEval('Urls.test_two_url_args("arg_one", "arg_two")', '/test_two_url_args/arg_one-arg_two/')
 
+    def test_view_optional_url_arg(self):
+        self.assertEqualJSUrlEval('Urls.test_optional_url_arg("arg_two")',
+                                  '/test_optional_url_arg/2_arg_two/')
+        self.assertEqualJSUrlEval('Urls.test_optional_url_arg("arg_one", "arg_two")',
+                                  '/test_optional_url_arg/1_arg_one-2_arg_two/')
+
     def test_unicode_url_name(self):
         self.assertEqualJSUrlEval('Urls.test_unicode_url_name()', '/test_unicode_url_name/')
 
@@ -75,6 +81,8 @@ class JSReverseViewTestCaseMinified(TestCase):
                                   '/ns1/test_two_url_args/arg_one-arg_two/')
         self.assertEqualJSUrlEval('Urls["ns2:test_two_url_args"]("arg_one", "arg_two")',
                                   '/ns2/test_two_url_args/arg_one-arg_two/')
+        self.assertEqualJSUrlEval('Urls["ns_arg:test_two_url_args"]("arg_one", "arg_two", "arg_three")',
+                                  '/nsarg_one/test_two_url_args/arg_two-arg_three/')
 
     def test_content_type(self):
         response = self.client.post('/jsreverse/')

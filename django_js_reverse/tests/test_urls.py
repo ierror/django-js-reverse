@@ -24,6 +24,8 @@ basic_patterns = patterns('',
                               name='test_one_url_args'),
                           url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', 'foo',
                               name='test_two_url_args'),
+                          url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', 'foo',
+                              name='test_optional_url_arg'),
                           url(r'^test_unicode_url_name/$', 'foo',
                               name=u('test_unicode_url_name')))
 
@@ -36,6 +38,10 @@ pattern_ns_1 = patterns('',
 pattern_ns_2 = patterns('',
                         url(r'', include(basic_patterns)))
 
+pattern_ns_arg = patterns('',
+                          url(r'', include(basic_patterns)))
+
 urlpatterns += patterns('',
                         url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
-                        url(r'^ns2/', include(pattern_ns_2, namespace='ns2')))
+                        url(r'^ns2/', include(pattern_ns_2, namespace='ns2')),
+                        url(r'^ns(?P<ns_arg>[^/]*)/', include(pattern_ns_arg, namespace='ns_arg')))
