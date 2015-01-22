@@ -24,6 +24,8 @@ basic_patterns = patterns('',
                               name='test_one_url_args'),
                           url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', 'foo',
                               name='test_two_url_args'),
+                          url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', 'foo',
+                              name='test_optional_url_arg'),
                           url(r'^test_unicode_url_name/$', 'foo',
                               name=u('test_unicode_url_name')))
 
