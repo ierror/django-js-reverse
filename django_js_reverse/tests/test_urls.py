@@ -36,6 +36,10 @@ pattern_ns_1 = patterns('',
 pattern_ns_2 = patterns('',
                         url(r'', include(basic_patterns)))
 
+pattern_ns_arg = patterns('',
+                          url(r'', include(basic_patterns)))
+
 urlpatterns += patterns('',
                         url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
-                        url(r'^ns2/', include(pattern_ns_2, namespace='ns2')))
+                        url(r'^ns2/', include(pattern_ns_2, namespace='ns2')),
+                        url(r'^ns(?P<ns_arg>[^/]*)/', include(pattern_ns_arg, namespace='ns_arg')))
