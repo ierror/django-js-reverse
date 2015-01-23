@@ -15,11 +15,12 @@ from django.utils.encoding import smart_str
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.core.exceptions import ImproperlyConfigured
+from django.core.management import call_command
 
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 
 import django_js_reverse
-from django_js_reverse import save_js_file
+
 
 # Raise errors on DeprecationWarnings
 # warnings.simplefilter('error', DeprecationWarning)
@@ -114,8 +115,8 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
 
 
 class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
-    def test_reverse_js_file_save(self):
-        save_js_file()
+    def _test_reverse_js_file_save(self):
+        call_command('collectstatic_js_reverse')
 
         package_path = dirname(django_js_reverse.__file__)
         path = join(package_path, 'static', 'django_js_reverse', 'js', 'reverse.js')

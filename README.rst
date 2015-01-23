@@ -43,6 +43,10 @@ Result:
 
 Changelog
 _________
+    0.4.1
+        Fix: collectstatic runner: moved to own management command collectstatic_js_reverse
+             
+
     0.4.0
         Add ability to save in file
         <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
@@ -122,10 +126,10 @@ Usage as static file
 
 First generate static file by
 ::
-    ./manage.py collectstatic
+    ./manage.py collectstatic_js_reverse
 
 If you change some urls or add plagin and wont to update reverse.js file
-run collectstatic again.
+run the command again.
 
 After this add file to template
 ::
