@@ -19,8 +19,8 @@ def save_js_file():
         fs.delete(file)
 
     content = urls_js()
-    file = fs.save(file, ContentFile(content))
+    fs.save(file, ContentFile(content))
 
 
-if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic']: # , 'runserver'
+if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic']:  # , 'runserver'
     save_js_file()

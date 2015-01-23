@@ -13,25 +13,31 @@ if sys.version < '3':
 else:
     def u(x):
         return x
+    
+
+def dummy_view(*args, **kwargs):
+    pass
 
 basic_patterns = patterns('',
                           url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
 
                           # test urls
-                          url(r'^test_no_url_args/$', 'foo',
+                          url(r'^test_no_url_args/$', dummy_view,
                               name='test_no_url_args'),
-                          url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', 'foo',
+                          url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', dummy_view,
                               name='test_one_url_args'),
-                          url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', 'foo',
+                          url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view,
                               name='test_two_url_args'),
-                          url(r'^test_unicode_url_name/$', 'foo',
+                          url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view,
+                              name='test_optional_url_arg'),
+                          url(r'^test_unicode_url_name/$', dummy_view,
                               name=u('test_unicode_url_name')))
 
 urlpatterns = copy(basic_patterns)
 
 # test exclude namespaces urls
 urlexclude = patterns('',
-                    url(r'^test_exclude_namespace/$', 'foo',
+                    url(r'^test_exclude_namespace/$', dummy_view,
                             name='test_exclude_namespace_url1'))
 
 

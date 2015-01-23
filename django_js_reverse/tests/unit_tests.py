@@ -113,7 +113,6 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
             self.assertTrue(len(js_minified) < len(js_not_minified))
 
 
-
 class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
     def test_reverse_js_file_save(self):
         save_js_file()
@@ -130,9 +129,8 @@ class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
         if hasattr(content2, 'decode'):
             content2 = content2.decode()
 
-        self.assertEqual(len(content1), len(content2), "Static file don't match http response content_1")
-        self.assertEqual(content1, content2, "Static file don't match http response content_2")
-
+        self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
+        self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
 
 
 class JSReverseNamespaceExcludeTest(JSReverseViewTestCaseMinified):
@@ -144,7 +142,6 @@ class JSReverseNamespaceExcludeTest(JSReverseViewTestCaseMinified):
     def test_namespace_not_in_response(self):
         response = self.client.get('/jsreverse/')
         self.assertNotContains(response, 'exclude_namespace', status_code=200)
-
 
 
 if __name__ == '__main__':

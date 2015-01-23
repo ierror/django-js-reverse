@@ -1,3 +1,18 @@
+0.4.0
+    Add ability to save in file
+    <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
+    to do this run ./manage.py collectstatic
+
+    Add JS_REVERSE_EXCLUDE_NAMESPACES option
+    to exclude namespaces from import
+    default is []
+
+    To exclude e.g. admin and Django Debug Toolbar:
+    ::
+        JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt']
+
+    Thank you Andertaker
+
 0.3.4
     New: Support for nested namespaces. Thank you hyperair
 
@@ -25,4 +40,3 @@
     Refactored include of JS_REVERSE_JS_VAR_NAME js var name
 
     Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead"
-
