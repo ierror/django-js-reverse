@@ -43,6 +43,20 @@ Result:
 
 Changelog
 _________
+    0.4.1
+        Add JS_REVERSE_EXCLUDE_NAMESPACES option
+        to exclude namespaces from import
+        default is ['admin', 'djdt'] (admin and Django Debug Tool Bar)
+        admin's namespaces takes about half of file size.
+        To include all urls use
+        ::
+            JS_REVERSE_EXCLUDE_NAMESPACES = []
+
+    0.4.0
+        Add ability to save in file
+        <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
+        to do this run ./manage.py collectstatic
+
     0.3.4
         New: Support for nested namespaces. Thank you hyperair
 
@@ -101,6 +115,27 @@ Add ``'django_js_reverse'`` to your ``INSTALLED_APPS`` setting.
         'django_js_reverse',        
     )
 
+
+Usage as static file
+--------------------
+
+First generate static file by
+::
+    ./manage.py collectstatic
+
+If you change some urls or add plagin and wont to update reverse.js file
+run collectstatic again.
+
+After this add file to template
+::
+    <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
+
+
+
+
+Usage with views
+----------------
+
 Include none-cached view …
 
 ::
@@ -130,6 +165,10 @@ or, if you are using Django > 1.5
 
     <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 
+
+Options
+-------
+
 Optional you can overwrite the default javascript variable ‘Urls’ used
 to access the named urls by django setting
 
@@ -143,6 +182,17 @@ by django setting
 ::
 
     JS_REVERSE_JS_MINIFY = False
+
+
+By default Admin and Django Debug Tool Bar namespaces excluded
+you can reset this by
+::
+    JS_REVERSE_EXCLUDE_NAMESPACES = []
+Or add some other things to exclude
+::
+    JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
+
+
 
 Usage
 -----

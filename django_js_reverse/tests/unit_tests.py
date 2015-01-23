@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import os
+from os.path import join, dirname
 import sys
 import warnings
 
@@ -17,9 +18,12 @@ from django.core.exceptions import ImproperlyConfigured
 
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 
+import django_js_reverse
+from django_js_reverse import save_js_file
 
 # Raise errors on DeprecationWarnings
 # warnings.simplefilter('error', DeprecationWarning)
+
 
 
 class JSReverseViewTestCaseMinified(TestCase):
@@ -107,6 +111,40 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
         with override_settings(JS_REVERSE_JS_MINIFY=True):
             js_minified = smart_str(self.client.post('/jsreverse/').content)
             self.assertTrue(len(js_minified) < len(js_not_minified))
+
+
+
+class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
+    def test_reverse_js_file_save(self):
+        save_js_file()
+
+        package_path = dirname(django_js_reverse.__file__)
+        path = join(package_path, 'static', 'django_js_reverse', 'js', 'reverse.js')
+        f = open(path)
+        content1 = f.read()
+        if hasattr(content1, 'decode'):
+            content1 = content1.decode()
+
+        r2 = self.client.get('/jsreverse/')
+        content2 = r2.content
+        if hasattr(content2, 'decode'):
+            content2 = content2.decode()
+
+        self.assertEqual(len(content1), len(content2), "Static file don't match http response content_1")
+        self.assertEqual(content1, content2, "Static file don't match http response content_2")
+
+
+
+class JSReverseNamespaceExcludeTest(JSReverseViewTestCaseMinified):
+    def test_namespace_in_urls(self):
+        response = self.client.get('/jsreverse/')
+        self.assertContains(response, 'exclude_namespace', status_code=200)
+
+    @override_settings(JS_REVERSE_EXCLUDE_NAMESPACES=['exclude_namespace'])
+    def test_namespace_not_in_response(self):
+        response = self.client.get('/jsreverse/')
+        self.assertNotContains(response, 'exclude_namespace', status_code=200)
+
 
 
 if __name__ == '__main__':

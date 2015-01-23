@@ -14,26 +14,26 @@ else:
     def u(x):
         return x
 
-
-def dummy_view(request):
-    pass
-
 basic_patterns = patterns('',
                           url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
 
                           # test urls
-                          url(r'^test_no_url_args/$', dummy_view,
+                          url(r'^test_no_url_args/$', 'foo',
                               name='test_no_url_args'),
-                          url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', dummy_view,
+                          url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', 'foo',
                               name='test_one_url_args'),
-                          url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view,
+                          url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', 'foo',
                               name='test_two_url_args'),
-                          url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view,
-                              name='test_optional_url_arg'),
-                          url(r'^test_unicode_url_name/$', dummy_view,
+                          url(r'^test_unicode_url_name/$', 'foo',
                               name=u('test_unicode_url_name')))
 
 urlpatterns = copy(basic_patterns)
+
+# test exclude namespaces urls
+urlexclude = patterns('',
+                    url(r'^test_exclude_namespace/$', 'foo',
+                            name='test_exclude_namespace_url1'))
+
 
 # test namespace
 pattern_ns_1 = patterns('',
@@ -52,5 +52,6 @@ pattern_nested_ns = patterns('',
 urlpatterns += patterns('',
                         url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
                         url(r'^ns2/', include(pattern_ns_2, namespace='ns2')),
+                        url(r'^ns_ex/', include(urlexclude, namespace='exclude_namespace')),
                         url(r'^ns(?P<ns_arg>[^/]*)/', include(pattern_ns_arg, namespace='ns_arg')),
                         url(r'^nestedns/', include(pattern_nested_ns, namespace='nestedns')))
