@@ -83,6 +83,8 @@ class JSReverseViewTestCaseMinified(TestCase):
                                   '/ns2/test_two_url_args/arg_one-arg_two/')
         self.assertEqualJSUrlEval('Urls["ns_arg:test_two_url_args"]("arg_one", "arg_two", "arg_three")',
                                   '/nsarg_one/test_two_url_args/arg_two-arg_three/')
+        self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
+                                  '/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
 
     def test_content_type(self):
         response = self.client.post('/jsreverse/')
