@@ -43,6 +43,13 @@ Result:
 
 Changelog
 _________
+    0.3.4
+        New: Support for nested namespaces. Thank you hyperair
+
+        New: Support for arguments within namespace path. Thank you hyperair
+
+        New: Support for optional url arguments. Thank you hyperair
+
     0.3.3
         New: Django 1.7 support
 

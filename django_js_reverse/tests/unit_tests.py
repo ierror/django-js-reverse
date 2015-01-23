@@ -19,7 +19,7 @@ from selenium.webdriver.phantomjs.webdriver import WebDriver
 
 
 # Raise errors on DeprecationWarnings
-warnings.simplefilter('error', DeprecationWarning)
+# warnings.simplefilter('error', DeprecationWarning)
 
 
 class JSReverseViewTestCaseMinified(TestCase):
@@ -81,8 +81,12 @@ class JSReverseViewTestCaseMinified(TestCase):
                                   '/ns1/test_two_url_args/arg_one-arg_two/')
         self.assertEqualJSUrlEval('Urls["ns2:test_two_url_args"]("arg_one", "arg_two")',
                                   '/ns2/test_two_url_args/arg_one-arg_two/')
+
+    def test_namespaces_with_args(self):
         self.assertEqualJSUrlEval('Urls["ns_arg:test_two_url_args"]("arg_one", "arg_two", "arg_three")',
                                   '/nsarg_one/test_two_url_args/arg_two-arg_three/')
+
+    def test_namespaces_nested(self):
         self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
                                   '/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
 
@@ -94,7 +98,6 @@ class JSReverseViewTestCaseMinified(TestCase):
     def test_js_minfiy_changed_to_invalid(self):
         with self.assertRaises(ImproperlyConfigured):
             self.client.post('/jsreverse/')
-
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
