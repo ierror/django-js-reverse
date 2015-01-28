@@ -128,7 +128,7 @@ First generate static file by
 ::
     ./manage.py collectstatic_js_reverse
 
-If you change some urls or add plugin and want to update the reverse.js file,
+If you change some urls or add a plugin and want to update the reverse.js file,
 run the command again.
 
 After this add the file to your template
@@ -178,22 +178,26 @@ Optionally, you can overwrite the default javascript variable ‘Urls’ used
 to access the named urls by django setting
 
 ::
+
     JS_REVERSE_JS_VAR_NAME = 'Urls'
 
 Optionally, you can disable the minfication of the generated javascript file
 by django setting
 
 ::
+
     JS_REVERSE_JS_MINIFY = False
 
 By default all namespaces are included
 
 ::
+
     JS_REVERSE_EXCLUDE_NAMESPACES = []
 
 To exclude any namespaces from the generated javascript file, add them to the `JS_REVERSE_EXCLUDE_NAMESPACES` setting
 
 ::
+
     JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
 
 
