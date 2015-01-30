@@ -13,9 +13,6 @@ Django JS Reverse
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
     
-.. image:: https://img.shields.io/gratipay/ierror.svg
-   :target: https://gratipay.com/ierror/
-   
 
 **Javascript url handling for Django that doesn’t hurt.**
 
