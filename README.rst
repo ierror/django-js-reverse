@@ -129,7 +129,7 @@ First generate static file by
 ::
     ./manage.py collectstatic_js_reverse
 
-If you change some urls or add a plugin and want to update the reverse.js file,
+If you change some urls or add an app and want to update the reverse.js file,
 run the command again.
 
 After this add the file to your template
