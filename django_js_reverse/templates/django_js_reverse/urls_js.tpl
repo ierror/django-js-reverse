@@ -48,6 +48,7 @@ this.{{ js_var_name }} = (function () {
         _ref = url_patterns[_i], name = _ref[0], pattern = _ref[1];
         self.url_patterns[name] = pattern;
         Urls[name] = _get_url(name);
+        Urls[name.replace('-', '_')] = _get_url(name);
     }
 
     return Urls;
