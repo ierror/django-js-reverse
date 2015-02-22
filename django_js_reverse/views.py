@@ -13,15 +13,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 from django.core import urlresolvers
 from django.conf import settings
-from django import get_version
 
 from slimit import minify
 from .js_reverse_settings import JS_VAR_NAME, JS_MINIFY, JS_EXCLUDE_NAMESPACES
-
-
-content_type_keyword_name = 'content_type'
-if get_version() < '1.5':
-    content_type_keyword_name = 'mimetype'
 
 
 def urls_js(request=None):
@@ -37,7 +31,7 @@ def urls_js(request=None):
 
     default_urlresolver = urlresolvers.get_resolver(getattr(request, 'urlconf', None))
     response_body = loader.render_to_string('django_js_reverse/urls_js.tpl', {
-        'urls': list(prepare_url_list(default_urlresolver)),
+        'urls': sorted(list(prepare_url_list(default_urlresolver))),
         'url_prefix': urlresolvers.get_script_prefix(),
         'js_var_name': js_var_name
     })
@@ -48,7 +42,7 @@ def urls_js(request=None):
     if not request:
         return response_body
     else:
-        return HttpResponse(response_body, **{content_type_keyword_name: 'application/javascript'})
+        return HttpResponse(response_body, **{'content_type': 'application/javascript'})
 
 
 def prepare_url_list(urlresolver, namespace_path='', namespace=''):

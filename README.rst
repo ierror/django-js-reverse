@@ -44,10 +44,20 @@ Result:
 
 Changelog
 _________
+    0.4.4
+        Improvement: management command collectstatic_js_reverse throws an error if settings.STATIC_ROOT is not set
+
+        Tests: exluded a debug print from test coverage
+
+        Removed: support for django 1.4
+
+        New: Templatetag to include js-reverse-js inline in your templates
+        Thank you logston
+
     0.4.3
         New: Add better support for django rest framework
-             Django rest framework generates url names like user-list, so it get's converted now as well so
-             Urls['user-list']() or the cleaner Urls.user_list() are both usable.
+        Django rest framework generates url names like user-list, so it get's converted now as well so
+        Urls['user-list']() or the cleaner Urls.user_list() are both usable.
 
         Fix: JSReverseStaticFileSaveTest is working and being tested again
 
@@ -59,54 +69,9 @@ _________
 
         Fix: Get rid of test warning "MIDDLEWARE_CLASSES is not set." for Django >= 1.7
 
-    0.4.2
-        Provided PyPI wheel Package
 
-    0.4.1
-        Fix: collectstatic runner: moved to own management command collectstatic_js_reverse
-             
-    0.4.0
-        Add ability to save in file
-        <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
-        to do this run ./manage.py collectstatic
+`Full changelog  <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
 
-        Add JS_REVERSE_EXCLUDE_NAMESPACES option
-        to exclude namespaces from import
-        default is []
-
-        To exclude e.g. admin and Django Debug Toolbar:
-        ::
-            JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt']
-
-        Thank you Andertaker
-
-    0.3.4
-        New: Support for nested namespaces. Thank you hyperair
-
-        New: Support for arguments within namespace path. Thank you hyperair
-
-        New: Support for optional url arguments. Thank you hyperair
-
-    0.3.3
-        New: Django 1.7 support
-
-    0.3.2
-        New: Default minification of the generated javascript file
-
-        Fix: content type of the jsreverse script. Thank you @emcsween
-
-        Testing: Use selenium for better testing
-
-    0.3.1
-        Added support for namespaces
-
-
-    0.3.0
-        Test support for pypy, python 3.4, django 1.6
-
-        Refactored include of JS_REVERSE_JS_VAR_NAME js var name
-
-        Get rid of "DeprecationWarning: The mimetype keyword argument is depracated, use content_type instead"
 
 Requirements
 ------------
@@ -154,8 +119,6 @@ After this add the file to your template
     <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 
 
-
-
 Usage with views
 ----------------
 
@@ -189,6 +152,35 @@ or, if you are using Django > 1.5
     <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 
 
+Usage as template tag
+_____________________
+
+    {% load js_reverse %}
+
+    <script type="text/javascript" charset="utf-8">
+        {% js_reverse_inline %}
+    </script>
+
+
+Use the urls in javascript
+--------------------------
+
+If your url names are valid javascript identifiers ([$A-Z\_][-Z\_$]\*)i
+you can access them by the Dot notation:
+
+::
+
+    Urls.betterliving_get_house('house', 12)
+
+If the named url contains invalid identifiers use the Square bracket
+notation instead:
+
+::
+
+    Urls['betterliving-get-house']('house', 12)
+    Urls['namespace:betterliving-get-house']('house', 12)
+
+
 Options
 -------
 
@@ -218,25 +210,6 @@ To exclude any namespaces from the generated javascript file, add them to the `J
 
     JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
 
-
-
-Usage
------
-
-If your url names are valid javascript identifiers ([$A-Z\_][-Z\_$]\*)i
-you can access them by the Dot notation:
-
-::
-
-    Urls.betterliving_get_house('house', 12)
-
-If the named url contains invalid identifiers use the Square bracket
-notation instead:
-
-::
-
-    Urls['betterliving-get-house']('house', 12)
-    Urls['namespace:betterliving-get-house']('house', 12)
 
 License
 -------
