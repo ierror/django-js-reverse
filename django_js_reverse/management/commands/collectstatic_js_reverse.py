@@ -3,18 +3,17 @@ import sys
 from os.path import join, dirname
 from django.core.management.base import BaseCommand
 
-import django_js_reverse
 from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 from django_js_reverse.views import urls_js
+from django.conf import settings
 
 
 class Command(BaseCommand):
     help = 'Creates a static urls-js file for django-js-reverse'
 
     def handle(self, *args, **options):
-            package_path = dirname(django_js_reverse.__file__)
-            location = join(package_path, 'static', 'django_js_reverse', 'js')
+            location = join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
             file = 'reverse.js'
             fs = FileSystemStorage(location=location)
             if fs.exists(file):
