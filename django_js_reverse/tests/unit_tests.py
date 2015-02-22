@@ -23,8 +23,7 @@ import django_js_reverse
 
 
 # Raise errors on DeprecationWarnings
-# warnings.simplefilter('error', DeprecationWarning)
-
+warnings.simplefilter('error', DeprecationWarning)
 
 
 class JSReverseViewTestCaseMinified(TestCase):
@@ -115,7 +114,7 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
 
 
 class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
-    def _test_reverse_js_file_save(self):
+    def test_reverse_js_file_save(self):
         call_command('collectstatic_js_reverse')
 
         package_path = dirname(django_js_reverse.__file__)
