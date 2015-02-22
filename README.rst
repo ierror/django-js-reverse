@@ -12,6 +12,7 @@ Django JS Reverse
 
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
+    
 
 **Javascript url handling for Django that doesn’t hurt.**
 
@@ -43,10 +44,27 @@ Result:
 
 Changelog
 _________
+    0.4.3
+        New: Add better support for django rest framework
+             Django rest framework generates url names like user-list, so it get's converted now as well so
+             Urls['user-list']() or the cleaner Urls.user_list() are both usable.
+
+        Fix: JSReverseStaticFileSaveTest is working and being tested again
+
+        Improvement: Cleanup Javascript
+
+        Thank you bulv1ne for the pull request
+
+        New: Test support for the latest pypy versions pypy3-2.4.0 and pypy-2.5.0
+
+        Fix: Get rid of test warning "MIDDLEWARE_CLASSES is not set." for Django >= 1.7
+
+    0.4.2
+        Provided PyPI wheel Package
+
     0.4.1
         Fix: collectstatic runner: moved to own management command collectstatic_js_reverse
              
-
     0.4.0
         Add ability to save in file
         <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
@@ -128,10 +146,10 @@ First generate static file by
 ::
     ./manage.py collectstatic_js_reverse
 
-If you change some urls or add plagin and wont to update reverse.js file
+If you change some urls or add an app and want to update the reverse.js file,
 run the command again.
 
-After this add file to template
+After this add the file to your template
 ::
     <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 
@@ -174,26 +192,30 @@ or, if you are using Django > 1.5
 Options
 -------
 
-Optional you can overwrite the default javascript variable ‘Urls’ used
+Optionally, you can overwrite the default javascript variable ‘Urls’ used
 to access the named urls by django setting
 
 ::
 
     JS_REVERSE_JS_VAR_NAME = 'Urls'
 
-Optional you can disable the minfication of the generated javascript file
+Optionally, you can disable the minfication of the generated javascript file
 by django setting
 
 ::
 
     JS_REVERSE_JS_MINIFY = False
 
-
 By default all namespaces are included
+
 ::
+
     JS_REVERSE_EXCLUDE_NAMESPACES = []
-Add some namespaces things to exclude
+
+To exclude any namespaces from the generated javascript file, add them to the `JS_REVERSE_EXCLUDE_NAMESPACES` setting
+
 ::
+
     JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
 
 

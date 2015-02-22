@@ -1,3 +1,21 @@
+0.4.3
+    New: Add better support for django rest framework
+         Django rest framework generates url names like user-list, so it get's converted now as well so
+         Urls['user-list']() or the cleaner Urls.user_list() are both usable.
+
+    Fix: JSReverseStaticFileSaveTest is working and being tested again
+
+    Improvement: Cleanup Javascript
+
+    Thank you bulv1ne for the pull request
+
+    New: Test support for the latest pypy versions pypy3-2.4.0 and pypy-2.5.0
+
+    Fix: Get rid of test warning "MIDDLEWARE_CLASSES is not set." for Django >= 1.7
+
+0.4.2
+    Provided PyPI wheel Package
+
 0.4.1
     Fix: collectstatic runner: moved to own management command collectstatic_js_reverse
 
