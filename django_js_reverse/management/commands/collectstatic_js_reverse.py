@@ -25,4 +25,4 @@ class Command(BaseCommand):
             content = urls_js()
             fs.save(file, ContentFile(content))
             if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:
-                self.stdout.write('js-reverse file written to %s' % (location))
+                self.stdout.write('js-reverse file written to %s' % (location))  # pragma: no cover

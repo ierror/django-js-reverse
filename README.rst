@@ -44,6 +44,13 @@ Result:
 
 Changelog
 _________
+    0.4.4
+        Improvement: management command collectstatic_js_reverse throws an error if settings.STATIC_ROOT is not set
+
+        Tests: exluded a debug print from test coverage
+
+        Removed support for django 1.4
+
     0.4.3
         New: Add better support for django rest framework
              Django rest framework generates url names like user-list, so it get's converted now as well so
