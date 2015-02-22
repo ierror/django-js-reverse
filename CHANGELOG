@@ -3,7 +3,9 @@
 
     Tests: exluded a debug print from coverage
 
-    Removed support for django 1.4
+    Removed: support for django 1.4
+
+    New: Templatetag to include js-reverse-js inline in your templates
 
 0.4.3
     New: Add better support for django rest framework
@@ -60,7 +62,6 @@
 
 0.3.1
     Added support for namespaces
-
 
 0.3.0
     Test support for pypy, python 3.4, django 1.6
