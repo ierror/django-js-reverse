@@ -37,7 +37,7 @@ def urls_js(request=None):
 
     default_urlresolver = urlresolvers.get_resolver(getattr(request, 'urlconf', None))
     response_body = loader.render_to_string('django_js_reverse/urls_js.tpl', {
-        'urls': list(prepare_url_list(default_urlresolver)),
+        'urls': sorted(list(prepare_url_list(default_urlresolver))),
         'url_prefix': urlresolvers.get_script_prefix(),
         'js_var_name': js_var_name
     })

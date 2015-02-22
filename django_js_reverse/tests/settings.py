@@ -1,3 +1,5 @@
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -12,3 +14,4 @@ INSTALLED_APPS = (
 )
 ALLOWED_HOSTS = ['testserver']
 MIDDLEWARE_CLASSES = ()
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'tmp')

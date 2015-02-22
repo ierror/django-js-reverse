@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import os
-from os.path import join, dirname
 import sys
 import warnings
 
@@ -16,10 +15,9 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
+from django.conf import settings
 
 from selenium.webdriver.phantomjs.webdriver import WebDriver
-
-import django_js_reverse
 
 
 # Raise errors on DeprecationWarnings
@@ -117,8 +115,7 @@ class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
     def test_reverse_js_file_save(self):
         call_command('collectstatic_js_reverse')
 
-        package_path = dirname(django_js_reverse.__file__)
-        path = join(package_path, 'static', 'django_js_reverse', 'js', 'reverse.js')
+        path = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js', 'reverse.js')
         f = open(path)
         content1 = f.read()
         if hasattr(content1, 'decode'):
@@ -131,6 +128,11 @@ class JSReverseStaticFileSaveTest(JSReverseViewTestCaseMinified):
 
         self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
         self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
+
+        # test for excpetion if STATIC_ROOT is not set
+        with override_settings(STATIC_ROOT=None):
+            with self.assertRaises(ImproperlyConfigured):
+                call_command('collectstatic_js_reverse')
 
 
 class JSReverseNamespaceExcludeTest(JSReverseViewTestCaseMinified):
