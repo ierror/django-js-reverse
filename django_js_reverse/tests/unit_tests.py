@@ -23,8 +23,7 @@ import django_js_reverse
 
 
 # Raise errors on DeprecationWarnings
-# warnings.simplefilter('error', DeprecationWarning)
-
+warnings.simplefilter('error', DeprecationWarning)
 
 
 class JSReverseViewTestCaseMinified(TestCase):
