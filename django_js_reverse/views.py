@@ -51,10 +51,11 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     """
     exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
 
+    if namespace[:-1] in exclude_ns:
+        return
+
     for url_name, url_pattern in urlresolver.reverse_dict.items():
         if isinstance(url_name, (text_type, str)):
-            if namespace[:-1] in exclude_ns:
-                continue
             yield [
                 namespace + url_name,
                 [[namespace_path + pat[0], pat[1]] for pat in url_pattern[0]]
@@ -62,8 +63,6 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
 
     for inner_ns, (inner_ns_path, inner_urlresolver) in \
             urlresolver.namespace_dict.items():
-        if namespace[:-1] in exclude_ns:
-            continue
         inner_ns_path = namespace_path + inner_ns_path
         inner_ns = namespace + inner_ns + ':'
 
