@@ -44,6 +44,11 @@ Result:
 
 Changelog
 _________
+    0.4.5
+        Fix: If you run your application under a subpath, the collectstatic_js_reverse needs to take care of this.
+             You can now define a setting JS_REVERSE_SCRIPT_PREFIX that handles this issue.
+             Thank you lizter for reporting the issue
+
     0.4.4
         Improvement: management command collectstatic_js_reverse throws an error if settings.STATIC_ROOT is not set
 
@@ -53,21 +58,6 @@ _________
 
         New: Templatetag to include js-reverse-js inline in your templates
         Thank you logston
-
-    0.4.3
-        New: Add better support for django rest framework
-        Django rest framework generates url names like user-list, so it get's converted now as well so
-        Urls['user-list']() or the cleaner Urls.user_list() are both usable.
-
-        Fix: JSReverseStaticFileSaveTest is working and being tested again
-
-        Improvement: Cleanup Javascript
-
-        Thank you bulv1ne for the pull request
-
-        New: Test support for the latest pypy versions pypy3-2.4.0 and pypy-2.5.0
-
-        Fix: Get rid of test warning "MIDDLEWARE_CLASSES is not set." for Django >= 1.7
 
 
 `Full changelog  <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
@@ -209,6 +199,11 @@ To exclude any namespaces from the generated javascript file, add them to the `J
 ::
 
     JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
+
+If you run your application under a subpath, the collectstatic_js_reverse needs to take care of this.
+Define the prefix in your django settings:
+::
+   JS_REVERSE_SCRIPT_PREFIX = '/myprefix/'
 
 
 License
