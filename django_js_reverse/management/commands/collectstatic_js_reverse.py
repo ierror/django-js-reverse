@@ -14,15 +14,20 @@ class Command(BaseCommand):
     help = 'Creates a static urls-js file for django-js-reverse'
 
     def handle(self, *args, **options):
-            if not hasattr(settings, 'STATIC_ROOT') or not settings.STATIC_ROOT:
-                raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.STATIC_ROOT to be set.')
-            location = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
-            file = 'reverse.js'
-            fs = FileSystemStorage(location=location)
-            if fs.exists(file):
-                fs.delete(file)
+        if not hasattr(settings, 'STATIC_ROOT') or not settings.STATIC_ROOT:
+            raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.STATIC_ROOT to be set.')
+        location = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
+        file = 'reverse.js'
+        fs = FileSystemStorage(location=location)
+        if fs.exists(file):
+            fs.delete(file)
 
-            content = urls_js()
-            fs.save(file, ContentFile(content))
-            if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:
-                self.stdout.write('js-reverse file written to %s' % (location))  # pragma: no cover
+        # take care of script prefix
+        script_prefix = None
+        if hasattr(settings, 'JS_REVERSE_SCRIPT_PREFIX') and settings.JS_REVERSE_SCRIPT_PREFIX:
+            script_prefix = settings.JS_REVERSE_SCRIPT_PREFIX
+
+        content = urls_js(script_prefix=script_prefix)
+        fs.save(file, ContentFile(content))
+        if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:
+            self.stdout.write('js-reverse file written to %s' % (location))  # pragma: no cover
