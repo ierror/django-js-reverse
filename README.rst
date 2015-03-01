@@ -3,8 +3,8 @@ Django JS Reverse
 .. image:: https://badge.fury.io/py/django-js-reverse.png
    :target: http://badge.fury.io/py/django-js-reverse
 
-.. image:: https://travis-ci.org/ierror/django-js-reverse.png
-   :target: https://travis-ci.org/ierror/django-js-reverse.svg?branch=production
+.. image:: https://travis-ci.org/ierror/django-js-reverse.svg?branch=production
+   :target: https://travis-ci.org/ierror/django-js-reverse
 
 .. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=production
    :alt: Coverage Status
