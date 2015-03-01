@@ -4,11 +4,11 @@ Django JS Reverse
    :target: http://badge.fury.io/py/django-js-reverse
 
 .. image:: https://travis-ci.org/ierror/django-js-reverse.png
-   :target: http://travis-ci.org/ierror/django-js-reverse
+   :target: https://travis-ci.org/ierror/django-js-reverse.svg?branch=production
 
-.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=develop
+.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=production
    :alt: Coverage Status
-   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=develop
+   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=production
 
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
