@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
 from django.core.management.base import BaseCommand
 
-from django.core.files.storage import FileSystemStorage
-from django.core.files.base import ContentFile
-from django.core.exceptions import ImproperlyConfigured
 from django_js_reverse.views import urls_js
-from django.conf import settings
 
 
 class Command(BaseCommand):

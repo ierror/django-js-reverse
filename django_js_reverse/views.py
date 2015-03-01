@@ -2,20 +2,21 @@
 import re
 import sys
 from itertools import chain
+
+from django.conf import settings
+from django.core import urlresolvers
+from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
+from django.template import loader
+
+from slimit import minify
+
+from .js_reverse_settings import JS_EXCLUDE_NAMESPACES, JS_MINIFY, JS_VAR_NAME
 
 if sys.version < '3':
     text_type = unicode
 else:
     text_type = str
-
-from django.core.exceptions import ImproperlyConfigured
-from django.template import loader
-from django.core import urlresolvers
-from django.conf import settings
-
-from slimit import minify
-from .js_reverse_settings import JS_VAR_NAME, JS_MINIFY, JS_EXCLUDE_NAMESPACES
 
 
 def urls_js(request=None, script_prefix=None):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import template
-from django_js_reverse.views import urls_js
 
+from django_js_reverse.views import urls_js
 
 register = template.Library()
 

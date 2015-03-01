@@ -2,8 +2,7 @@
 import sys
 from copy import copy
 
-from django.conf.urls import patterns, url, include
-
+from django.conf.urls import include, patterns, url
 
 if sys.version < '3':
     import codecs

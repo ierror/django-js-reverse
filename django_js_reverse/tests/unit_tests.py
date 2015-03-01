@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 import os
-from string import Template
 import sys
 import warnings
-from django.template import RequestContext
+from string import Template
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 import django
-from django.test.client import Client
-from django.utils import unittest
-from django.utils.encoding import smart_str
-from django.test import TestCase
-from django.test.utils import override_settings
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
-from django.conf import settings
+from django.template import RequestContext
+from django.test import TestCase
+from django.test.client import Client
+from django.test.utils import override_settings
+from django.utils import unittest
+from django.utils.encoding import smart_str
 
 from selenium.webdriver.phantomjs.webdriver import WebDriver
-
 
 # Raise errors on DeprecationWarnings
 warnings.simplefilter('error', DeprecationWarning)
