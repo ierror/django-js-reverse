@@ -26,7 +26,7 @@ def urls_js(request=None, script_prefix=None):
             'JS_REVERSE_JS_VAR_NAME setting "%s" is not a valid javascript identifier.' % (js_var_name))
 
     js_global_object_name = getattr(settings, 'JS_REVERSE_JS_GLOBAL_OBJECT_NAME', JS_GLOBAL_OBJECT_NAME)
-    if js_global_object_name:
+    if not js_identifier_re.match(js_global_object_name.upper()):
         raise ImproperlyConfigured(
             'JS_REVERSE_JS_GLOBAL_OBJECT_NAME setting "%s" is not a valid javascript identifier.' % (js_global_object_name))
 
