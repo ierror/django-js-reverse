@@ -181,12 +181,21 @@ to access the named urls by django setting
 
     JS_REVERSE_JS_VAR_NAME = 'Urls'
 
+Optionally, you can change the name of the global object the javascript variable
+used to access the named urls is attached to. Default is :code:`this`
+
+::
+
+    JS_REVERSE_JS_GLOBAL_OBJECT_NAME = False
+
+
 Optionally, you can disable the minfication of the generated javascript file
 by django setting
 
 ::
 
     JS_REVERSE_JS_MINIFY = False
+
 
 By default all namespaces are included
 

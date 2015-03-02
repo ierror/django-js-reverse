@@ -1,4 +1,4 @@
-this.{{ js_var_name }} = (function () {
+{{ js_global_object_name }}.{{ js_var_name }} = (function () {
 
     var Urls = {};
 
@@ -6,7 +6,7 @@ this.{{ js_var_name }} = (function () {
         url_patterns:{}
     };
 
-    _get_url = function (url_pattern) {
+    var _get_url = function (url_pattern) {
         return function () {
             var index, url, url_arg, url_args, _i, _len, _ref, _ref_list;
             _ref_list = self.url_patterns[url_pattern];
