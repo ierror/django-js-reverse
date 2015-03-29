@@ -122,6 +122,18 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
             self.assertTrue(len(js_minified) < len(js_not_minified))
 
 
+class JSReverseViewTestCaseGlobalObjectName(JSReverseViewTestCaseMinified):
+    @override_settings(JS_REVERSE_JS_GLOBAL_OBJECT_NAME='window')
+    def test_global_object_name_change(self):
+        js_content = smart_str(self.client.post('/jsreverse/').content)
+        self.assertTrue(js_content.startswith('window.'))
+
+    @override_settings(JS_REVERSE_JS_GLOBAL_OBJECT_NAME='1test')
+    def test_global_object_name_change_invalid_identifier(self):
+        with self.assertRaises(ImproperlyConfigured):
+            self.client.post('/jsreverse/')
+
+
 class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
     def test_reverse_js_file_save(self):
         call_command('collectstatic_js_reverse')
