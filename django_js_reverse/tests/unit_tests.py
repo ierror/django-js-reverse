@@ -123,6 +123,10 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
 
 
 class JSReverseViewTestCaseGlobalObjectName(JSReverseViewTestCaseMinified):
+    def test_global_object_name_default(self):
+        js_content = smart_str(self.client.post('/jsreverse/').content)
+        self.assertTrue(js_content.startswith('this.'))
+
     @override_settings(JS_REVERSE_JS_GLOBAL_OBJECT_NAME='window')
     def test_global_object_name_change(self):
         js_content = smart_str(self.client.post('/jsreverse/').content)

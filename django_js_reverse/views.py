@@ -1,33 +1,36 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
+
+from django.conf import settings
+from django.core import urlresolvers
+from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
+from django.template import loader
+
+from slimit import minify
+
+from .js_reverse_settings import JS_EXCLUDE_NAMESPACES, JS_MINIFY, JS_VAR_NAME, JS_GLOBAL_OBJECT_NAME
 
 if sys.version < '3':
     text_type = unicode
 else:
     text_type = str
 
-from django.core.exceptions import ImproperlyConfigured
-from django.template import loader
-from django.core import urlresolvers
-from django.conf import settings
-
-from slimit import minify
-from .js_reverse_settings import JS_VAR_NAME, JS_MINIFY, JS_EXCLUDE_NAMESPACES
+JS_IDENTIFIER_RE = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
 
 
 def urls_js(request=None, script_prefix=None):
-    js_identifier_re = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
     js_var_name = getattr(settings, 'JS_REVERSE_JS_VAR_NAME', JS_VAR_NAME)
-    if not js_identifier_re.match(js_var_name.upper()):
+    if not JS_IDENTIFIER_RE.match(js_var_name.upper()):
         raise ImproperlyConfigured(
             'JS_REVERSE_JS_VAR_NAME setting "%s" is not a valid javascript identifier.' % (js_var_name))
 
     js_global_object_name = getattr(settings, 'JS_REVERSE_JS_GLOBAL_OBJECT_NAME', JS_GLOBAL_OBJECT_NAME)
-    if not js_identifier_re.match(js_global_object_name.upper()):
+    if not JS_IDENTIFIER_RE.match(js_global_object_name.upper()):
         raise ImproperlyConfigured(
-            'JS_REVERSE_JS_GLOBAL_OBJECT_NAME setting "%s" is not a valid javascript identifier.' % (js_global_object_name))
+            'JS_REVERSE_JS_GLOBAL_OBJECT_NAME setting "%s" is not a valid javascript identifier.' % (
+                js_global_object_name))
 
     minfiy = getattr(settings, 'JS_REVERSE_JS_MINIFY', JS_MINIFY)
     if not isinstance(minfiy, bool):
