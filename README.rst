@@ -44,20 +44,15 @@ Result:
 
 Changelog
 _________
+    0.4.6
+        New: You can change the name (default=this) of the global object the javascript variable
+             used to access the named urls is attached to by changing JS_REVERSE_JS_GLOBAL_OBJECT_NAME setting.
+             Thank you aumo
+
     0.4.5
         Fix: If you run your application under a subpath, the collectstatic_js_reverse needs to take care of this.
              You can now define a setting JS_REVERSE_SCRIPT_PREFIX that handles this issue.
              Thank you lizter for reporting the issue
-
-    0.4.4
-        Improvement: management command collectstatic_js_reverse throws an error if settings.STATIC_ROOT is not set
-
-        Tests: exluded a debug print from test coverage
-
-        Removed: support for django 1.4
-
-        New: Templatetag to include js-reverse-js inline in your templates
-        Thank you logston
 
 
 `Full changelog  <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
