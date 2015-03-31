@@ -12,7 +12,10 @@ Django JS Reverse
 
 .. image:: https://pypip.in/license/django-js-reverse/badge.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
-    
+
+.. image:: https://stillmaintained.com/ierror/django-js-reverse.png
+    :target: https://stillmaintained.com/ierror/django-js-reverse
+
 
 **Javascript url handling for Django that doesn’t hurt.**
 

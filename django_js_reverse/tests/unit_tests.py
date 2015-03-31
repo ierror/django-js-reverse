@@ -22,6 +22,8 @@ from django.utils.encoding import smart_str
 
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 
+from utils import script_prefix
+
 # Raise errors on DeprecationWarnings
 warnings.simplefilter('error', DeprecationWarning)
 
@@ -112,6 +114,11 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         response = self.client.get('/jsreverse/')
         self.assertNotContains(response, 'exclude_namespace', status_code=200)
 
+    def test_script_prefix(self):
+        with script_prefix('/foobarlala/'):
+            self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
+                                      '/foobarlala/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
+
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
 class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
@@ -168,13 +175,13 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
 
 
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
-    def test_tpl_tag_with_request_in_contect(self):
+    def test_tpl_tag_with_request_in_context(self):
         from django_js_reverse.templatetags.js_reverse import js_reverse_inline
 
         context_instance = RequestContext(self.client.request)
         Template("{%% load %s %%}{%% %s %%}" % ('js_reverse', js_reverse_inline(context_instance)))
 
-    def test_tpl_tag_without_request_in_contect(self):
+    def test_tpl_tag_without_request_in_context(self):
         from django_js_reverse.templatetags.js_reverse import js_reverse_inline
 
         context_instance = RequestContext(None)

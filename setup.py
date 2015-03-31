@@ -29,7 +29,7 @@ setup(
     long_description=README,
     author='Bernhard Janetzki',
     author_email='boerni@gmail.com',
-    url='https://github.com/version2/django-js-reverse',
+    url='https://github.com/ierror/django-js-reverse',
     download_url='http://pypi.python.org/pypi/django-js-reverse/',
     packages=find_packages(),
     package_data={
