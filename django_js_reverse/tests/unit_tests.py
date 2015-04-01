@@ -112,6 +112,12 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         response = self.client.get('/jsreverse/')
         self.assertNotContains(response, 'exclude_namespace', status_code=200)
 
+    def test_duplicate_name(self):
+        self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one")',
+                                  '/test_duplicate_name/arg_one/')
+        self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one", "arg_two")',
+                                  '/test_duplicate_name/arg_one-arg_two/')
+
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
 class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
