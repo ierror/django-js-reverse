@@ -30,7 +30,7 @@ warnings.simplefilter('error', DeprecationWarning)
 
 class AbstractJSReverseTestCase(object):
     client = None
-    urls = 'django_js_reverse.tests.test_urls'
+    urls = 'tests.test_urls'
 
     @classmethod
     def setUpClass(cls):
@@ -189,5 +189,5 @@ class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '../') + os.sep)
     unittest.main()

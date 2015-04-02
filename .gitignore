@@ -10,4 +10,4 @@ django_js_reverse.egg-info/
 htmlcov/
 ghostdriver.log
 django_js_reverse/static/*
-django_js_reverse/tests/tmp/django_js_reverse/js/reverse.js
+tests/tmp/django_js_reverse/js/reverse.js
