@@ -5,10 +5,10 @@ from setuptools import find_packages
 from distutils.core import setup
 
 
-try:
-    README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
-except IOError:
-    README = ''
+def read(*parts):
+    filename = os.path.join(os.path.dirname(__file__), *parts)
+    with codecs.open(filename, encoding='utf-8') as fp:
+        return fp.read()
 
 
 version_tuple = __import__('django_js_reverse').VERSION
@@ -26,7 +26,7 @@ setup(
     ],
     license='MIT',
     description='Javascript url handling for Django that doesn\'t hurt.',
-    long_description=README,
+    long_description=read('README.rst'),
     author='Bernhard Janetzki',
     author_email='boerni@gmail.com',
     url='https://github.com/ierror/django-js-reverse',
@@ -38,7 +38,7 @@ setup(
         ]
     },
     install_requires=[
-        'Django>=1.4',
+        'Django>=1.5',
         'slimit==0.8.1.'
     ]
 )
