@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 import codecs
 import os
-from setuptools import find_packages
 from distutils.core import setup
+
+from setuptools import find_packages
 
 
 def read(*parts):

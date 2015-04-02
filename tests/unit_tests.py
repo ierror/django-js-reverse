@@ -7,8 +7,6 @@ import sys
 import warnings
 from string import Template
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-
 import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -19,10 +17,14 @@ from django.test.client import Client
 from django.test.utils import override_settings
 from django.utils import unittest
 from django.utils.encoding import smart_str
-
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 
 from utils import script_prefix
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
+
+
 
 # Raise errors on DeprecationWarnings
 warnings.simplefilter('error', DeprecationWarning)

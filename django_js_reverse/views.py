@@ -7,10 +7,10 @@ from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
 from django.template import loader
-
 from slimit import minify
 
-from .js_reverse_settings import JS_EXCLUDE_NAMESPACES, JS_MINIFY, JS_VAR_NAME, JS_GLOBAL_OBJECT_NAME
+from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
+                                  JS_MINIFY, JS_VAR_NAME)
 
 if sys.version < '3':
     text_type = unicode  # NOQA
