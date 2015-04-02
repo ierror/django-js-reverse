@@ -173,6 +173,10 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         with override_settings(JS_REVERSE_SCRIPT_PREFIX=script_prefix):
             self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}test_no_url_args/'.format(script_prefix))
 
+        script_prefix = '/test/foo/bar'
+        with override_settings(JS_REVERSE_SCRIPT_PREFIX=script_prefix):
+            self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}/test_no_url_args/'.format(script_prefix))
+
 
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
     def test_tpl_tag_with_request_in_context(self):
