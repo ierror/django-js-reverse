@@ -13,14 +13,14 @@ from slimit import minify
 from .js_reverse_settings import JS_EXCLUDE_NAMESPACES, JS_MINIFY, JS_VAR_NAME, JS_GLOBAL_OBJECT_NAME
 
 if sys.version < '3':
-    text_type = unicode
+    text_type = unicode  # NOQA
 else:
     text_type = str
 
 JS_IDENTIFIER_RE = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
 
 
-def urls_js(request=None, script_prefix=None):
+def urls_js(request=None):
     js_var_name = getattr(settings, 'JS_REVERSE_JS_VAR_NAME', JS_VAR_NAME)
     if not JS_IDENTIFIER_RE.match(js_var_name.upper()):
         raise ImproperlyConfigured(

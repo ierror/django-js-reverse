@@ -23,12 +23,7 @@ class Command(BaseCommand):
         if fs.exists(file):
             fs.delete(file)
 
-        # take care of script prefix
-        script_prefix = None
-        if hasattr(settings, 'JS_REVERSE_SCRIPT_PREFIX') and settings.JS_REVERSE_SCRIPT_PREFIX:
-            script_prefix = settings.JS_REVERSE_SCRIPT_PREFIX
-
-        content = urls_js(script_prefix=script_prefix)
+        content = urls_js()
         fs.save(file, ContentFile(content))
         if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:
             self.stdout.write('js-reverse file written to %s' % (location))  # pragma: no cover
