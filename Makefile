@@ -18,3 +18,9 @@ release:
 	@pip install wheel
 	@python setup.py sdist bdist_wheel upload --sign
 	@git checkout develop
+
+optimizing_imports:
+	@pip install -r tests/requirements.txt
+	@isort -rc *.py
+	@isort -rc tests/
+	@isort -rc django_js_reverse/
