@@ -12,7 +12,7 @@ if sys.version < '3':
 else:
     def u(x):
         return x
-    
+
 
 def dummy_view(*args, **kwargs):
     pass
@@ -30,7 +30,11 @@ basic_patterns = patterns('',
                           url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view,
                               name='test_optional_url_arg'),
                           url(r'^test_unicode_url_name/$', dummy_view,
-                              name=u('test_unicode_url_name')))
+                              name=u('test_unicode_url_name')),
+                          url(r'^test_duplicate_name/(?P<arg_one>[-\w]+)/$', dummy_view,
+                              name='test_duplicate_name'),
+                          url(r'^test_duplicate_name/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view,
+                              name='test_duplicate_name'))
 
 urlpatterns = copy(basic_patterns)
 

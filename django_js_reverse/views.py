@@ -71,12 +71,14 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     if namespace[:-1] in exclude_ns:
         return
 
-    for url_name, url_pattern in urlresolver.reverse_dict.items():
+    for url_name in urlresolver.reverse_dict.keys():
         if isinstance(url_name, (text_type, str)):
-            yield [
-                namespace + url_name,
-                [[namespace_path + pat[0], pat[1]] for pat in url_pattern[0]]
-            ]
+            url_patterns = []
+            for url_pattern in urlresolver.reverse_dict.getlist(url_name):
+                url_patterns += [
+                    [namespace_path + pat[0], pat[1]] for pat in url_pattern[0]
+                ]
+            yield [namespace + url_name, url_patterns]
 
     for inner_ns, (inner_ns_path, inner_urlresolver) in \
             urlresolver.namespace_dict.items():

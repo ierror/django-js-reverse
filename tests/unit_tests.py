@@ -19,6 +19,7 @@ from django.test.client import Client
 from django.test.utils import override_settings
 from django.utils import unittest
 from django.utils.encoding import smart_str
+
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 
 from utils import script_prefix
@@ -118,6 +119,12 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         with script_prefix('/foobarlala/'):
             self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
                                       '/foobarlala/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
+    
+    def test_duplicate_name(self):
+        self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one")',
+                                  '/test_duplicate_name/arg_one/')
+        self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one", "arg_two")',
+                                  '/test_duplicate_name/arg_one-arg_two/')
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
@@ -179,13 +186,13 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
 
 
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
-    def test_tpl_tag_with_request_in_context(self):
+    def test_tpl_tag_with_request_in_contect(self):
         from django_js_reverse.templatetags.js_reverse import js_reverse_inline
 
         context_instance = RequestContext(self.client.request)
         Template("{%% load %s %%}{%% %s %%}" % ('js_reverse', js_reverse_inline(context_instance)))
 
-    def test_tpl_tag_without_request_in_context(self):
+    def test_tpl_tag_without_request_in_contect(self):
         from django_js_reverse.templatetags.js_reverse import js_reverse_inline
 
         context_instance = RequestContext(None)
@@ -193,5 +200,5 @@ class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '../') + os.sep)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
     unittest.main()
