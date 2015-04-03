@@ -50,17 +50,21 @@ Result:
 Changelog
 _________
 
+0.5.0
+    New: Django allows you to have multiple URL patterns with the same name.
+    This release adds support for the featuer.
+
+    Thank you defrex
+
+    New: Test support for django 1.8
+
+    New: test for script_prefix without ending slash
+
 0.4.6
     New: You can change the name (default=this) of the global object the javascript variable used to access the named 
     urls is attached to by changing JS_REVERSE_JS_GLOBAL_OBJECT_NAME setting.
 
     Thank you aumo
-
-0.4.5
-    Fix: If you run your application under a subpath, the collectstatic_js_reverse needs to take care of this. You can 
-    now define a setting JS_REVERSE_SCRIPT_PREFIX that handles this issue.
-
-    Thank you lizter for reporting the issue
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
