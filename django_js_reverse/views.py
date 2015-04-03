@@ -59,7 +59,6 @@ def urls_js(request=None):
     if not request:
         return response_body
     else:
-        print(response_body)
         return HttpResponse(response_body, **{'content_type': 'application/javascript'})
 
 
