@@ -5,7 +5,7 @@ test:
 	@pip install -r tests/requirements.txt
 	@flake8 --ignore=W801,E128,E501,W402 django_js_reverse
 	@coverage erase
-	@tox
+	@tox -r
 	@coverage combine
 	@coverage report
 
