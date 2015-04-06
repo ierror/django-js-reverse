@@ -90,7 +90,7 @@ Install using ``pip`` …
 
 ::
 
-    git clone git@github.com:ierror/django-js-reverse.git
+    git clone https://github.com/ierror/django-js-reverse.git
 
 Add ``'django_js_reverse'`` to your ``INSTALLED_APPS`` setting.
 
