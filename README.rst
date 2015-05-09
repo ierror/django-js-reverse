@@ -50,6 +50,9 @@ Result:
 Changelog
 _________
 
+0.5.1
+    Fix: Current ply breaks slimit => force ply==3.4
+
 0.5.0
     New: Django allows you to have multiple URL patterns with the same name.
     This release adds support for the featuer.
