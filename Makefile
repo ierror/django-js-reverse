@@ -11,7 +11,7 @@ test:
 
 release:
 	@git checkout production
-	@git merge develop -m bump v$(VERSION)
+	@git merge develop -m "bump v$(VERSION)"
 	@git push origin production
 	@git tag v$(VERSION)
 	@git push origin v$(VERSION)
