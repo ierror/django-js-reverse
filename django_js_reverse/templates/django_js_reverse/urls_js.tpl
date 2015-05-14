@@ -11,7 +11,8 @@
             var index, url, url_arg, url_args, _i, _len, _ref, _ref_list;
             _ref_list = self.url_patterns[url_pattern];
             for (_i = 0;
-                 _ref = _ref_list[_i], _ref[1].length != arguments.length;
+                 _i < _ref_list.length &&
+                 (_ref = _ref_list[_i], _ref[1].length != arguments.length);
                  _i++);
 
             url = _ref[0], url_args = _ref[1];
