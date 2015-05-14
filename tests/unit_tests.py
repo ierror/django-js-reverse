@@ -119,12 +119,20 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         with script_prefix('/foobarlala/'):
             self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
                                       '/foobarlala/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
-    
+
     def test_duplicate_name(self):
         self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one")',
                                   '/test_duplicate_name/arg_one/')
         self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one", "arg_two")',
                                   '/test_duplicate_name/arg_one-arg_two/')
+
+    def test_duplicate_argcount(self):
+        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_one: "arg_one"})',
+                                  '/test_duplicate_argcount/arg_one-/')
+        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_two: "arg_two"})',
+                                  '/test_duplicate_argcount/-arg_two/')
+        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_one: "arg_one", arg_two: "arg_two"})',
+                                  '/test_duplicate_argcount/arg_one-arg_two/')
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
