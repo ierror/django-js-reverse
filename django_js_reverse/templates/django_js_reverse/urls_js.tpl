@@ -16,18 +16,21 @@
 
             if (arguments.length == 1 && typeof (arguments[0]) == "object") {
                 // kwargs mode
-                provided_keys = new Set (Object.keys (arguments[0]));
+                var provided_keys_list = Object.keys (arguments[0]);
+                provided_keys = {};
+                for (_i = 0; _i < provided_keys_list.length; _i++)
+                    provided_keys[provided_keys_list[_i]] = 1;
 
                 match_ref = function (ref)
                 {
                     var _i;
 
                     // Verify that they have the same number of arguments
-                    if (ref[1].length != provided_keys.size)
+                    if (ref[1].length != provided_keys_list.length)
                         return false;
 
                     for (_i = 0;
-                         _i < ref[1].length && provided_keys.has (ref[1][_i]);
+                         _i < ref[1].length && ref[1][_i] in provided_keys;
                          _i++);
 
                     // If for loop completed, we have all keys
