@@ -8,17 +8,65 @@
 
     var _get_url = function (url_pattern) {
         return function () {
-            var index, url, url_arg, url_args, _i, _len, _ref, _ref_list;
+            var _arguments, index, url, url_arg, url_args, _i, _len, _ref,
+                _ref_list, match_ref, provided_keys, build_kwargs;
+
+            _arguments = arguments;
             _ref_list = self.url_patterns[url_pattern];
+
+            if (arguments.length == 1 && typeof (arguments[0]) == "object") {
+                // kwargs mode
+                provided_keys = new Set (Object.keys (arguments[0]));
+
+                match_ref = function (ref)
+                {
+                    var _i;
+
+                    // Verify that they have the same number of arguments
+                    if (ref[1].length != provided_keys.size)
+                        return false;
+
+                    for (_i = 0;
+                         _i < ref[1].length && provided_keys.has (ref[1][_i]);
+                         _i++);
+
+                    // If for loop completed, we have all keys
+                    return _i == ref[1].length;
+                }
+
+                build_kwargs = function (keys) {return _arguments[0];}
+
+            } else {
+                // args mode
+                match_ref = function (ref)
+                {
+                    return ref[1].length == _arguments.length;
+                }
+
+                build_kwargs = function (keys) {
+                    var kwargs = {};
+
+                    for (var i = 0; i < keys.length; i++) {
+                        kwargs[keys[i]] = _arguments[i];
+                    }
+
+                    return kwargs;
+                }
+            }
+
             for (_i = 0;
-                 _i < _ref_list.length &&
-                 (_ref = _ref_list[_i], _ref[1].length != arguments.length);
+                 _i < _ref_list.length && !match_ref (_ref_list[_i]);
                  _i++);
 
-            url = _ref[0], url_args = _ref[1];
-            for (index = _i = 0, _len = url_args.length; _i < _len; index = ++_i) {
-                url_arg = url_args[index];
-                url = url.replace("%(" + url_arg + ")s", arguments[index] || '');
+            // can't find a match
+            if (_i == _ref_list.length)
+                return null;
+
+            _ref = _ref_list[_i];
+            url = _ref[0], url_args = build_kwargs (_ref[1]);
+            for (url_arg in url_args) {
+                url = url.replace("%(" + url_arg + ")s",
+                                  url_args[url_arg] || '');
             }
             return '{{url_prefix|escapejs}}' + url;
         };
