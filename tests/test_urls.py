@@ -34,7 +34,10 @@ basic_patterns = patterns('',
                           url(r'^test_duplicate_name/(?P<arg_one>[-\w]+)/$', dummy_view,
                               name='test_duplicate_name'),
                           url(r'^test_duplicate_name/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view,
-                              name='test_duplicate_name'))
+                              name='test_duplicate_name'),
+                          url(r'^test_duplicate_argcount/(?P<arg_one>[-\w]+)?-(?P<arg_two>[-\w]+)?/$', dummy_view,
+                              name='test_duplicate_argcount'),
+                      )
 
 urlpatterns = copy(basic_patterns)
 
