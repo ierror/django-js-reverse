@@ -1,3 +1,12 @@
+0.6.0
+    Fix: `#27 <https://github.com/ierror/django-js-reverse/pull/27>`_
+
+    Thank you michael-borisov
+
+    New: Support for Keyword-based URL reversing `#30 <https://github.com/ierror/django-js-reverse/pull/30/>`_
+
+    Thank you hyperair
+
 0.5.1
     Fix: Current ply breaks slimit => force ply==3.4
 

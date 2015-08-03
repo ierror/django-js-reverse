@@ -50,6 +50,15 @@ Result:
 Changelog
 _________
 
+0.6.0
+    Fix: `#27 <https://github.com/ierror/django-js-reverse/pull/27>`_
+
+    Thank you michael-borisov
+
+    New: Support for Keyword-based URL reversing `#30 <https://github.com/ierror/django-js-reverse/pull/30/>`_
+
+    Thank you hyperair
+
 0.5.1
     Fix: Current ply breaks slimit => force ply==3.4
 
@@ -62,12 +71,6 @@ _________
     New: Test support for django 1.8
 
     New: test for script_prefix without ending slash
-
-0.4.6
-    New: You can change the name (default=this) of the global object the javascript variable used to access the named 
-    urls is attached to by changing JS_REVERSE_JS_GLOBAL_OBJECT_NAME setting.
-
-    Thank you aumo
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
