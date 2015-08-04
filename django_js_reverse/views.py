@@ -56,10 +56,7 @@ def urls_js(request=None):
     if minfiy:
         response_body = minify(response_body, mangle=True, mangle_toplevel=False)
 
-    if not request:
-        return response_body
-    else:
-        return HttpResponse(response_body, **{'content_type': 'application/javascript'})
+    return response_body
 
 
 def prepare_url_list(urlresolver, namespace_path='', namespace=''):
