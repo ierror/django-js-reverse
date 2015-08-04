@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
+import rjsmin
 
 from django.conf import settings
 from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
 from django.template import loader
-from slimit import minify
 
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
                                   JS_MINIFY, JS_VAR_NAME)
@@ -54,7 +54,7 @@ def urls_js(request=None):
     })
 
     if minfiy:
-        response_body = minify(response_body, mangle=True, mangle_toplevel=False)
+        response_body = rjsmin.jsmin(response_body)
 
     if not request:
         return response_body
