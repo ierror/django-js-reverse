@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import template
+from django.core import urlresolvers
 
-from django_js_reverse.views import urls_js
+from django_js_reverse.core import generate_js
 
 register = template.Library()
 
@@ -12,4 +13,8 @@ def js_reverse_inline(context):
     Outputs a string of javascript that can generate URLs via the use
     of the names given to those URLs.
     """
-    return urls_js()
+    if 'request' in context:
+        default_urlresolver = urlresolvers.get_resolver(getattr(context['request'], 'urlconf', None))
+    else:
+        default_urlresolver = urlresolvers.get_resolver(None)
+    return generate_js(default_urlresolver)

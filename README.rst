@@ -49,6 +49,8 @@ Result:
 
 Changelog
 _________
+0.6.1
+    Refactored: Separate the view functionality from the JS generation
 
 0.6.0
     Fix: `#27 <https://github.com/ierror/django-js-reverse/pull/27>`_
@@ -61,16 +63,6 @@ _________
 
 0.5.1
     Fix: Current ply breaks slimit => force ply==3.4
-
-0.5.0
-    New: Django allows you to have multiple URL patterns with the same name.
-    This release adds support for the featuer.
-
-    Thank you defrex
-
-    New: Test support for django 1.8
-
-    New: test for script_prefix without ending slash
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
