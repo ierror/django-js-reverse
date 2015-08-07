@@ -2,18 +2,22 @@
 Django JS Reverse
 =================
 
-.. image:: https://badge.fury.io/py/django-js-reverse.png
-   :target: http://badge.fury.io/py/django-js-reverse
+.. image:: https://img.shields.io/pypi/v/django-js-reverse.svg
+   :target: https://pypi.python.org/pypi/django-js-reverse/
 
-.. image:: https://travis-ci.org/ierror/django-js-reverse.svg?branch=production
+.. image:: https://img.shields.io/travis/ierror/django-js-reverse/production.svg
    :target: https://travis-ci.org/ierror/django-js-reverse
 
-.. image:: https://coveralls.io/repos/ierror/django-js-reverse/badge.png?branch=production
+.. image:: https://img.shields.io/coveralls/ierror/django-js-reverse/production.svg
    :alt: Coverage Status
    :target: https://coveralls.io/r/ierror/django-js-reverse?branch=production
 
-.. image:: https://pypip.in/license/django-js-reverse/badge.svg
+.. image:: https://img.shields.io/github/license/ierror/django-js-reverse.svg
     :target: https://pypi.python.org/pypi/django-js-reverse/
+
+.. image:: https://img.shields.io/pypi/dm/django-js-reverse.svg
+
+.. image:: https://img.shields.io/pypi/wheel/django-js-reverse.svg
 
 
 **Javascript url handling for Django that doesn’t hurt.**
