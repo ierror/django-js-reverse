@@ -13,7 +13,7 @@ Django JS Reverse
    :target: https://coveralls.io/r/ierror/django-js-reverse?branch=production
 
 .. image:: https://img.shields.io/github/license/ierror/django-js-reverse.svg
-    :target: https://pypi.python.org/pypi/django-js-reverse/
+    :target: https://raw.githubusercontent.com/ierror/django-js-reverse/develop/LICENSE
 
 .. image:: https://img.shields.io/pypi/dm/django-js-reverse.svg
 
