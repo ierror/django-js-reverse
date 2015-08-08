@@ -56,6 +56,10 @@ _________
 0.6.1
     Refactored: Separate the view functionality from the JS generation
 
+    New: Replaced slimit by rjsmin based on `#33 <https://github.com/ierror/django-js-reverse/pull/33/>`_
+
+    Thank you chripede
+
 0.6.0
     Fix: `#27 <https://github.com/ierror/django-js-reverse/pull/27>`_
 

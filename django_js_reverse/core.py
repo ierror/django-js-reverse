@@ -7,10 +7,9 @@ from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 
-from slimit import minify
-
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
                                   JS_MINIFY, JS_VAR_NAME)
+from . import rjsmin
 
 if sys.version < '3':
     text_type = unicode  # NOQA
@@ -87,5 +86,5 @@ def generate_js(default_urlresolver):
     })
 
     if minfiy:
-        js_content = minify(js_content, mangle=True, mangle_toplevel=False)
+        js_content = rjsmin.jsmin(js_content)
     return js_content

@@ -41,7 +41,5 @@ setup(
     },
     install_requires=[
         'Django>=1.5',
-        'ply==3.4',
-        'slimit==0.8.1.'
     ]
 )
