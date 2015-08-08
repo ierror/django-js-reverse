@@ -3,7 +3,7 @@ export PYTHONPATH := $(shell pwd)
 
 test:
 	@pip install -r tests/requirements.txt
-	@flake8 --ignore=W801,E128,E501,W402 django_js_reverse
+	@flake8 --ignore=W801,E128,E501,W402 django_js_reverse --exclude=django_js_reverse/rjsmin.py
 	@coverage erase
 	@tox
 	@coverage combine
