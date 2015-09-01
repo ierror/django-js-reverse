@@ -224,6 +224,9 @@ To exclude any namespaces from the generated javascript file, add them to the `J
     JS_REVERSE_EXCLUDE_NAMESPACES = ['admin', 'djdt', ...]
 
 If you want to include only specific namespaces add them to the `JS_REVERSE_INCLUDE_ONLY_NAMESPACES` setting
+tips:
+ * Use "" for urls without namespace
+ * Use "foo\0" to include urls just from "foo" namaspace and not from any subnamespaces (e.g. "foo:bar")
 
 ::
 
