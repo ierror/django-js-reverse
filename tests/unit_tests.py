@@ -123,6 +123,13 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         self.assertNotContains(response, 'ns_arg', status_code=200)
         self.assertNotContains(response, 'nesteadns', status_code=200)
         self.assertNotContains(response, 'exclude_namespace', status_code=200)
+        self.assertNotContains(response, 'nsdn', status_code=200)
+
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsdn:nsdn'])
+    def test_only_namespace_nestead_in_response(self):
+        response = self.client.get('/jsreverse/')
+        self.assertContains(response, 'nsdn:nsdn:ns1', status_code=200)
+        self.assertNotContains(response, 'nsdn:ns1', status_code=200)
 
     def test_script_prefix(self):
         with script_prefix('/foobarlala/'):
