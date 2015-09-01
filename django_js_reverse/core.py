@@ -41,11 +41,14 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
         # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
         include_only_is_in_list = False
         for ns in include_only_ns:
-            if namespace[:-1].startswith(ns):
+            if ns != "" and namespace[:-1].startswith(ns):
                 include_only_is_in_list = True 
                 break
 
         if not include_only_is_in_list: include_only_allow = False
+
+        # use "" to include_only urls without ns
+        if "" in include_only_ns and namespace == "": include_only_allow = True
 
     if include_only_allow:
         for url_name in urlresolver.reverse_dict.keys():
