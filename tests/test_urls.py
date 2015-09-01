@@ -63,7 +63,7 @@ pattern_nested_ns = patterns('',
 
 pattern_dubble_nested_ns = patterns('',
                              url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
-                             url(r'^nsdn/', include(pattern_dubble_nested2_ns, namespace='nsdn'))
+                             url(r'^nsdn/', include(pattern_dubble_nested2_ns, namespace='nsdn')))
 
 pattern_dubble_nested2_ns = patterns('',
                              url(r'^ns1/', include(pattern_ns_1,
@@ -71,7 +71,7 @@ pattern_dubble_nested2_ns = patterns('',
 
 pattern_only_nested_ns = patterns('',
                              url(r'^ns1/', include(pattern_ns_1)),
-                             url(r'^nsdn/', include(pattern_dubble_nested2_ns, namespace='nsdn'))
+                             url(r'^nsdn/', include(pattern_dubble_nested2_ns, namespace='nsdn')))
 
 urlpatterns += patterns('',
                         url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
