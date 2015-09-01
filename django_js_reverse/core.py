@@ -35,7 +35,7 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     if include_only_ns != []:
         if namespace == "": include_only_allow = False # urls without ns
 
-        # check if nestead ns isn't child of include_only ns
+        # check if nestead ns isn't subns of include_only ns
         # e.g. ns = "foo:bar" include_only = ["foo"] -> this ns will be used
         # works for ns = "lorem:ipsum:dolor" include_only = ["lorem:ipsum"]
         # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
@@ -46,6 +46,9 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
                 break
 
         if not include_only_is_in_list: include_only_allow = False
+
+        # use "foo\0" to add urls just from "foo" not from subns "foo:bar"
+        if not include_only_allow and namespace[:-1] + "\0" in include_only_ns: include_only_allow = True
 
         # use "" to include_only urls without ns
         if "" in include_only_ns and namespace == "": include_only_allow = True
