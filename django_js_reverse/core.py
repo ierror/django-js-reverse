@@ -9,7 +9,7 @@ from django.template import loader
 
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
-                                  JS_MINIFY, JS_VAR_NAME)
+                                  JS_MINIFY, JS_VAR_NAME, JS_INCLUDE_ONLY)
 
 if sys.version < '3':
     text_type = unicode  # NOQA
@@ -24,6 +24,11 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     returns list of tuples [(<url_name>, <url_patern_tuple> ), ...]
     """
     exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
+
+    include_only_ns = getattr(settings, 'JS_REVERSE_INCLUDE_NAMESPACES', JS_INCLUDE_NAMESPACES)
+
+    if include_only_ns != [] and namespace[:-1] not in include_only_ns:
+        return
 
     if namespace[:-1] in exclude_ns:
         return
