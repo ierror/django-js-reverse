@@ -33,25 +33,28 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     include_only_allow = True # include_only state varible
 
     if include_only_ns != []:
-        if namespace == "": include_only_allow = False # urls without ns
+        # True mean that ns passed the test
+        in_on_empty_ns = False
+        in_on_is_in_list = False
+        in_on_null = False
+
+        # Test urls without ns
+        if namespace == "" and "" in include_only_ns: in_on_empty_ns = True
 
         # check if nestead ns isn't subns of include_only ns
         # e.g. ns = "foo:bar" include_only = ["foo"] -> this ns will be used
         # works for ns = "lorem:ipsum:dolor" include_only = ["lorem:ipsum"]
         # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
-        include_only_is_in_list = False
         for ns in include_only_ns:
             if ns != "" and namespace[:-1].startswith(ns):
-                include_only_is_in_list = True 
+                in_on_is_in_list = True 
                 break
 
-        if not include_only_is_in_list: include_only_allow = False
-
+        # Test if isn't used "\0" flag
         # use "foo\0" to add urls just from "foo" not from subns "foo:bar"
-        if not include_only_allow and namespace[:-1] + "\0" in include_only_ns: include_only_allow = True
+        if namespace[:-1] + "\0" in include_only_ns: in_on_null = True
 
-        # use "" to include_only urls without ns
-        if "" in include_only_ns and namespace == "": include_only_allow = True
+        include_only_allow = in_on_empty_ns or in_on_is_in_list or in_on_null
 
     if include_only_allow:
         for url_name in urlresolver.reverse_dict.keys():
