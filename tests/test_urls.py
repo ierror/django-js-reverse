@@ -62,16 +62,15 @@ pattern_nested_ns = patterns('',
                                                   namespace='ns1')))
 
 pattern_dubble_nested2_ns = patterns('',
-                             url(r'^ns1/', include(pattern_ns_1,
-                                                  namespace='ns1')))
+                             url(r'^ns1/', include(pattern_ns_1, namespace='ns1')))
 
 pattern_dubble_nested_ns = patterns('',
                              url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
-                             url(r'^nsdn/', include(pattern_dubble_nested2_ns, namespace='nsdn')))
+                             url(r'^nsdn2/', include(pattern_dubble_nested2_ns, namespace='nsdn2')))
 
 pattern_only_nested_ns = patterns('',
                              url(r'^ns1/', include(pattern_ns_1)),
-                             url(r'^nsdn/', include(pattern_dubble_nested2_ns, namespace='nsdn')))
+                             url(r'^nsdn0/', include(pattern_dubble_nested2_ns, namespace='nsdn0')))
 
 urlpatterns += patterns('',
                         url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
@@ -80,5 +79,4 @@ urlpatterns += patterns('',
                         url(r'^ns(?P<ns_arg>[^/]*)/', include(pattern_ns_arg, namespace='ns_arg')),
                         url(r'^nestedns/', include(pattern_nested_ns, namespace='nestedns')),
                         url(r'^nsdn/', include(pattern_dubble_nested_ns, namespace='nsdn')),
-                        url(r'^nsn/', include(pattern_ns_1)),
                         url(r'^nsno/', include(pattern_only_nested_ns, namespace='nsno')))
