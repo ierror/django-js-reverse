@@ -17,7 +17,7 @@ from django.template import RequestContext
 from django.test import TestCase
 from django.test.client import Client
 from django.test.utils import override_settings
-from django.utils import unittest
+import unittest
 from django.utils.encoding import smart_str
 
 from selenium.webdriver.phantomjs.webdriver import WebDriver

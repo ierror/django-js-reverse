@@ -14,4 +14,10 @@ INSTALLED_APPS = (
 )
 ALLOWED_HOSTS = ['testserver']
 MIDDLEWARE_CLASSES = ()
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'tmp', 'static_root')
