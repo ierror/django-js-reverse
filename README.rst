@@ -228,6 +228,13 @@ Define the prefix in your django settings:
 ::
    JS_REVERSE_SCRIPT_PREFIX = '/myprefix/'
 
+By default collectstatic_js_reverse writes its output (reverse.js) to your project's STATIC_ROOT.
+You can change the output path:
+
+::
+
+    JS_REVERSE_OUTPUT_PATH = 'some_path'
+
 
 License
 -------
