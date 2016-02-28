@@ -53,6 +53,11 @@ Result:
 
 Changelog
 _________
+0.7.0
+    New: By default collectstatic_js_reverse writes its output (reverse.js) to your project's STATIC_ROOT. Now You can change settings: JS_REVERSE_OUTPUT_PATH
+
+    Thank you `mjnaderi <https://github.com/ierror/django-js-reverse/pull/36>`_
+
 0.6.1
     Refactored: Separate the view functionality from the JS generation
 
@@ -68,9 +73,6 @@ _________
     New: Support for Keyword-based URL reversing `#30 <https://github.com/ierror/django-js-reverse/pull/30/>`_
 
     Thank you hyperair
-
-0.5.1
-    Fix: Current ply breaks slimit => force ply==3.4
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
