@@ -8,6 +8,7 @@ test:
 	@tox
 	@coverage combine
 	@coverage report
+	@coverage erase
 
 release:
 	@git checkout production

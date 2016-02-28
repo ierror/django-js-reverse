@@ -183,6 +183,31 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
             with self.assertRaises(ImproperlyConfigured):
                 call_command('collectstatic_js_reverse')
 
+    def test_reverse_js_file_save_with_output_path_option(self):
+        js_output_path = os.path.join(os.path.dirname(__file__), 'tmp', 'some_path')
+        with override_settings(JS_REVERSE_OUTPUT_PATH=js_output_path):
+            call_command('collectstatic_js_reverse')
+
+            f = open(os.path.join(js_output_path, 'reverse.js'))
+            content1 = f.read()
+            if hasattr(content1, 'decode'):
+                content1 = content1.decode()
+
+            r2 = self.client.get('/jsreverse/')
+            content2 = r2.content
+            if hasattr(content2, 'decode'):
+                content2 = content2.decode()
+
+            self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
+            self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
+
+            # should not raise ImproperlyConfigured exception if STATIC_ROOT is not set
+            with override_settings(STATIC_ROOT=None):
+                try:
+                    call_command('collectstatic_js_reverse')
+                except ImproperlyConfigured:
+                    self.fail('should not raise ImproperlyConfigured exception if STATIC_ROOT is not set and JS_REVERSE_OUTPUT_PATH is set')
+
     def test_script_prefix(self):
         script_prefix = '/test/foo/bar/'
         with override_settings(JS_REVERSE_SCRIPT_PREFIX=script_prefix):

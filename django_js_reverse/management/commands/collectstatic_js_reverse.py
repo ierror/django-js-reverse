@@ -10,16 +10,24 @@ from django.core.files.storage import FileSystemStorage
 from django.core.management.base import BaseCommand
 
 from django_js_reverse.core import generate_js
+from django_js_reverse.js_reverse_settings import JS_OUTPUT_PATH
 
 
 class Command(BaseCommand):
     help = 'Creates a static urls-js file for django-js-reverse'
 
-    def handle(self, *args, **options):
-        if not hasattr(settings, 'STATIC_ROOT') or not settings.STATIC_ROOT:
-            raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.STATIC_ROOT to be set.')
+    def get_location(self):
+        output_path = getattr(settings, 'JS_REVERSE_OUTPUT_PATH', JS_OUTPUT_PATH)
+        if output_path:
+            return output_path
 
-        location = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
+        if not hasattr(settings, 'STATIC_ROOT') or not settings.STATIC_ROOT:
+            raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.JS_OUTPUT_PATH or settings.STATIC_ROOT to be set.')
+
+        return os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
+
+    def handle(self, *args, **options):
+        location = self.get_location()
         file = 'reverse.js'
         fs = FileSystemStorage(location=location)
         if fs.exists(file):
