@@ -112,6 +112,38 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         response = self.client.get('/jsreverse/')
         self.assertNotContains(response, 'exclude_namespace', status_code=200)
 
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['ns1'])
+    def test_only_namespace_in_response(self):
+        response = self.client.get('/jsreverse/')
+        self.assertContains(response, 'ns1', status_code=200)
+        self.assertNotContains(response, 'ns2', status_code=200)
+        self.assertNotContains(response, 'ns_arg', status_code=200)
+        self.assertNotContains(response, 'nesteadns', status_code=200)
+        self.assertNotContains(response, 'exclude_namespace', status_code=200)
+        self.assertNotContains(response, 'nsdn', status_code=200)
+        self.assertNotContains(response, 'nsno', status_code=200)
+
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsdn:nsdn'])
+    def test_only_namespace_nestead_in_response(self):
+        response = self.client.get('/jsreverse/')
+        self.assertContains(response, 'nsdn:nsdn2:ns1', status_code=200)
+        self.assertNotContains(response, 'nsdn:ns1', status_code=200)
+
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=[''])
+    def test_only_empty_namespaces(self):
+        response = self.client.get('/jsreverse/')
+       	self.assertEqualJSUrlEval('Urls["test_two_url_args"]("arg_one", "arg_two")',
+                                  '/test_two_url_args/arg_one-arg_two/')
+        self.assertNotContains(response, 'ns1', status_code=200)
+        self.assertNotContains(response, 'ns2', status_code=200)
+
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsno\0'])
+    def test_only_namespaces_without_subnss(self):
+        response = self.client.get('/jsreverse/')
+        self.assertEqualJSUrlEval('Urls["nsno:test_two_url_args"]("arg_one", "arg_two")',
+                                  '/nsno/ns1/test_two_url_args/arg_one-arg_two/')
+        self.assertNotContains(response, 'nsno:nsdn0', status_code=200)
+
     def test_script_prefix(self):
         with script_prefix('/foobarlala/'):
             self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
@@ -130,6 +162,12 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/test_duplicate_argcount/-arg_two/')
         self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_one: "arg_one", arg_two: "arg_two"})',
                                   '/test_duplicate_argcount/arg_one-arg_two/')
+
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsno\0'])
+    @override_settings(JS_REVERSE_EXCLUDE_NAMESPACES=['exclude_namespace'])
+    def test_include_exclude_configuration(self):
+        with self.assertRaises(ImproperlyConfigured):
+            self.client.post('/jsreverse/')
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
