@@ -9,7 +9,7 @@ from django.template import loader
 
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
-                                  JS_MINIFY, JS_VAR_NAME)
+                                  JS_MINIFY, JS_VAR_NAME, JS_INCLUDE_ONLY_NAMESPACES)
 
 if sys.version < '3':
     text_type = unicode  # NOQA
@@ -25,17 +25,47 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     """
     exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
 
+    include_only_ns = getattr(settings, 'JS_REVERSE_INCLUDE_ONLY_NAMESPACES', JS_INCLUDE_ONLY_NAMESPACES)
+
     if namespace[:-1] in exclude_ns:
         return
 
-    for url_name in urlresolver.reverse_dict.keys():
-        if isinstance(url_name, (text_type, str)):
-            url_patterns = []
-            for url_pattern in urlresolver.reverse_dict.getlist(url_name):
-                url_patterns += [
-                    [namespace_path + pat[0], pat[1]] for pat in url_pattern[0]
-                ]
-            yield [namespace + url_name, url_patterns]
+    include_only_allow = True  # include_only state varible
+
+    if include_only_ns != []:
+        # True mean that ns passed the test
+        in_on_empty_ns = False
+        in_on_is_in_list = False
+        in_on_null = False
+
+        # Test urls without ns
+        if namespace == '' and '' in include_only_ns:
+            in_on_empty_ns = True
+
+        # check if nestead ns isn't subns of include_only ns
+        # e.g. ns = "foo:bar" include_only = ["foo"] -> this ns will be used
+        # works for ns = "lorem:ipsum:dolor" include_only = ["lorem:ipsum"]
+        # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
+        for ns in include_only_ns:
+            if ns != "" and namespace[:-1].startswith(ns):
+                in_on_is_in_list = True
+                break
+
+        # Test if isn't used "\0" flag
+        # use "foo\0" to add urls just from "foo" not from subns "foo:bar"
+        if namespace[:-1] + '\0' in include_only_ns:
+            in_on_null = True
+
+        include_only_allow = in_on_empty_ns or in_on_is_in_list or in_on_null
+
+    if include_only_allow:
+        for url_name in urlresolver.reverse_dict.keys():
+            if isinstance(url_name, (text_type, str)):
+                url_patterns = []
+                for url_pattern in urlresolver.reverse_dict.getlist(url_name):
+                    url_patterns += [
+                        [namespace_path + pat[0], pat[1]] for pat in url_pattern[0]]
+                yield [namespace + url_name, url_patterns]
 
     for inner_ns, (inner_ns_path, inner_urlresolver) in \
             urlresolver.namespace_dict.items():
