@@ -163,6 +163,12 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
         self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_one: "arg_one", arg_two: "arg_two"})',
                                   '/test_duplicate_argcount/arg_one-arg_two/')
 
+    @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsno\0'])
+    @override_settings(JS_REVERSE_EXCLUDE_NAMESPACES=['exclude_namespace'])
+    def test_include_exclude_configuration(self):
+        with self.assertRaises(ImproperlyConfigured):
+            self.client.post('/jsreverse/')
+
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
 @override_settings(ROOT_URLCONF='tests.test_urls')

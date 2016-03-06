@@ -24,8 +24,11 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     returns list of tuples [(<url_name>, <url_patern_tuple> ), ...]
     """
     exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
-
     include_only_ns = getattr(settings, 'JS_REVERSE_INCLUDE_ONLY_NAMESPACES', JS_INCLUDE_ONLY_NAMESPACES)
+
+    if exclude_ns and include_only_ns:
+        raise ImproperlyConfigured(
+            'Neither use JS_REVERSE_EXCLUDE_NAMESPACES nor JS_REVERSE_INCLUDE_ONLY_NAMESPACES setting')
 
     if namespace[:-1] in exclude_ns:
         return
