@@ -58,6 +58,10 @@ _________
 
     Thank you `mjnaderi <https://github.com/ierror/django-js-reverse/pull/36>`_
 
+    New: Support for Django 1.9
+
+    Thank you `mjnaderi <https://github.com/ierror/django-js-reverse/pull/37>`_
+
 0.6.1
     Refactored: Separate the view functionality from the JS generation
 
@@ -237,6 +241,13 @@ You can change the output path:
 
     JS_REVERSE_OUTPUT_PATH = 'some_path'
 
+
+Running the test suite
+----------------------
+
+::
+
+    make test
 
 License
 -------
