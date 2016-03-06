@@ -62,6 +62,10 @@ _________
 
     Thank you `mjnaderi <https://github.com/ierror/django-js-reverse/pull/37>`_
 
+    New: It's now possible to include specific namespaces only. See JS_REVERSE_INCLUDE_ONLY_NAMESPACES setting for details.
+
+    Thank you BrnoPCmaniak
+
 0.6.1
     Refactored: Separate the view functionality from the JS generation
 
