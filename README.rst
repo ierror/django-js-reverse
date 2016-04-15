@@ -53,6 +53,9 @@ Result:
 
 Changelog
 _________
+0.7.1
+    Fix: `#41 <https://github.com/ierror/django-js-reverse/issues/41>`_ - make it possible to use number 0 as url argument
+
 0.7.0
     New: By default collectstatic_js_reverse writes its output (reverse.js) to your project's STATIC_ROOT. Now You can change settings: JS_REVERSE_OUTPUT_PATH
 
@@ -72,15 +75,6 @@ _________
     New: Replaced slimit by rjsmin based on `#33 <https://github.com/ierror/django-js-reverse/pull/33/>`_
 
     Thank you chripede
-
-0.6.0
-    Fix: `#27 <https://github.com/ierror/django-js-reverse/pull/27>`_
-
-    Thank you michael-borisov
-
-    New: Support for Keyword-based URL reversing `#30 <https://github.com/ierror/django-js-reverse/pull/30/>`_
-
-    Thank you hyperair
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_

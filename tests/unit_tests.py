@@ -132,7 +132,7 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
     @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=[''])
     def test_only_empty_namespaces(self):
         response = self.client.get('/jsreverse/')
-       	self.assertEqualJSUrlEval('Urls["test_two_url_args"]("arg_one", "arg_two")',
+        self.assertEqualJSUrlEval('Urls["test_two_url_args"]("arg_one", "arg_two")',
                                   '/test_two_url_args/arg_one-arg_two/')
         self.assertNotContains(response, 'ns1', status_code=200)
         self.assertNotContains(response, 'ns2', status_code=200)
@@ -156,11 +156,11 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/test_duplicate_name/arg_one-arg_two/')
 
     def test_duplicate_argcount(self):
-        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_one: "arg_one"})',
+        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount({arg_one: "arg_one"})',
                                   '/test_duplicate_argcount/arg_one-/')
-        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_two: "arg_two"})',
+        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount({arg_two: "arg_two"})',
                                   '/test_duplicate_argcount/-arg_two/')
-        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount ({arg_one: "arg_one", arg_two: "arg_two"})',
+        self.assertEqualJSUrlEval('Urls.test_duplicate_argcount({arg_one: "arg_one", arg_two: "arg_two"})',
                                   '/test_duplicate_argcount/arg_one-arg_two/')
 
     @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsno\0'])
@@ -168,6 +168,14 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
     def test_include_exclude_configuration(self):
         with self.assertRaises(ImproperlyConfigured):
             self.client.post('/jsreverse/')
+
+    def test_int_args(self):
+        self.assertEqualJSUrlEval('Urls.test_two_url_args(0, 5)', '/test_two_url_args/0-5/')
+        self.assertEqualJSUrlEval('Urls.test_two_url_args("", 5)', '/test_two_url_args/-5/')
+
+    def test_float_args(self):
+        self.assertEqualJSUrlEval('Urls.test_two_url_args(0, 5.5)', '/test_two_url_args/0-5.5/')
+        self.assertEqualJSUrlEval('Urls.test_two_url_args(0.00001, 5.5)', '/test_two_url_args/0.00001-5.5/')
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
