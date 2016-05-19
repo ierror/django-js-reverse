@@ -8,7 +8,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.core.management.base import BaseCommand
-
 from django_js_reverse.core import generate_js
 from django_js_reverse.js_reverse_settings import JS_OUTPUT_PATH
 

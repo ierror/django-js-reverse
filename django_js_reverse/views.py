@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core import urlresolvers
 from django.http import HttpResponse
-
 from django_js_reverse.core import generate_js
 
 
