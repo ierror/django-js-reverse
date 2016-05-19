@@ -1,3 +1,9 @@
+0.7.2
+    Fix: `#42 <https://github.com/ierror/django-js-reverse/issues/42>`_ - "Templatetag js_reverse_inline breaks on Django 1.9"
+    Thank you `tommikaikkonen <https://github.com/tommikaikkonen>`_
+
+    Optimized imports
+
 0.7.1
     Fix: `#41 <https://github.com/ierror/django-js-reverse/issues/41>`_ - make it possible to use number 0 as url argument
 

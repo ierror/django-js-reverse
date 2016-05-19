@@ -53,6 +53,12 @@ Result:
 
 Changelog
 _________
+0.7.2
+    Fix: `#42 <https://github.com/ierror/django-js-reverse/issues/42>`_ - "Templatetag js_reverse_inline breaks on Django 1.9"
+    Thank you `tommikaikkonen <https://github.com/tommikaikkonen>`_
+
+    Optimized imports
+
 0.7.1
     Fix: `#41 <https://github.com/ierror/django-js-reverse/issues/41>`_ - make it possible to use number 0 as url argument
 
@@ -68,13 +74,6 @@ _________
     New: It's now possible to include specific namespaces only. See JS_REVERSE_INCLUDE_ONLY_NAMESPACES setting for details.
 
     Thank you BrnoPCmaniak
-
-0.6.1
-    Refactored: Separate the view functionality from the JS generation
-
-    New: Replaced slimit by rjsmin based on `#33 <https://github.com/ierror/django-js-reverse/pull/33/>`_
-
-    Thank you chripede
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_

@@ -4,24 +4,23 @@ from __future__ import unicode_literals
 
 import os
 import sys
-import warnings
-from string import Template
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-import django
 import unittest
+import warnings
+
+import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
-from django.template import RequestContext
+from django.template import Context, RequestContext, Template
 from django.test import TestCase
 from django.test.client import Client
 from django.test.utils import override_settings
 from django.utils.encoding import smart_str
-
 from selenium.webdriver.phantomjs.webdriver import WebDriver
-
 from utils import script_prefix
 
 # Raise errors on DeprecationWarnings
@@ -263,19 +262,20 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
 
 @override_settings(ROOT_URLCONF='tests.test_urls')
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
-    def test_tpl_tag_with_request_in_contect(self):
-        from django_js_reverse.templatetags.js_reverse import js_reverse_inline
-
+    def test_tpl_tag_with_request_in_context(self):
         context_instance = RequestContext(self.client.request)
-        Template("{%% load %s %%}{%% %s %%}" % ('js_reverse', js_reverse_inline(context_instance)))
+        tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
+        js_from_tag = tpl.render(context_instance)
+        js_from_view = smart_str(self.client.post('/jsreverse/').content)
+        self.assertEqual(js_from_tag, js_from_view)
 
-    def test_tpl_tag_without_request_in_contect(self):
-        from django_js_reverse.templatetags.js_reverse import js_reverse_inline
-
-        context_instance = RequestContext(None)
-        Template("{%% load %s %%}{%% %s %%}" % ('js_reverse', js_reverse_inline(context_instance)))
+    def test_tpl_tag_without_request_in_context(self):
+        context_instance = Context()
+        tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
+        js_from_tag = tpl.render(context_instance)
+        js_from_view = smart_str(self.client.post('/jsreverse/').content)
+        self.assertEqual(js_from_tag, js_from_view)
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
     unittest.main()
