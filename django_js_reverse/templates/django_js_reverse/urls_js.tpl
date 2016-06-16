@@ -1,6 +1,6 @@
 {% if es6_module %}
     const reverse =
-{% else % }
+{% else %}
     {{ js_global_object_name }}.{{ js_var_name }} =
 {% endif %}
 (function () {
