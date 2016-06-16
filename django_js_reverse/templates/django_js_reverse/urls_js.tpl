@@ -1,4 +1,9 @@
-{{ js_global_object_name }}.{{ js_var_name }} = (function () {
+{% if es6_module %}
+    const reverse =
+{% else % }
+    {{ js_global_object_name }}.{{ js_var_name }} =
+{% endif %}
+(function () {
 
     var Urls = {};
 
@@ -110,3 +115,6 @@
 
     return Urls;
 })();
+{% if es6_module %}
+    export default reverse
+{% endif %}

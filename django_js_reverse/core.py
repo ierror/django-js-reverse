@@ -112,7 +112,10 @@ def generate_js(default_urlresolver):
     else:
         script_prefix = urlresolvers.get_script_prefix()
 
+    es6_module = getattr(settings, 'JS_REVERSE_ES6_MODULE', False)
+
     js_content = loader.render_to_string('django_js_reverse/urls_js.tpl', {
+        'es6_module': es6_module,
         'urls': sorted(list(prepare_url_list(default_urlresolver))),
         'url_prefix': script_prefix,
         'js_var_name': js_var_name,
