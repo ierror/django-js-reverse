@@ -80,7 +80,7 @@
         };
     };
 
-    var name, pattern, self, url_patterns, _i, _len, _ref;
+    var name, pattern, url, url_patterns, _i, _len, _ref;
     url_patterns = [
         {% for name, patterns in urls %}
             [
@@ -104,8 +104,9 @@
     for (_i = 0, _len = url_patterns.length; _i < _len; _i++) {
         _ref = url_patterns[_i], name = _ref[0], pattern = _ref[1];
         self.url_patterns[name] = pattern;
-        Urls[name] = _get_url(name);
-        Urls[name.replace(/-/g, '_')] = _get_url(name);
+        url = _get_url(name);
+        Urls[name] = url;
+        Urls[name.replace(/-/g, '_')] = url;
     }
 
     return Urls;
