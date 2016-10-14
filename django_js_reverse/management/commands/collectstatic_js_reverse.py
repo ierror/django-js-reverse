@@ -21,7 +21,7 @@ class Command(BaseCommand):
             return output_path
 
         if not hasattr(settings, 'STATIC_ROOT') or not settings.STATIC_ROOT:
-            raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.JS_OUTPUT_PATH or settings.STATIC_ROOT to be set.')
+            raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.JS_REVERSE_OUTPUT_PATH or settings.STATIC_ROOT to be set.')
 
         return os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
 
