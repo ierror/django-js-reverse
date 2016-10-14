@@ -203,7 +203,7 @@ used to access the named urls is attached to. Default is :code:`this`
 
 ::
 
-    JS_REVERSE_JS_GLOBAL_OBJECT_NAME = False
+    JS_REVERSE_JS_GLOBAL_OBJECT_NAME = 'window'
 
 
 Optionally, you can disable the minfication of the generated javascript file
