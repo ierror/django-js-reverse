@@ -4,8 +4,10 @@ import sys
 
 from django.conf import settings
 from django.core import urlresolvers
+from django.conf.urls import RegexURLPattern, RegexURLResolver
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
+from django.utils.regex_helper import normalize
 
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
@@ -17,25 +19,21 @@ if sys.version < '3':
 else:
     text_type = str
 
+
 JS_IDENTIFIER_RE = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
 
 
-def prepare_url_list(urlresolver, namespace_path='', namespace=''):
-    """
-    returns list of tuples [(<url_name>, <url_patern_tuple> ), ...]
-    """
-    exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
-    include_only_ns = getattr(settings, 'JS_REVERSE_INCLUDE_ONLY_NAMESPACES', JS_INCLUDE_ONLY_NAMESPACES)
+def test_exclude(namespace, exclude_ns):
+    exclude_allow = True
+    for ns in exclude_ns:
+        if ns != "" and namespace.startswith(ns):
+            exclude_allow = False
+            break
+    return exclude_allow
 
-    if exclude_ns and include_only_ns:
-        raise ImproperlyConfigured(
-            'Neither use JS_REVERSE_EXCLUDE_NAMESPACES nor JS_REVERSE_INCLUDE_ONLY_NAMESPACES setting')
 
-    if namespace[:-1] in exclude_ns:
-        return
-
-    include_only_allow = True  # include_only state varible
-
+def test_include_only(namespace, include_only_ns):
+    include_only_allow = True
     if include_only_ns != []:
         # True mean that ns passed the test
         in_on_empty_ns = False
@@ -51,40 +49,69 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
         # works for ns = "lorem:ipsum:dolor" include_only = ["lorem:ipsum"]
         # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
         for ns in include_only_ns:
-            if ns != "" and namespace[:-1].startswith(ns):
+            if ns != "" and namespace.startswith(ns):
                 in_on_is_in_list = True
                 break
 
         # Test if isn't used "\0" flag
         # use "foo\0" to add urls just from "foo" not from subns "foo:bar"
-        if namespace[:-1] + '\0' in include_only_ns:
+        if namespace + '\0' in include_only_ns:
             in_on_null = True
 
         include_only_allow = in_on_empty_ns or in_on_is_in_list or in_on_null
+    return include_only_allow
 
-    if include_only_allow:
-        for url_name in urlresolver.reverse_dict.keys():
-            if isinstance(url_name, (text_type, str)):
-                url_patterns = []
-                for url_pattern in urlresolver.reverse_dict.getlist(url_name):
-                    url_patterns += [
-                        [namespace_path + pat[0], pat[1]] for pat in url_pattern[0]]
-                yield [namespace + url_name, url_patterns]
 
-    for inner_ns, (inner_ns_path, inner_urlresolver) in \
-            urlresolver.namespace_dict.items():
-        inner_ns_path = namespace_path + inner_ns_path
-        inner_ns = namespace + inner_ns + ':'
+def clean_patttern(pattern):
+    if pattern.startswith('^'):
+        pattern = pattern[1:]
+    return pattern
 
-        # if we have inner_ns_path, reconstruct a new resolver so that we can
-        # handle regex substitutions within the regex of a namespace.
-        if inner_ns_path:
-            inner_urlresolver = urlresolvers.get_ns_resolver(inner_ns_path,
-                                                             inner_urlresolver)
-            inner_ns_path = ''
 
-        for x in prepare_url_list(inner_urlresolver, inner_ns_path, inner_ns):
-            yield x
+def build_url_dict(url_resolver, exclude=[], include=[], parent_pattern="", namespace=""):
+    """
+    returns dict of tuples {<url_name>: <url_patern_tuple>, ...}
+    """
+    patterns = {}
+    for up in url_resolver.url_patterns:
+        if isinstance(up, RegexURLResolver):
+            if up.namespace:
+                next_namespace = namespace + up.namespace + ":"
+            else:
+                next_namespace = namespace
+            next_parent_pattern = parent_pattern + clean_patttern(up.regex.pattern)
+            next_patterns = build_url_dict(up, exclude, include, next_parent_pattern, next_namespace)
+            patterns.update(next_patterns)
+        elif isinstance(up, RegexURLPattern):
+            if not up.name:
+                continue
+            if (not test_exclude(namespace, exclude) or
+                not test_include_only(namespace, include)):
+                continue
+            new_pattern = parent_pattern + clean_patttern(up.regex.pattern)
+            new_pattern = normalize(new_pattern)[0]
+            name = namespace + up.name
+            if patterns.get(name, False):
+                patterns[name].append(new_pattern)
+            else:
+                patterns[name] = [new_pattern]
+    return patterns
+
+
+def prepare_url_list(urlresolver):
+    """
+    returns list of tuples [(<url_name>, <url_patern_tuple> ), ...]
+    """
+    exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
+    include_only_ns = getattr(settings, 'JS_REVERSE_INCLUDE_ONLY_NAMESPACES', JS_INCLUDE_ONLY_NAMESPACES)
+
+    if exclude_ns and include_only_ns:
+        raise ImproperlyConfigured(
+            'Neither use JS_REVERSE_EXCLUDE_NAMESPACES nor JS_REVERSE_INCLUDE_ONLY_NAMESPACES setting')
+
+    patterns = build_url_dict(urlresolver, exclude_ns, include_only_ns)
+
+    return ([k,v] for k, v in patterns.items())
 
 
 def generate_js(default_urlresolver):
