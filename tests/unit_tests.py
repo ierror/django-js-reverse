@@ -24,7 +24,7 @@ from selenium.webdriver.phantomjs.webdriver import WebDriver
 from utils import script_prefix
 
 # Raise errors on DeprecationWarnings
-warnings.simplefilter('error', DeprecationWarning)
+#warnings.simplefilter('error', DeprecationWarning)
 
 
 class AbstractJSReverseTestCase(object):

@@ -5,17 +5,15 @@ Django JS Reverse
 .. image:: https://img.shields.io/pypi/v/django-js-reverse.svg
    :target: https://pypi.python.org/pypi/django-js-reverse/
 
-.. image:: https://img.shields.io/travis/ierror/django-js-reverse/production.svg
+.. image:: https://img.shields.io/travis/ierror/django-js-reverse/master.svg
    :target: https://travis-ci.org/ierror/django-js-reverse
 
-.. image:: https://img.shields.io/coveralls/ierror/django-js-reverse/production.svg
+.. image:: https://img.shields.io/coveralls/ierror/django-js-reverse/master.svg
    :alt: Coverage Status
-   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=production
+   :target: https://coveralls.io/r/ierror/django-js-reverse?branch=master
 
 .. image:: https://img.shields.io/github/license/ierror/django-js-reverse.svg
     :target: https://raw.githubusercontent.com/ierror/django-js-reverse/develop/LICENSE
-
-.. image:: https://img.shields.io/pypi/dm/django-js-reverse.svg
 
 .. image:: https://img.shields.io/pypi/wheel/django-js-reverse.svg
 
@@ -53,6 +51,21 @@ Result:
 
 Changelog
 _________
+
+0.7.3
+    New: Support for Django 1.10
+
+    Chg: Renamed "production" branch to "master"
+
+    Fix: `#48 <https://github.com/ierror/django-js-reverse/issues/48>`_ - "Change False to 'window' in global object name in README."
+    Thank you `karamanolev <https://github.com/karamanolev>`_
+
+    Fix: `PR #45 <https://github.com/ierror/django-js-reverse/pull/45>`_ - "Fix: collectstatic_js_reverse usage message"
+    Thank you `ghedsouza <https://github.com/ghedsouza>`_
+
+    Fix: `PR #44 <https://github.com/ierror/django-js-reverse/pull/44>`_ - "Remove duplicate _get_url call"
+    Thank you `razh <https://github.com/razh>`_
+
 0.7.2
     Fix: `#42 <https://github.com/ierror/django-js-reverse/issues/42>`_ - "Templatetag js_reverse_inline breaks on Django 1.9"
     Thank you `tommikaikkonen <https://github.com/tommikaikkonen>`_
@@ -62,28 +75,15 @@ _________
 0.7.1
     Fix: `#41 <https://github.com/ierror/django-js-reverse/issues/41>`_ - make it possible to use number 0 as url argument
 
-0.7.0
-    New: By default collectstatic_js_reverse writes its output (reverse.js) to your project's STATIC_ROOT. Now You can change settings: JS_REVERSE_OUTPUT_PATH
 
-    Thank you `mjnaderi <https://github.com/ierror/django-js-reverse/pull/36>`_
-
-    New: Support for Django 1.9
-
-    Thank you `mjnaderi <https://github.com/ierror/django-js-reverse/pull/37>`_
-
-    New: It's now possible to include specific namespaces only. See JS_REVERSE_INCLUDE_ONLY_NAMESPACES setting for details.
-
-    Thank you BrnoPCmaniak
-
-
-`Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/production/CHANGELOG>`_
+`Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/master/CHANGELOG>`_
 
 
 Requirements
 ------------
 
 -  Python (2.6, 2.7, 3.1, 3.3, 3.4, 3.5)
--  Django (1.5, 1.6, 1.7, 1.8, 1.9)
+-  Django (1.5, 1.6, 1.7, 1.8, 1.9, 1.10)
 
 
 Installation

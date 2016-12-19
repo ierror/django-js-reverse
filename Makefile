@@ -11,9 +11,9 @@ test:
 	coverage erase
 
 release:
-	git checkout production
+	git checkout master
 	git merge develop -m "bump v$(VERSION)"
-	git push origin production
+	git push origin master
 	git tag v$(VERSION)
 	git push origin v$(VERSION)
 	pip install wheel

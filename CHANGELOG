@@ -1,3 +1,17 @@
+0.7.3
+    New: Support for Django 1.10
+
+    Chg: Renamed "production" branch to "master"
+
+    Fix: `#48 <https://github.com/ierror/django-js-reverse/issues/48>`_ - "Change False to 'window' in global object name in README."
+    Thank you `karamanolev <https://github.com/karamanolev>`_
+
+    Fix: `PR #45 <https://github.com/ierror/django-js-reverse/pull/45>`_ - "Fix: collectstatic_js_reverse usage message"
+    Thank you `ghedsouza <https://github.com/ghedsouza>`_
+
+    Fix: `PR #44 <https://github.com/ierror/django-js-reverse/pull/44>`_ - "Remove duplicate _get_url call"
+    Thank you `razh <https://github.com/razh>`_
+
 0.7.2
     Fix: `#42 <https://github.com/ierror/django-js-reverse/issues/42>`_ - "Templatetag js_reverse_inline breaks on Django 1.9"
     Thank you `tommikaikkonen <https://github.com/tommikaikkonen>`_
