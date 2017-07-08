@@ -187,6 +187,13 @@ notation instead:
     Urls['betterliving-get-house']('house', 12)
     Urls['namespace:betterliving-get-house']('house', 12)
 
+You can also pass javascript objects to match keyword aguments like the 
+examples bellow:
+
+::
+
+    Urls['betterliving-get-house']({ category_slug: 'house', entry_pk: 12 })
+    Urls['namespace:betterliving-get-house']({ category_slug: 'house', entry_pk: 12 })
 
 Options
 -------
@@ -228,7 +235,7 @@ To exclude any namespaces from the generated javascript file, add them to the `J
 
 If you want to include only specific namespaces add them to the `JS_REVERSE_INCLUDE_ONLY_NAMESPACES` setting
 tips:
- * Use "" for urls without namespace
+ * Use "" (empty string) for urls without namespace
  * Use "foo\0" to include urls just from "foo" namaspace and not from any subnamespaces (e.g. "foo:bar")
 
 ::
