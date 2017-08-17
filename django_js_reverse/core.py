@@ -10,7 +10,7 @@ from django.template import loader
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
                                   JS_INCLUDE_ONLY_NAMESPACES, JS_MINIFY,
-                                  JS_VAR_NAME)
+                                  JS_USE_ES6, JS_VAR_NAME)
 
 if sys.version < '3':
     text_type = unicode  # NOQA
@@ -112,7 +112,10 @@ def generate_js(default_urlresolver):
     else:
         script_prefix = urlresolvers.get_script_prefix()
 
-    js_content = loader.render_to_string('django_js_reverse/urls_js.tpl', {
+    template_name = 'django_js_reverse/urls_js.tpl'
+    if JS_USE_ES6:
+        template_name = 'django_js_reverse/urls_js6.tpl'
+    js_content = loader.render_to_string(template_name, {
         'urls': sorted(list(prepare_url_list(default_urlresolver))),
         'url_prefix': script_prefix,
         'js_var_name': js_var_name,
