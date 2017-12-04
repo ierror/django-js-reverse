@@ -3,7 +3,12 @@ import os
 import sys
 
 from django.conf import settings
-from django.core import urlresolvers
+
+try:
+    from django.urls import get_resolver
+except ImportError:
+    from django.core.urlresolvers import get_resolver
+
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
@@ -32,7 +37,7 @@ class Command(BaseCommand):
         if fs.exists(file):
             fs.delete(file)
 
-        default_urlresolver = urlresolvers.get_resolver(None)
+        default_urlresolver = get_resolver(None)
         content = generate_js(default_urlresolver)
         fs.save(file, ContentFile(content))
         if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:
