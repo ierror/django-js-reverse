@@ -12,6 +12,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
 from django.template import Context, RequestContext, Template
 from django.utils.encoding import smart_str
+from helper import is_django_ver_gte_2
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 from utils import script_prefix
 
@@ -171,6 +172,11 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
     def test_float_args(self):
         self.assertEqualJSUrlEval('Urls.test_two_url_args(0, 5.5)', '/test_two_url_args/0-5.5/')
         self.assertEqualJSUrlEval('Urls.test_two_url_args(0.00001, 5.5)', '/test_two_url_args/0.00001-5.5/')
+
+    def test_django_path_syntax(self):
+        if is_django_ver_gte_2():
+            self.assertEqualJSUrlEval('Urls.test_django_gte_2_path_syntax(42, "foo")',
+                                      '/test_django_gte_2_path_syntax/42/foo/')
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)

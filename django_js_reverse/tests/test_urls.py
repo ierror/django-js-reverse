@@ -2,9 +2,14 @@
 import sys
 from copy import copy
 
-from django import VERSION
 from django.conf.urls import include, url
+from django_js_reverse.tests.helper import is_django_ver_gte_2
 from django_js_reverse.views import urls_js
+
+try:
+    from django.urls import path
+except ImportError:
+    pass
 
 if sys.version < '3':
     import codecs
@@ -38,6 +43,12 @@ basic_patterns = [
         name='test_duplicate_argcount'),
 ]
 
+if is_django_ver_gte_2():
+    basic_patterns.append(
+        path('test_django_gte_2_path_syntax/<int:arg_one>/<str:arg_two>/', dummy_view,
+             name='test_django_gte_2_path_syntax'),
+    )
+
 urlpatterns = copy(basic_patterns)
 
 # test exclude namespaces urls
@@ -59,7 +70,7 @@ pattern_ns_arg = [
     url(r'', include(basic_patterns))
 ]
 
-if VERSION[0] == 2:
+if is_django_ver_gte_2():
     urlexclude = (urlexclude, 'django_js_reverse')
     pattern_ns_1_arg = (pattern_ns_1, 'django_js_reverse')
     pattern_ns_2_arg = (pattern_ns_2, 'django_js_reverse')
@@ -77,7 +88,7 @@ pattern_nested_ns = [
 pattern_dubble_nested2_ns = [
     url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1'))]
 
-if VERSION[0] == 2:
+if is_django_ver_gte_2():
     pattern_nested_ns_arg = (pattern_nested_ns, 'django_js_reverse')
     pattern_dubble_nested2_ns_arg = (pattern_dubble_nested2_ns, 'django_js_reverse')
 else:
@@ -88,7 +99,7 @@ pattern_dubble_nested_ns = [
     url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1')),
     url(r'^nsdn2/', include(pattern_dubble_nested2_ns_arg, namespace='nsdn2'))]
 
-if VERSION[0] == 2:
+if is_django_ver_gte_2():
     pattern_dubble_nested_ns_arg = (pattern_dubble_nested_ns, 'django_js_reverse')
 else:
     pattern_dubble_nested_ns_arg = pattern_dubble_nested_ns
@@ -97,7 +108,7 @@ pattern_only_nested_ns = [
     url(r'^ns1/', include(pattern_ns_1)),
     url(r'^nsdn0/', include(pattern_dubble_nested2_ns_arg, namespace='nsdn0'))]
 
-if VERSION[0] == 2:
+if is_django_ver_gte_2():
     pattern_only_nested_ns_arg = (pattern_only_nested_ns, 'django_js_reverse')
 else:
     pattern_only_nested_ns_arg = pattern_only_nested_ns
