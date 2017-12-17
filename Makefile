@@ -10,7 +10,7 @@ test:
 	coverage report
 	coverage erase
 
-release:
+release: clean
 	git checkout master
 	git merge develop -m "bump v$(VERSION)"
 	git push origin master
