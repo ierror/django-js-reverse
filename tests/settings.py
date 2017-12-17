@@ -14,6 +14,7 @@ INSTALLED_APPS = (
 )
 ALLOWED_HOSTS = ['testserver']
 MIDDLEWARE_CLASSES = ()
+MIDDLEWARE = ()
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -3,7 +3,11 @@ import re
 import sys
 
 from django.conf import settings
-from django.core import urlresolvers
+try:
+    from django import urls as urlresolvers
+except ImportError:
+    from django.core import urlresolvers
+
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 

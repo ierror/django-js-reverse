@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.core.urlresolvers import get_script_prefix, set_script_prefix
+try:
+    from django.urls import get_script_prefix, set_script_prefix
+except ImportError:
+    from django.core.urlresolvers import get_script_prefix, set_script_prefix
 
 
 class script_prefix(object):
