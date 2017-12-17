@@ -3,11 +3,6 @@ import re
 import sys
 
 from django.conf import settings
-try:
-    from django import urls as urlresolvers
-except ImportError:
-    from django.core import urlresolvers
-
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 
@@ -15,6 +10,11 @@ from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
                                   JS_INCLUDE_ONLY_NAMESPACES, JS_MINIFY,
                                   JS_VAR_NAME)
+
+try:
+    from django import urls as urlresolvers
+except ImportError:
+    from django.core import urlresolvers
 
 if sys.version < '3':
     text_type = unicode  # NOQA

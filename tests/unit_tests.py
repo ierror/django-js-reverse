@@ -4,10 +4,6 @@ from __future__ import unicode_literals
 
 import os
 import sys
-
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-
 import unittest
 import warnings
 
@@ -22,6 +18,11 @@ from django.test.utils import override_settings
 from django.utils.encoding import smart_str
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 from utils import script_prefix
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
+
 
 # Raise errors on DeprecationWarnings
 #warnings.simplefilter('error', DeprecationWarning)

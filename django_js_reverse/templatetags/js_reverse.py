@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import template
+from django.utils.safestring import mark_safe
+from django_js_reverse.core import generate_js
+
 try:
     from django.urls import get_resolver
 except ImportError:
     from django.core.urlresolvers import get_resolver
 
-from django.utils.safestring import mark_safe
-from django_js_reverse.core import generate_js
 
 register = template.Library()
 

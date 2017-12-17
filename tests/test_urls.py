@@ -30,11 +30,13 @@ basic_patterns = [
     url(r'^test_no_url_args/$', dummy_view, name='test_no_url_args'),
     url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', dummy_view, name='test_one_url_args'),
     url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view, name='test_two_url_args'),
-    url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view, name='test_optional_url_arg'),
+    url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view,
+        name='test_optional_url_arg'),
     url(r'^test_unicode_url_name/$', dummy_view, name=u('test_unicode_url_name')),
     url(r'^test_duplicate_name/(?P<arg_one>[-\w]+)/$', dummy_view, name='test_duplicate_name'),
     url(r'^test_duplicate_name/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view, name='test_duplicate_name'),
-    url(r'^test_duplicate_argcount/(?P<arg_one>[-\w]+)?-(?P<arg_two>[-\w]+)?/$', dummy_view, name='test_duplicate_argcount'),
+    url(r'^test_duplicate_argcount/(?P<arg_one>[-\w]+)?-(?P<arg_two>[-\w]+)?/$', dummy_view,
+        name='test_duplicate_argcount'),
 ]
 
 urlpatterns = copy(basic_patterns)

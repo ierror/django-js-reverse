@@ -17,7 +17,7 @@ release:
 	git tag v$(VERSION)
 	git push origin v$(VERSION)
 	pip install wheel
-	python setup.py sdist bdist_wheel upload --sign
+	python setup.py sdist bdist_wheel upload --sign --identity=99C3C059
 	git checkout develop
 
 optimizing_imports:

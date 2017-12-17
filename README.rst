@@ -52,6 +52,10 @@ Result:
 Changelog
 _________
 
+0.8.0
+    New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`_
+    Thank you `wlonk <https://github.com/wlonk>`_
+
 0.7.3
     New: Support for Django 1.10
 
@@ -82,7 +86,7 @@ _________
 Requirements
 ------------
 
--  Python (2.7, 3.4)
+-  Python (2.7, 3.4, 3.5, 3.6)
 -  Django (1.5, 1.6, 1.7, 1.8, 1.9, 1.10, 1.11, 2.0)
 
 
