@@ -9,7 +9,6 @@ from django_js_reverse.views import urls_js
 if sys.version < '3':
     import codecs
 
-
     def u(x):
         return codecs.unicode_escape_decode(x)[0]
 else:

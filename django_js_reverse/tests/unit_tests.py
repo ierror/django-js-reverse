@@ -5,16 +5,12 @@ from __future__ import unicode_literals
 import os
 import sys
 import unittest
-import warnings
 
 import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
 from django.template import Context, RequestContext, Template
-from django.test import TestCase
-from django.test.client import Client
-from django.test.utils import override_settings
 from django.utils.encoding import smart_str
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 from utils import script_prefix
@@ -22,10 +18,9 @@ from utils import script_prefix
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-
-
-# Raise errors on DeprecationWarnings
-#warnings.simplefilter('error', DeprecationWarning)
+from django.test import TestCase  # noqa: E402 isort:skip
+from django.test.client import Client  # noqa: E402 isort:skip
+from django.test.utils import override_settings  # noqa: E402 isort:skip
 
 
 class AbstractJSReverseTestCase(object):
@@ -51,7 +46,7 @@ class AbstractJSReverseTestCase(object):
                          expected_url)
 
 
-@override_settings(ROOT_URLCONF='tests.test_urls')
+@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
 class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
     def test_view_no_url_args(self):
         self.assertEqualJSUrlEval('Urls.test_no_url_args()', '/test_no_url_args/')
@@ -179,7 +174,7 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
 
 
 @override_settings(JS_REVERSE_JS_MINIFY=False)
-@override_settings(ROOT_URLCONF='tests.test_urls')
+@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
 class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
     def test_minification(self):
         js_not_minified = smart_str(self.client.post('/jsreverse/').content)
@@ -188,7 +183,7 @@ class JSReverseViewTestCaseNotMinified(JSReverseViewTestCaseMinified):
             self.assertTrue(len(js_minified) < len(js_not_minified))
 
 
-@override_settings(ROOT_URLCONF='tests.test_urls')
+@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
 class JSReverseViewTestCaseGlobalObjectName(JSReverseViewTestCaseMinified):
     def test_global_object_name_default(self):
         js_content = smart_str(self.client.post('/jsreverse/').content)
@@ -205,7 +200,7 @@ class JSReverseViewTestCaseGlobalObjectName(JSReverseViewTestCaseMinified):
             self.client.post('/jsreverse/')
 
 
-@override_settings(ROOT_URLCONF='tests.test_urls')
+@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
 class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
     def test_reverse_js_file_save(self):
         call_command('collectstatic_js_reverse')
@@ -261,7 +256,7 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
             self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}test_no_url_args/'.format(script_prefix))
 
 
-@override_settings(ROOT_URLCONF='tests.test_urls')
+@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
     def test_tpl_tag_with_request_in_context(self):
         context_instance = RequestContext(self.client.request)
