@@ -9,7 +9,7 @@ python:
   - "pypy3-2"
 
 install:
-  - pip install -q tox coverage coveralls
+  - pip install -q tox coverage coveralls tox-travis
 
 script:
   - coverage erase
