@@ -1,3 +1,0 @@
-coverage>=3.7.1
-tox>=1.9.2
-isort>=3.9.6

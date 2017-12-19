@@ -3,13 +3,17 @@ import os
 import sys
 
 from django.conf import settings
-from django.core import urlresolvers
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.core.management.base import BaseCommand
 from django_js_reverse.core import generate_js
 from django_js_reverse.js_reverse_settings import JS_OUTPUT_PATH
+
+try:
+    from django.urls import get_resolver
+except ImportError:
+    from django.core.urlresolvers import get_resolver
 
 
 class Command(BaseCommand):
@@ -21,7 +25,8 @@ class Command(BaseCommand):
             return output_path
 
         if not hasattr(settings, 'STATIC_ROOT') or not settings.STATIC_ROOT:
-            raise ImproperlyConfigured('The collectstatic_js_reverse command needs settings.JS_REVERSE_OUTPUT_PATH or settings.STATIC_ROOT to be set.')
+            raise ImproperlyConfigured(
+                'The collectstatic_js_reverse command needs settings.JS_REVERSE_OUTPUT_PATH or settings.STATIC_ROOT to be set.')
 
         return os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js')
 
@@ -32,7 +37,7 @@ class Command(BaseCommand):
         if fs.exists(file):
             fs.delete(file)
 
-        default_urlresolver = urlresolvers.get_resolver(None)
+        default_urlresolver = get_resolver(None)
         content = generate_js(default_urlresolver)
         fs.save(file, ContentFile(content))
         if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:

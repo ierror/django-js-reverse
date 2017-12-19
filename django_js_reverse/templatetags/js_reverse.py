@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import template
-from django.core import urlresolvers
 from django.utils.safestring import mark_safe
 from django_js_reverse.core import generate_js
+
+try:
+    from django.urls import get_resolver
+except ImportError:
+    from django.core.urlresolvers import get_resolver
+
 
 register = template.Library()
 
@@ -14,7 +19,7 @@ def js_reverse_inline(context):
     of the names given to those URLs.
     """
     if 'request' in context:
-        default_urlresolver = urlresolvers.get_resolver(getattr(context['request'], 'urlconf', None))
+        default_urlresolver = get_resolver(getattr(context['request'], 'urlconf', None))
     else:
-        default_urlresolver = urlresolvers.get_resolver(None)
+        default_urlresolver = get_resolver(None)
     return mark_safe(generate_js(default_urlresolver))

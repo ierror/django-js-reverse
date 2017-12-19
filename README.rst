@@ -52,6 +52,15 @@ Result:
 Changelog
 _________
 
+0.8.1
+    Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ was still present in the build. => Added cleanup to the release make command.
+
+0.8.0
+    New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`_
+    Thank you `wlonk <https://github.com/wlonk>`_
+
+    Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
+
 0.7.3
     New: Support for Django 1.10
 
@@ -82,8 +91,17 @@ _________
 Requirements
 ------------
 
--  Python (2.6, 2.7, 3.1, 3.3, 3.4, 3.5)
--  Django (1.5, 1.6, 1.7, 1.8, 1.9, 1.10)
++----------------+------------------------------------------+
+| Python version | Django versions                          |
++================+==========================================+
+| 3.6            | 2.0, 1.11, 1.10, 1.9, 1.8                |
++----------------+------------------------------------------+
+| 3.5            | 2.0, 1.11, 1.10, 1.9, 1.8                |
++----------------+------------------------------------------+
+| 3.4            | 2.0, 1.11, 1.10, 1.9, 1.8, 1.7, 1.6, 1.5 |
++----------------+------------------------------------------+
+| 2.7            | 1.11, 1.10, 1.9, 1.8, 1.7, 1.6, 1.5      |
++----------------+------------------------------------------+
 
 
 Installation
@@ -187,6 +205,13 @@ notation instead:
     Urls['betterliving-get-house']('house', 12)
     Urls['namespace:betterliving-get-house']('house', 12)
 
+You can also pass javascript objects to match keyword aguments like the 
+examples bellow:
+
+::
+
+    Urls['betterliving-get-house']({ category_slug: 'house', entry_pk: 12 })
+    Urls['namespace:betterliving-get-house']({ category_slug: 'house', entry_pk: 12 })
 
 Options
 -------
@@ -228,7 +253,7 @@ To exclude any namespaces from the generated javascript file, add them to the `J
 
 If you want to include only specific namespaces add them to the `JS_REVERSE_INCLUDE_ONLY_NAMESPACES` setting
 tips:
- * Use "" for urls without namespace
+ * Use "" (empty string) for urls without namespace
  * Use "foo\0" to include urls just from "foo" namaspace and not from any subnamespaces (e.g. "foo:bar")
 
 ::

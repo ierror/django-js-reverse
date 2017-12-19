@@ -100,6 +100,7 @@
             ]{% if not forloop.last %},{% endif %}
         {% endfor %}
     ];
+
     self.url_patterns = {};
     for (_i = 0, _len = url_patterns.length; _i < _len; _i++) {
         _ref = url_patterns[_i], name = _ref[0], pattern = _ref[1];
