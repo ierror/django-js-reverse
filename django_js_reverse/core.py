@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import re
 import sys
 from distutils.version import StrictVersion
@@ -7,6 +8,7 @@ import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
+from django.utils.encoding import force_text
 
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
@@ -123,11 +125,22 @@ def generate_js(default_urlresolver):
     else:
         script_prefix = urlresolvers.get_script_prefix()
 
+    urls = sorted(list(prepare_url_list(default_urlresolver)))
+
     js_content = loader.render_to_string('django_js_reverse/urls_js.tpl', {
-        'urls': sorted(list(prepare_url_list(default_urlresolver))),
-        'url_prefix': script_prefix,
-        'js_var_name': js_var_name,
-        'js_global_object_name': js_global_object_name,
+        'data': json.dumps({
+            'urls': [
+                [
+                    force_text(name),
+                    [
+                        [force_text(path), [force_text(arg) for arg in args]]
+                        for path, args in patterns
+                    ],
+                ] for name, patterns in urls
+            ],
+            'url_prefix': script_prefix,
+        }),
+        'js_name': '.'.join([js_global_object_name, js_var_name]),
     })
 
     if minfiy:

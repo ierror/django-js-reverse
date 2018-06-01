@@ -1,10 +1,9 @@
-{{ js_global_object_name }}.{{ js_var_name }} = (function () {
-
+{{ js_name }} = (function () {
+    var data = JSON.parse('{{ data|escapejs }}');
+    var url_patterns = data.urls;
+    var url_prefix = data.url_prefix;
     var Urls = {};
-
-    var self = {
-        url_patterns:{}
-    };
+    var self = { url_patterns: {} };
 
     var _get_url = function (url_pattern) {
         return function () {
@@ -76,32 +75,11 @@
             	}
                 url = url.replace("%(" + url_arg + ")s", url_arg_value);
             }
-            return '{{url_prefix|escapejs}}' + url;
+            return url_prefix + url;
         };
     };
 
-    var name, pattern, url, url_patterns, _i, _len, _ref;
-    url_patterns = [
-        {% for name, patterns in urls %}
-            [
-                '{{name|escapejs}}',
-                [
-                    {% for path, args in patterns %}
-                    [
-                        '{{path|escapejs}}',
-                        [
-                            {% for arg in args %}
-                            '{{arg|escapejs}}',
-                            {% endfor %}
-                        ]{% if not forloop.last %},{% endif %}
-                    ]{% if not forloop.last %},{% endif %}
-                    {% endfor %}
-                ]{% if not forloop.last %},{% endif %}
-            ]{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    ];
-
-    self.url_patterns = {};
+    var name, pattern, url, _i, _len, _ref;
     for (_i = 0, _len = url_patterns.length; _i < _len; _i++) {
         _ref = url_patterns[_i], name = _ref[0], pattern = _ref[1];
         self.url_patterns[name] = pattern;
