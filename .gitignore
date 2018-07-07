@@ -11,3 +11,6 @@ htmlcov/
 ghostdriver.log
 django_js_reverse/static/*
 django_js_reverse/tests/tmp/
+.project
+.pydevproject
+.settings/
