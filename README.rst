@@ -52,6 +52,10 @@ Result:
 Changelog
 _________
 
+0.8.2
+    Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`_
+    Thank you `kavdev <https://github.com/kavdev>`_
+
 0.8.1
     Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ was still present in the build. => Added cleanup to the release make command.
 
@@ -75,15 +79,6 @@ _________
     Fix: `PR #44 <https://github.com/ierror/django-js-reverse/pull/44>`_ - "Remove duplicate _get_url call"
     Thank you `razh <https://github.com/razh>`_
 
-0.7.2
-    Fix: `#42 <https://github.com/ierror/django-js-reverse/issues/42>`_ - "Templatetag js_reverse_inline breaks on Django 1.9"
-    Thank you `tommikaikkonen <https://github.com/tommikaikkonen>`_
-
-    Optimized imports
-
-0.7.1
-    Fix: `#41 <https://github.com/ierror/django-js-reverse/issues/41>`_ - make it possible to use number 0 as url argument
-
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/master/CHANGELOG>`_
 
@@ -94,6 +89,8 @@ Requirements
 +----------------+------------------------------------------+
 | Python version | Django versions                          |
 +================+==========================================+
+| 3.7            | 2.0, 1.11, 1.10, 1.9, 1.8                |
++----------------+------------------------------------------+
 | 3.6            | 2.0, 1.11, 1.10, 1.9, 1.8                |
 +----------------+------------------------------------------+
 | 3.5            | 2.0, 1.11, 1.10, 1.9, 1.8                |
