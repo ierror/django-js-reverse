@@ -67,6 +67,12 @@
 
             _ref = _ref_list[_i];
             url = _ref[0], url_args = build_kwargs(_ref[1]);
+
+            if (url.indexOf("%(locale)s") !== -1) {
+                // Populate url with locale
+                url = url.replace("%(locale)s", detected_locale());
+            }
+
             for (url_arg in url_args) {
             	var url_arg_value = url_args[url_arg];
             	if (url_arg_value === undefined || url_arg_value === null) {
@@ -112,3 +118,13 @@
 
     return Urls;
 })();
+
+
+function detected_locale() {
+    var allowed_language_codes = {{ allowed_language_codes|safe }};
+    var locale = window.navigator.language.substr(0, 2); // Shorten strings to use two chars (E.g. "en-US" -> "en")
+    if (locale && allowed_language_codes && allowed_language_codes.indexOf(locale) !== -1) {
+        return locale;
+    }
+    return "{{ default_language_code }}";  // `LANGUAGE_CODE` in Django settings
+}
