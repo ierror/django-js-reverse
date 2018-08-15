@@ -26,6 +26,29 @@ else:
 JS_IDENTIFIER_RE = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
 
 
+def generate_url_pattern(namespace_path, pattern):
+    """
+    Builds correct pattern for sites with multiple languages.
+    Returns tuple (<url_pattern>, <list_of_args>)
+
+
+    E.g. `pattern`:
+        ('products/checkout/%(basket_pk)s/', ['basket_pk'])
+    If `namespace_path == ''`, will be returned as is.
+
+    E.g. `pattern` when url wrapped with `i18n_patterns`:
+        ('None/products/checkout/%(basket_pk)s/', ['basket_pk'])
+    If `namespace_path == ''`, will be returned:
+        ('%(locale)s/products/checkout/%(basket_pk)s/', ['basket_pk'])
+        Then `locale` will be correctly filled in js code.
+    """
+
+    url, args = pattern
+    if url.startswith('None'):
+        url = url.replace('None', '%(locale)s', 1)
+    return '{0}{1}'.format(namespace_path, url), args
+
+
 def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     """
     returns list of tuples [(<url_name>, <url_patern_tuple> ), ...]
@@ -73,8 +96,7 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
             if isinstance(url_name, (text_type, str)):
                 url_patterns = []
                 for url_pattern in urlresolver.reverse_dict.getlist(url_name):
-                    url_patterns += [
-                        [namespace_path + pat[0], pat[1]] for pat in url_pattern[0]]
+                    url_patterns += [generate_url_pattern(namespace_path, pat) for pat in url_pattern[0]]
                 yield [namespace + url_name, url_patterns]
 
     for inner_ns, (inner_ns_path, inner_urlresolver) in \
@@ -128,6 +150,8 @@ def generate_js(default_urlresolver):
         'url_prefix': script_prefix,
         'js_var_name': js_var_name,
         'js_global_object_name': js_global_object_name,
+        'allowed_language_codes': [language[0] for language in settings.LANGUAGES],
+        'default_language_code': settings.LANGUAGE_CODE,
     })
 
     if minfiy:
