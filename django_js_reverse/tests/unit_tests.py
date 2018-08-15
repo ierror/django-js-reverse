@@ -51,25 +51,46 @@ class AbstractJSReverseTestCase(object):
 class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
     def test_view_no_url_args(self):
         self.assertEqualJSUrlEval('Urls.test_no_url_args()', '/test_no_url_args/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_no_url_args()', '/en/i18n_test_no_url_args/')
+
+    @override_settings(LANGUAGE_CODE='ua')
+    def test_view_no_url_args_with_changed_language_code(self):
+        self.assertEqualJSUrlEval('Urls.test_no_url_args()', '/test_no_url_args/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_no_url_args()', '/ua/i18n_test_no_url_args/')
 
     def test_view_one_url_arg(self):
         self.assertEqualJSUrlEval('Urls.test_one_url_args("arg_one")', '/test_one_url_args/arg_one/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_one_url_args("arg_one")', '/en/i18n_test_one_url_args/arg_one/')
 
     def test_view_two_url_args(self):
         self.assertEqualJSUrlEval('Urls.test_two_url_args("arg_one", "arg_two")', '/test_two_url_args/arg_one-arg_two/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_two_url_args("arg_one", "arg_two")',
+                                  '/en/i18n_test_two_url_args/arg_one-arg_two/')
 
     def test_view_optional_url_arg(self):
         self.assertEqualJSUrlEval('Urls.test_optional_url_arg("arg_two")',
                                   '/test_optional_url_arg/2_arg_two/')
         self.assertEqualJSUrlEval('Urls.test_optional_url_arg("arg_one", "arg_two")',
                                   '/test_optional_url_arg/1_arg_one-2_arg_two/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_optional_url_arg("arg_two")',
+                                  '/en/i18n_test_optional_url_arg/2_arg_two/')
+        self.assertEqualJSUrlEval('Urls.i18n_test_optional_url_arg("arg_one", "arg_two")',
+                                  '/en/i18n_test_optional_url_arg/1_arg_one-2_arg_two/')
 
     def test_unicode_url_name(self):
         self.assertEqualJSUrlEval('Urls.test_unicode_url_name()', '/test_unicode_url_name/')
+        self.assertEqualJSUrlEval('Urls.i18n_test_unicode_url_name()', '/en/i18n_test_unicode_url_name/')
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='Foo')
     def test_js_var_name_changed_valid(self):
         self.assertEqualJSUrlEval('Foo.test_no_url_args()', '/test_no_url_args/')
+        # i18n
+        self.assertEqualJSUrlEval('Foo.i18n_test_no_url_args()', '/en/i18n_test_no_url_args/')
 
     @override_settings(JS_REVERSE_JS_VAR_NAME='1test')
     def test_js_var_name_changed_to_invalid(self):
@@ -81,10 +102,18 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/ns1/test_two_url_args/arg_one-arg_two/')
         self.assertEqualJSUrlEval('Urls["ns2:test_two_url_args"]("arg_one", "arg_two")',
                                   '/ns2/test_two_url_args/arg_one-arg_two/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls["i18n_ns1:test_two_url_args"]("arg_one", "arg_two")',
+                                  '/en/i18n_ns1/test_two_url_args/arg_one-arg_two/')
+        self.assertEqualJSUrlEval('Urls["i18n_ns2:test_two_url_args"]("arg_one", "arg_two")',
+                                  '/en/i18n_ns2/test_two_url_args/arg_one-arg_two/')
 
     def test_namespaces_with_args(self):
         self.assertEqualJSUrlEval('Urls["ns_arg:test_two_url_args"]("arg_one", "arg_two", "arg_three")',
                                   '/nsarg_one/test_two_url_args/arg_two-arg_three/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls["i18n_ns_arg:test_two_url_args"]("arg_one", "arg_two", "arg_three")',
+                                  '/en/i18n_nsarg_one/test_two_url_args/arg_two-arg_three/')
 
     def test_namespaces_nested(self):
         self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
@@ -150,6 +179,11 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/test_duplicate_name/arg_one/')
         self.assertEqualJSUrlEval('Urls.test_duplicate_name("arg_one", "arg_two")',
                                   '/test_duplicate_name/arg_one-arg_two/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_duplicate_name("arg_one")',
+                                  '/en/i18n_test_duplicate_name/arg_one/')
+        self.assertEqualJSUrlEval('Urls.i18n_test_duplicate_name("arg_one", "arg_two")',
+                                  '/en/i18n_test_duplicate_name/arg_one-arg_two/')
 
     def test_duplicate_argcount(self):
         self.assertEqualJSUrlEval('Urls.test_duplicate_argcount({arg_one: "arg_one"})',
@@ -158,6 +192,13 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/test_duplicate_argcount/-arg_two/')
         self.assertEqualJSUrlEval('Urls.test_duplicate_argcount({arg_one: "arg_one", arg_two: "arg_two"})',
                                   '/test_duplicate_argcount/arg_one-arg_two/')
+        # i18n
+        self.assertEqualJSUrlEval('Urls.i18n_test_duplicate_argcount({arg_one: "arg_one"})',
+                                  '/en/i18n_test_duplicate_argcount/arg_one-/')
+        self.assertEqualJSUrlEval('Urls.i18n_test_duplicate_argcount({arg_two: "arg_two"})',
+                                  '/en/i18n_test_duplicate_argcount/-arg_two/')
+        self.assertEqualJSUrlEval('Urls.i18n_test_duplicate_argcount({arg_one: "arg_one", arg_two: "arg_two"})',
+                                  '/en/i18n_test_duplicate_argcount/arg_one-arg_two/')
 
     @override_settings(JS_REVERSE_INCLUDE_ONLY_NAMESPACES=['nsno\0'])
     @override_settings(JS_REVERSE_EXCLUDE_NAMESPACES=['exclude_namespace'])
