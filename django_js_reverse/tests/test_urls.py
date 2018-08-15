@@ -3,6 +3,8 @@ import sys
 from copy import copy
 
 from django.conf.urls import include, url
+from django.conf.urls.i18n import i18n_patterns
+
 from django_js_reverse.tests.helper import is_django_ver_gte_2
 from django_js_reverse.views import urls_js
 
@@ -70,16 +72,34 @@ pattern_ns_arg = [
     url(r'', include(basic_patterns))
 ]
 
+i18n_pattern_ns_1 = [
+    url(r'', include(basic_patterns))
+]
+
+i18n_pattern_ns_2 = [
+    url(r'', include(basic_patterns))
+]
+
+i18n_pattern_ns_arg = [
+    url(r'', include(basic_patterns))
+]
+
 if is_django_ver_gte_2():
     urlexclude = (urlexclude, 'django_js_reverse')
     pattern_ns_1_arg = (pattern_ns_1, 'django_js_reverse')
     pattern_ns_2_arg = (pattern_ns_2, 'django_js_reverse')
     pattern_ns_arg_arg = (pattern_ns_arg, 'django_js_reverse')
+    i18n_pattern_ns_1_arg = (i18n_pattern_ns_1, 'django_js_reverse')
+    i18n_pattern_ns_2_arg = (i18n_pattern_ns_2, 'django_js_reverse')
+    i18n_pattern_ns_arg_arg = (i18n_pattern_ns_arg, 'django_js_reverse')
 else:
     urlexclude = urlexclude
     pattern_ns_1_arg = pattern_ns_1
     pattern_ns_2_arg = pattern_ns_2
     pattern_ns_arg_arg = pattern_ns_arg
+    i18n_pattern_ns_1_arg = i18n_pattern_ns_1
+    i18n_pattern_ns_2_arg = i18n_pattern_ns_2
+    i18n_pattern_ns_arg_arg = i18n_pattern_ns_arg
 
 pattern_nested_ns = [
     url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1'))
@@ -122,3 +142,21 @@ urlpatterns += [
     url(r'^nsdn/', include(pattern_dubble_nested_ns_arg, namespace='nsdn')),
     url(r'^nsno/', include(pattern_only_nested_ns_arg, namespace='nsno'))
 ]
+
+urlpatterns += i18n_patterns(
+    url(r'^i18n_ns1/', include(i18n_pattern_ns_1_arg, namespace='i18n_ns1')),
+    url(r'^i18n_ns2/', include(i18n_pattern_ns_2_arg, namespace='i18n_ns2')),
+    url(r'^i18n_ns(?P<ns_arg>[^/]*)/', include(pattern_ns_arg_arg, namespace='i18n_ns_arg')),
+    url(r'^i18n_test_no_url_args/$', dummy_view, name='i18n_test_no_url_args'),
+    url(r'^i18n_test_one_url_args/(?P<arg_one>[-\w]+)/$', dummy_view, name='i18n_test_one_url_args'),
+    url(r'^i18n_test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view,
+        name='i18n_test_two_url_args'),
+    url(r'^i18n_test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view,
+        name='i18n_test_optional_url_arg'),
+    url(r'^i18n_test_unicode_url_name/$', dummy_view, name=u('i18n_test_unicode_url_name')),
+    url(r'^i18n_test_duplicate_name/(?P<arg_one>[-\w]+)/$', dummy_view, name='i18n_test_duplicate_name'),
+    url(r'^i18n_test_duplicate_name/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view,
+        name='i18n_test_duplicate_name'),
+    url(r'^i18n_test_duplicate_argcount/(?P<arg_one>[-\w]+)?-(?P<arg_two>[-\w]+)?/$', dummy_view,
+        name='i18n_test_duplicate_argcount'),
+)
