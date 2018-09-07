@@ -100,6 +100,26 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
             yield x
 
 
+def generate_json(default_urlresolver, script_prefix=None):
+    if script_prefix is None:
+        script_prefix = urlresolvers.get_script_prefix()
+
+    urls = sorted(list(prepare_url_list(default_urlresolver)))
+
+    return {
+        'urls': [
+            [
+                force_text(name),
+                [
+                    [force_text(path), [force_text(arg) for arg in args]]
+                    for path, args in patterns
+                ],
+            ] for name, patterns in urls
+        ],
+        'prefix': script_prefix,
+    }
+
+
 def generate_js(default_urlresolver):
     js_var_name = getattr(settings, 'JS_REVERSE_JS_VAR_NAME', JS_VAR_NAME)
     if not JS_IDENTIFIER_RE.match(js_var_name.upper()):
@@ -123,23 +143,11 @@ def generate_js(default_urlresolver):
         if not script_prefix.endswith('/'):
             script_prefix = '{0}/'.format(script_prefix)
     else:
-        script_prefix = urlresolvers.get_script_prefix()
+        script_prefix = None
 
-    urls = sorted(list(prepare_url_list(default_urlresolver)))
-
+    data = generate_json(default_urlresolver, script_prefix)
     js_content = loader.render_to_string('django_js_reverse/urls_js.tpl', {
-        'data': json.dumps({
-            'urls': [
-                [
-                    force_text(name),
-                    [
-                        [force_text(path), [force_text(arg) for arg in args]]
-                        for path, args in patterns
-                    ],
-                ] for name, patterns in urls
-            ],
-            'url_prefix': script_prefix,
-        }),
+        'data': json.dumps(data),
         'js_name': '.'.join([js_global_object_name, js_var_name]),
     })
 

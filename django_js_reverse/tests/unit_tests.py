@@ -52,6 +52,9 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
     def test_view_no_url_args(self):
         self.assertEqualJSUrlEval('Urls.test_no_url_args()', '/test_no_url_args/')
 
+    def test_camel_case(self):
+        self.assertEqualJSUrlEval('Urls.testNoUrlArgs()', '/test_no_url_args/')
+
     def test_view_one_url_arg(self):
         self.assertEqualJSUrlEval('Urls.test_one_url_args("arg_one")', '/test_one_url_args/arg_one/')
 

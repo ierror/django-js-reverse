@@ -1,7 +1,7 @@
 {{ js_name }} = (function () {
     var data = JSON.parse('{{ data|escapejs }}');
     var url_patterns = data.urls;
-    var url_prefix = data.url_prefix;
+    var url_prefix = data.prefix;
     var Urls = {};
     var self = { url_patterns: {} };
 
@@ -84,8 +84,9 @@
         _ref = url_patterns[_i], name = _ref[0], pattern = _ref[1];
         self.url_patterns[name] = pattern;
         url = _get_url(name);
-        Urls[name] = url;
+        Urls[name.replace(/[-_]+(.)/g, function (_m, p1) { return p1.toUpperCase(); })] = url;
         Urls[name.replace(/-/g, '_')] = url;
+        Urls[name] = url;
     }
 
     return Urls;
