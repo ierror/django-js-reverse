@@ -13,6 +13,8 @@ matrix:
       sudo: true
 
 install:
+  - nvm install --lts
+  - nvm use --lts
   - pip install -q tox coverage coveralls tox-travis
 
 script:
