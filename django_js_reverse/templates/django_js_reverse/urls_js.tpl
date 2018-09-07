@@ -3,7 +3,7 @@
     var url_patterns = data.urls;
     var url_prefix = data.prefix;
     var Urls = {};
-    var self = { url_patterns: {} };
+    var self_url_patterns = {};
 
     var _get_url = function (url_pattern) {
         return function () {
@@ -11,7 +11,7 @@
                 _ref_list, match_ref, provided_keys, build_kwargs;
 
             _arguments = arguments;
-            _ref_list = self.url_patterns[url_pattern];
+            _ref_list = self_url_patterns[url_pattern];
 
             if (arguments.length == 1 && typeof (arguments[0]) == "object") {
                 // kwargs mode
@@ -82,7 +82,7 @@
     var name, pattern, url, _i, _len, _ref;
     for (_i = 0, _len = url_patterns.length; _i < _len; _i++) {
         _ref = url_patterns[_i], name = _ref[0], pattern = _ref[1];
-        self.url_patterns[name] = pattern;
+        self_url_patterns[name] = pattern;
         url = _get_url(name);
         Urls[name.replace(/[-_]+(.)/g, function (_m, p1) { return p1.toUpperCase(); })] = url;
         Urls[name.replace(/-/g, '_')] = url;
