@@ -27,6 +27,26 @@ after_success:
   - coverage combine
   - coveralls
 
+before_deploy:
+  - git stash --all
+  - ./prepare_npm.py
+_deploy_provider: &_deploy_provider
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: ierror/django-js-reverse
+    python: "3.7"
+deploy:
+  - <<: *_deploy_provider
+    provider: pypi
+    distributions: sdist bdist_wheel
+    user: boerni
+    password: "TODO: add password"
+  - <<: *_deploy_provider
+    provider: npm
+    email: mboerni@gmail.com
+    api_key: "TODO: add api_key"
+
 cache: pip
 
 notifications:

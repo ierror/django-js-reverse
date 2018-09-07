@@ -1,4 +1,5 @@
 {{ js_name }} = (function () {
+    "use strict";
     var data = JSON.parse('{{ data|escapejs }}');
     function factory(d) {
         var url_patterns = d.urls;
