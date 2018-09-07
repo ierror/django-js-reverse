@@ -27,6 +27,8 @@ after_success:
   - coverage combine
   - coveralls
 
+cache: pip
+
 notifications:
   email:
     - boerni@gmail.com
