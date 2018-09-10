@@ -60,13 +60,13 @@ _________
     Thank you `kavdev <https://github.com/kavdev>`_
 
 0.8.1
-    Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ was still present in the build. => Added cleanup to the release make command.
+    Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ was still present in the build. => Added cleanup to the release make command.
 
 0.8.0
     New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`_
     Thank you `wlonk <https://github.com/wlonk>`_
 
-    Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
+    Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
 
 0.7.3
     New: Support for Django 1.10
@@ -133,14 +133,18 @@ Usage as static file
 --------------------
 
 First generate static file by
+
 ::
+
     ./manage.py collectstatic_js_reverse
 
 If you change some urls or add an app and want to update the reverse.js file,
 run the command again.
 
 After this add the file to your template
+
 ::
+
     <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 
 
@@ -179,6 +183,9 @@ or, if you are using Django > 1.5
 
 Usage as template tag
 _____________________
+
+
+::
 
     {% load js_reverse %}
 
@@ -253,8 +260,8 @@ To exclude any namespaces from the generated javascript file, add them to the `J
 
 If you want to include only specific namespaces add them to the `JS_REVERSE_INCLUDE_ONLY_NAMESPACES` setting
 tips:
- * Use "" (empty string) for urls without namespace
- * Use "foo\0" to include urls just from "foo" namaspace and not from any subnamespaces (e.g. "foo:bar")
+* Use "" (empty string) for urls without namespace
+* Use "foo\0" to include urls just from "foo" namaspace and not from any subnamespaces (e.g. "foo:bar")
 
 ::
 
@@ -262,7 +269,9 @@ tips:
 
 If you run your application under a subpath, the collectstatic_js_reverse needs to take care of this.
 Define the prefix in your django settings:
+
 ::
+
    JS_REVERSE_SCRIPT_PREFIX = '/myprefix/'
 
 By default collectstatic_js_reverse writes its output (reverse.js) to your project's STATIC_ROOT.
