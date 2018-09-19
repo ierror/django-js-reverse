@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import json
 import os
+import re
+import subprocess
 import sys
 import unittest
 
@@ -13,7 +16,6 @@ from django.core.management import call_command
 from django.template import Context, RequestContext, Template
 from django.utils.encoding import smart_str
 from helper import is_django_ver_gte_2
-from selenium.webdriver.phantomjs.webdriver import WebDriver
 from utils import script_prefix
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
@@ -23,28 +25,26 @@ from django.test import TestCase  # noqa: E402 isort:skip
 from django.test.client import Client  # noqa: E402 isort:skip
 from django.test.utils import override_settings  # noqa: E402 isort:skip
 
-
 class AbstractJSReverseTestCase(object):
     client = Client()
-    selenium = WebDriver()
 
     @classmethod
     def setUpClass(cls):
         if hasattr(django, 'setup'):
             # for django >= 1.7
             django.setup()
-        cls.selenium = WebDriver()
         super(AbstractJSReverseTestCase, cls).setUpClass()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super(AbstractJSReverseTestCase, cls).tearDownClass()
 
     def assertEqualJSUrlEval(self, url_call, expected_url):
         response = self.client.post('/jsreverse/')
-        self.assertEqual(self.selenium.execute_script('%s return %s;' % (smart_str(response.content), url_call)),
-                         expected_url)
+        script = '{}return {};'.format(smart_str(response.content), url_call)
+        module = 'console.log(new Function({})());'.format(json.dumps(script))
+        stdout = (
+            subprocess
+            .check_output(['node', '-e', module.encode('utf8')])
+            .decode('utf8')
+        )
+        self.assertEqual(re.sub(r'\n$', '', stdout), expected_url)
 
 
 @override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')

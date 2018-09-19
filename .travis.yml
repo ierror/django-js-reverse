@@ -1,22 +1,23 @@
+sudo: false
 language: python
 python:
   - "2.7"
   - "3.4"
   - "3.5"
   - "3.6"
-
+  - "pypy"
+  - "pypy3"
 matrix:
   include:
     - language: python
       python: "3.7"
       dist: xenial
+      sudo: true
 
 install:
+  - nvm install --lts
+  - nvm use --lts
   - pip install -q tox coverage coveralls tox-travis
-  - mkdir travis-phantomjs
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
 
 script:
   - coverage erase
@@ -25,6 +26,8 @@ script:
 after_success:
   - coverage combine
   - coveralls
+
+cache: pip
 
 notifications:
   email:
