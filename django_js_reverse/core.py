@@ -18,10 +18,7 @@ try:
 except ImportError:
     from django.core import urlresolvers
 
-if sys.version < '3':
-    text_type = unicode  # NOQA
-else:
-    text_type = str
+text_type = type(u'')
 
 JS_IDENTIFIER_RE = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
 
