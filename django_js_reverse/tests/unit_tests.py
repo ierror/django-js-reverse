@@ -141,7 +141,7 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/nsno/ns1/test_two_url_args/arg_one-arg_two/')
         self.assertNotContains(response, 'nsno:nsdn0', status_code=200)
 
-    def test_script_prefix(self):
+    def test_script_prefix_v1(self):
         with script_prefix('/foobarlala/'):
             self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
                                       '/foobarlala/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
@@ -243,16 +243,19 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
 
             # should not raise ImproperlyConfigured exception if STATIC_ROOT is not set
             with override_settings(STATIC_ROOT=None):
-                try:
-                    call_command('collectstatic_js_reverse')
-                except ImproperlyConfigured:
-                    self.fail(
-                        'should not raise ImproperlyConfigured exception if STATIC_ROOT is not set and JS_REVERSE_OUTPUT_PATH is set')
+                call_command('collectstatic_js_reverse')
+
+    def test_script_prefix_noslash(self):
+        script_prefix = '/test/foo/bar'
+        with override_settings(JS_REVERSE_SCRIPT_PREFIX=script_prefix):
+            self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}/test_no_url_args/'.format(script_prefix))
 
     def test_script_prefix(self):
         script_prefix = '/test/foo/bar/'
         with override_settings(JS_REVERSE_SCRIPT_PREFIX=script_prefix):
             self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}test_no_url_args/'.format(script_prefix))
+
+
 
 
 @override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
