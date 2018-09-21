@@ -3,6 +3,7 @@ import sys
 from copy import copy
 
 from django.conf.urls import include, url
+from django.views.generic import View
 from django_js_reverse.tests.helper import is_django_ver_gte_2
 from django_js_reverse.views import urls_js
 
@@ -12,9 +13,7 @@ except ImportError:
     pass
 
 
-def dummy_view(*args, **kwargs):
-    pass
-
+dummy_view = View.as_view()
 
 app_name = 'django_js_reverse'
 
