@@ -22,7 +22,7 @@ from utils import script_prefix
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from django.test import TestCase  # noqa: E402 isort:skip
+from django.test import TestCase, RequestFactory  # noqa: E402 isort:skip
 from django.test.client import Client  # noqa: E402 isort:skip
 from django.test.utils import override_settings  # noqa: E402 isort:skip
 
@@ -36,9 +36,8 @@ class AbstractJSReverseTestCase(object):
             django.setup()
         super(AbstractJSReverseTestCase, cls).setUpClass()
 
-    def assertEqualJSUrlEval(self, url_call, expected_url):
-        response = self.client.post('/jsreverse/')
-        script = '{}return {};'.format(smart_str(response.content), url_call)
+    def assertEqualJSEval(self, js, url_call, expected_url):
+        script = '{}return {};'.format(js, url_call)
         module = 'console.log(new Function({})());'.format(json.dumps(script))
         stdout = (
             subprocess
@@ -46,6 +45,11 @@ class AbstractJSReverseTestCase(object):
             .decode('utf8')
         )
         self.assertEqual(re.sub(r'\n$', '', stdout), expected_url)
+
+
+    def assertEqualJSUrlEval(self, *args, **kwargs):
+        js = smart_str(self.client.post('/jsreverse/').content)
+        self.assertEqualJSEval(js, *args, **kwargs)
 
 
 @override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
@@ -258,14 +262,23 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
 
 
 
-@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
+@override_settings(
+    ROOT_URLCONF='django_js_reverse.tests.test_urls',
+    TEMPLATE_CONTEXT_PROCESSORS=['django.core.context_processors.request'],
+)
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
     def test_tpl_tag_with_request_in_context(self):
-        context_instance = RequestContext(self.client.request)
+        request = RequestFactory().post('/jsreverse/')
+        request.urlconf = 'django_js_reverse.tests.test_urlconf_urls'
         tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
-        js_from_tag = tpl.render(context_instance)
-        js_from_view = smart_str(self.client.post('/jsreverse/').content)
-        self.assertEqual(js_from_tag, js_from_view)
+        js = tpl.render(RequestContext(request))
+        self.assertEqualJSEval(js, 'Urls.test_changed_urlconf()', '/test_changed_urlconf/')
+
+    def test_tpl_tag_with_dict_request_in_context(self):
+        request = {'urlconf': 'django_js_reverse.tests.test_urlconf_urls'}
+        tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
+        js = tpl.render(Context({'request': request}))
+        self.assertEqualJSEval(js, 'Urls.test_changed_urlconf()', '/test_changed_urlconf/')
 
     def test_tpl_tag_without_request_in_context(self):
         context_instance = Context()
