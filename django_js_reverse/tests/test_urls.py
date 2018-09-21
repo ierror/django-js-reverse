@@ -2,7 +2,7 @@
 import sys
 from copy import copy
 
-from django.conf.urls import include, url
+from django.conf.urls import include as django_include, url
 from django.views.generic import View
 from django_js_reverse.tests.helper import is_django_ver_gte_2
 from django_js_reverse.views import urls_js
@@ -14,8 +14,6 @@ except ImportError:
 
 
 dummy_view = View.as_view()
-
-app_name = 'django_js_reverse'
 
 basic_patterns = [
     url(r'^jsreverse/$', urls_js, name='js_reverse'),
@@ -47,68 +45,46 @@ urlexclude = [
         name='test_exclude_namespace_url1')
 ]
 
+def include(v, **kwargs):
+    if not is_django_ver_gte_2():
+        return django_include(v, **kwargs)
+
+    return django_include((v, 'django_js_reverse'), **kwargs)
+
 # test namespace
 pattern_ns_1 = [
-    url(r'', include(basic_patterns))
+    url(r'', django_include(basic_patterns))
 ]
 
 pattern_ns_2 = [
-    url(r'', include(basic_patterns))
+    url(r'', django_include(basic_patterns))
 ]
 
-pattern_ns_arg = [
-    url(r'', include(basic_patterns))
+pattern_ns = [
+    url(r'', django_include(basic_patterns))
 ]
-
-if is_django_ver_gte_2():
-    urlexclude = (urlexclude, 'django_js_reverse')
-    pattern_ns_1_arg = (pattern_ns_1, 'django_js_reverse')
-    pattern_ns_2_arg = (pattern_ns_2, 'django_js_reverse')
-    pattern_ns_arg_arg = (pattern_ns_arg, 'django_js_reverse')
-else:
-    urlexclude = urlexclude
-    pattern_ns_1_arg = pattern_ns_1
-    pattern_ns_2_arg = pattern_ns_2
-    pattern_ns_arg_arg = pattern_ns_arg
 
 pattern_nested_ns = [
-    url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1'))
+    url(r'^ns1/', include(pattern_ns_1, namespace='ns1'))
 ]
 
 pattern_dubble_nested2_ns = [
-    url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1'))]
-
-if is_django_ver_gte_2():
-    pattern_nested_ns_arg = (pattern_nested_ns, 'django_js_reverse')
-    pattern_dubble_nested2_ns_arg = (pattern_dubble_nested2_ns, 'django_js_reverse')
-else:
-    pattern_nested_ns_arg = pattern_nested_ns
-    pattern_dubble_nested2_ns_arg = pattern_dubble_nested2_ns
+    url(r'^ns1/', include(pattern_ns_1, namespace='ns1'))]
 
 pattern_dubble_nested_ns = [
-    url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1')),
-    url(r'^nsdn2/', include(pattern_dubble_nested2_ns_arg, namespace='nsdn2'))]
-
-if is_django_ver_gte_2():
-    pattern_dubble_nested_ns_arg = (pattern_dubble_nested_ns, 'django_js_reverse')
-else:
-    pattern_dubble_nested_ns_arg = pattern_dubble_nested_ns
+    url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
+    url(r'^nsdn2/', include(pattern_dubble_nested2_ns, namespace='nsdn2'))]
 
 pattern_only_nested_ns = [
-    url(r'^ns1/', include(pattern_ns_1)),
-    url(r'^nsdn0/', include(pattern_dubble_nested2_ns_arg, namespace='nsdn0'))]
-
-if is_django_ver_gte_2():
-    pattern_only_nested_ns_arg = (pattern_only_nested_ns, 'django_js_reverse')
-else:
-    pattern_only_nested_ns_arg = pattern_only_nested_ns
+    url(r'^ns1/', django_include(pattern_ns_1)),
+    url(r'^nsdn0/', include(pattern_dubble_nested2_ns, namespace='nsdn0'))]
 
 urlpatterns += [
-    url(r'^ns1/', include(pattern_ns_1_arg, namespace='ns1')),
-    url(r'^ns2/', include(pattern_ns_2_arg, namespace='ns2')),
+    url(r'^ns1/', include(pattern_ns_1, namespace='ns1')),
+    url(r'^ns2/', include(pattern_ns_2, namespace='ns2')),
     url(r'^ns_ex/', include(urlexclude, namespace='exclude_namespace')),
-    url(r'^ns(?P<ns_arg>[^/]*)/', include(pattern_ns_arg_arg, namespace='ns_arg')),
-    url(r'^nestedns/', include(pattern_nested_ns_arg, namespace='nestedns')),
-    url(r'^nsdn/', include(pattern_dubble_nested_ns_arg, namespace='nsdn')),
-    url(r'^nsno/', include(pattern_only_nested_ns_arg, namespace='nsno'))
+    url(r'^ns(?P<ns_arg>[^/]*)/', include(pattern_ns, namespace='ns_arg')),
+    url(r'^nestedns/', include(pattern_nested_ns, namespace='nestedns')),
+    url(r'^nsdn/', include(pattern_dubble_nested_ns, namespace='nsdn')),
+    url(r'^nsno/', include(pattern_only_nested_ns, namespace='nsno'))
 ]
