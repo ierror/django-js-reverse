@@ -81,17 +81,15 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
 
         # if we have inner_ns_path, reconstruct a new resolver so that we can
         # handle regex substitutions within the regex of a namespace.
-        if inner_ns_path:
-            args = [inner_ns_path, inner_urlresolver]
+        args = [inner_ns_path, inner_urlresolver]
 
-            # https://github.com/ierror/django-js-reverse/issues/65
-            if StrictVersion(django.get_version()) >= StrictVersion("2.0.6"):
-                args.append(tuple(urlresolver.pattern.converters.items()))
+        # https://github.com/ierror/django-js-reverse/issues/65
+        if StrictVersion(django.get_version()) >= StrictVersion("2.0.6"):
+            args.append(tuple(urlresolver.pattern.converters.items()))
 
-            inner_urlresolver = urlresolvers.get_ns_resolver(*args)
-            inner_ns_path = ''
+        inner_urlresolver = urlresolvers.get_ns_resolver(*args)
 
-        for x in prepare_url_list(inner_urlresolver, inner_ns_path, inner_ns):
+        for x in prepare_url_list(inner_urlresolver, '', inner_ns):
             yield x
 
 
