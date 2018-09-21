@@ -1,3 +1,4 @@
 [run]
 include=*/django_js_reverse*
 omit=django_js_reverse/rjsmin.py
+branch = True
