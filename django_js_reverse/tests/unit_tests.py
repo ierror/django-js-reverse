@@ -8,6 +8,7 @@ import re
 import subprocess
 import sys
 import unittest
+import io
 
 import django
 from django.conf import settings
@@ -212,15 +213,11 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         call_command('collectstatic_js_reverse')
 
         path = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js', 'reverse.js')
-        f = open(path)
+        f = io.open(path)
         content1 = f.read()
-        if hasattr(content1, 'decode'):
-            content1 = content1.decode()
 
         r2 = self.client.get('/jsreverse/')
-        content2 = r2.content
-        if hasattr(content2, 'decode'):
-            content2 = content2.decode()
+        content2 = r2.content.decode()
 
         self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
         self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
@@ -235,15 +232,11 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         with override_settings(JS_REVERSE_OUTPUT_PATH=js_output_path):
             call_command('collectstatic_js_reverse')
 
-            f = open(os.path.join(js_output_path, 'reverse.js'))
+            f = io.open(os.path.join(js_output_path, 'reverse.js'))
             content1 = f.read()
-            if hasattr(content1, 'decode'):
-                content1 = content1.decode()
 
             r2 = self.client.get('/jsreverse/')
-            content2 = r2.content
-            if hasattr(content2, 'decode'):
-                content2 = content2.decode()
+            content2 = r2.content.decode()
 
             self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
             self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
