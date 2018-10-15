@@ -37,7 +37,11 @@ class Command(BaseCommand):
         if fs.exists(file):
             fs.delete(file)
 
-        default_urlresolver = get_resolver(None)
+        try:
+            urlconf = settings.ROOT_URLCONF
+        except AttributeError:
+            urlconf = None
+        default_urlresolver = get_resolver(urlconf)
         content = generate_js(default_urlresolver)
         fs.save(file, ContentFile(content))
         if len(sys.argv) > 1 and sys.argv[1] in ['collectstatic_js_reverse']:
