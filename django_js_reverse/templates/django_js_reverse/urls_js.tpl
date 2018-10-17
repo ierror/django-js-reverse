@@ -1,91 +1,81 @@
 {{ js_global_object_name }}.{{ js_var_name }} = (function () {
-
     var Urls = {};
-
     var self = {
         urlPatterns:{}
     };
 
-    var _getUrl = (function (urlPattern) {
+    var _getUrl = function (urlPattern) {
         return function () {
-            var _arguments, index, url, urlArgs, _i, _len, _ref,
-                _refList, matchRef, providedKeys, buildKwargs;
-
+            var _arguments, index, url, urlArg, urlArgs, i, _len, _ref,
+                _refList, matchRef, providedKeys, build_kwargs;
             _arguments = arguments;
             _refList = self.urlPatterns[urlPattern];
-
             if (arguments.length === 1 && typeof (arguments[0]) === "object") {
                 // kwargs mode
                 var providedKeysList = Object.keys (arguments[0]);
                 providedKeys = {};
-                for (_i = 0; _i < providedKeysList.length; _i++) {
-                    providedKeys[providedKeysList[_i]] = 1;
-                };
+                for (var i = 0; i < providedKeysList.length; i++) {
+                    providedKeys[providedKeysList[i]] = 1;
+                }
 
                 matchRef = function (ref)
                 {
-                    var _i;
-
+                    var j;
                     // Verify that they have the same number of arguments
                     if (ref[1].length !== providedKeysList.length) {
                         return false;
-                    };
-
-                    for (_i = 0;
-                         _i < ref[1].length && ref[1][_i] in providedKeys;
-                         _i++) { };
-
+                    }
+                    for (j = 0;
+                         j < ref[1].length && ref[1][j] in providedKeys;
+                         j++) { ; }
                     // If for loop completed, we have all keys
-                    return _i === ref[1].length;
-                };
+                    return j === ref[1].length;
+                }
 
-                buildKwargs = function (keys) {return _arguments[0];};
+                build_kwargs = function (keys) {return _arguments[0];}
 
-            };
-            else {
+            } else {
                 // args mode
                 matchRef = function (ref)
                 {
                     return ref[1].length === _arguments.length;
-                };
+                }
 
-                buildKwargs = function (keys) {
+                build_kwargs = function (keys) {
                     var kwargs = {};
 
-                    for (var i = 0; i < keys.length; i++) {
-                        kwargs[keys[i]] = _arguments[i];
-                    };
+                    for (var j = 0; j < keys.length; j++) {
+                        kwargs[keys[j]] = _arguments[j];
+                    }
 
                     return kwargs;
-                };
-            };
+                }
+            }
 
-            for (_i = 0;
-                 _i < _refList.length && !matchRef(_refList[_i]);
-                 _i++) { };
+            for (i = 0;
+                 i < _refList.length && !matchRef(_refList[i]);
+                 i++) { ; }
 
             // can't find a match
-            if (_i === _refList.length) {
+            if (i === _refList.length)
                 return null;
-            };
 
-            _ref = _refList[_i];
-            url = _ref[0], urlArgs = buildKwargs(_ref[1]);
-            for (var urlArg in urlArgs) {
-                var urlArgValue = urlArgs[urlArg];
-                if (urlArgValue === undefined || urlArgValue === null) {
-                    urlArgValue = '';
-                };
-                else {
-                    urlArgValue = urlArgValue.toString();
-                };
+            _ref = _refList[i];
+            url = _ref[0], urlArgs = build_kwargs(_ref[1]);
+            for (urlArg in urlArgs) {
+            	var urlArgValue = urlArgs[urlArg];
+            	if (urlArgValue === undefined || urlArgValue === null) {
+            		urlArgValue = '';
+            	} else {
+            		urlArgValue = urlArgValue.toString();
+            	}
                 url = url.replace("%(" + urlArg + ")s", urlArgValue);
-            };
+            }
             return '{{url_prefix|escapejs}}' + url;
         };
     };
 
-    var name, pattern, url, urlPatterns, _i, _len, _ref;
+    var name, pattern, url, urlPatterns, i, _len, _ref;
     urlPatterns = [
         {% for name, patterns in urls %}
             [
@@ -107,13 +97,13 @@
     ];
 
     self.urlPatterns = {};
-    for (_i = 0, _len = urlPatterns.length; _i < _len; _i++) {
-        _ref = urlPatterns[_i], name = _ref[0], pattern = _ref[1];
+    for (i = 0, _len = urlPatterns.length; i < _len; i++) {
+        _ref = urlPatterns[i], name = _ref[0], pattern = _ref[1];
         self.urlPatterns[name] = pattern;
         url = _getUrl(name);
         Urls[name] = url;
         Urls[name.replace(/-/g, '_')] = url;
-    };
+    }
 
     return Urls;
-};)());
+})();
