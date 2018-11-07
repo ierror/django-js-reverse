@@ -37,10 +37,7 @@ class Command(BaseCommand):
         if fs.exists(file):
             fs.delete(file)
 
-        try:
-            urlconf = settings.ROOT_URLCONF
-        except AttributeError:
-            urlconf = None
+        urlconf = getattr(settings, 'ROOT_URLCONF', None)
         default_urlresolver = get_resolver(urlconf)
         content = generate_js(default_urlresolver)
         fs.save(file, ContentFile(content))
