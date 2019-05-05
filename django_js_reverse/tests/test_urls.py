@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from copy import copy
 
-from django.conf.urls import include as django_include, url
+from django.conf.urls import include as django_include
+from django.conf.urls import url
 from django.views.generic import View
 from django_js_reverse.tests.helper import is_django_ver_gte_2
 from django_js_reverse.views import urls_js

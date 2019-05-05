@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import io
 import json
 import os
 import re
 import subprocess
 import sys
 import unittest
-import io
 
 import django
 from django.conf import settings

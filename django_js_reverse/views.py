@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
 
+from django import http
+from django_js_reverse import core
+
 try:
     from django.urls import get_resolver
 except ImportError:
     from django.core.urlresolvers import get_resolver
-
-from django import http
-from django_js_reverse import core
 
 
 def _urls_js(fn, type):
