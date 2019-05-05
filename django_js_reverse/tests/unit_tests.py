@@ -8,6 +8,7 @@ import re
 import subprocess
 import sys
 import unittest
+import io
 
 import django
 from django.conf import settings
@@ -21,7 +22,7 @@ from utils import script_prefix
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..') + os.sep)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from django.test import TestCase  # noqa: E402 isort:skip
+from django.test import TestCase, RequestFactory  # noqa: E402 isort:skip
 from django.test.client import Client  # noqa: E402 isort:skip
 from django.test.utils import override_settings  # noqa: E402 isort:skip
 
@@ -36,9 +37,8 @@ class AbstractJSReverseTestCase(object):
             django.setup()
         super(AbstractJSReverseTestCase, cls).setUpClass()
 
-    def assertEqualJSUrlEval(self, url_call, expected_url):
-        response = self.client.post('/jsreverse/')
-        script = '{}return {};'.format(smart_str(response.content), url_call)
+    def assertEqualJSEval(self, js, url_call, expected_url):
+        script = '{}return {};'.format(js, url_call)
         module = 'console.log(new Function({})());'.format(json.dumps(script))
         stdout = (
             subprocess
@@ -46,6 +46,10 @@ class AbstractJSReverseTestCase(object):
             .decode('utf8')
         )
         self.assertEqual(re.sub(r'\n$', '', stdout), expected_url)
+
+    def assertEqualJSUrlEval(self, *args, **kwargs):
+        js = smart_str(self.client.post('/jsreverse/').content)
+        self.assertEqualJSEval(js, *args, **kwargs)
 
 
 @override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
@@ -144,7 +148,7 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
                                   '/nsno/ns1/test_two_url_args/arg_one-arg_two/')
         self.assertNotContains(response, 'nsno:nsdn0', status_code=200)
 
-    def test_script_prefix(self):
+    def test_script_prefix_v1(self):
         with script_prefix('/foobarlala/'):
             self.assertEqualJSUrlEval('Urls["nestedns:ns1:test_two_url_args"]("arg_one", "arg_two")',
                                       '/foobarlala/nestedns/ns1/test_two_url_args/arg_one-arg_two/')
@@ -216,15 +220,11 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         call_command('collectstatic_js_reverse')
 
         path = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js', 'reverse.js')
-        f = open(path)
+        f = io.open(path)
         content1 = f.read()
-        if hasattr(content1, 'decode'):
-            content1 = content1.decode()
 
         r2 = self.client.get('/jsreverse/')
-        content2 = r2.content
-        if hasattr(content2, 'decode'):
-            content2 = content2.decode()
+        content2 = r2.content.decode()
 
         self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
         self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
@@ -239,26 +239,23 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         with override_settings(JS_REVERSE_OUTPUT_PATH=js_output_path):
             call_command('collectstatic_js_reverse')
 
-            f = open(os.path.join(js_output_path, 'reverse.js'))
+            f = io.open(os.path.join(js_output_path, 'reverse.js'))
             content1 = f.read()
-            if hasattr(content1, 'decode'):
-                content1 = content1.decode()
 
             r2 = self.client.get('/jsreverse/')
-            content2 = r2.content
-            if hasattr(content2, 'decode'):
-                content2 = content2.decode()
+            content2 = r2.content.decode()
 
             self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
             self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
 
             # should not raise ImproperlyConfigured exception if STATIC_ROOT is not set
             with override_settings(STATIC_ROOT=None):
-                try:
-                    call_command('collectstatic_js_reverse')
-                except ImproperlyConfigured:
-                    self.fail(
-                        'should not raise ImproperlyConfigured exception if STATIC_ROOT is not set and JS_REVERSE_OUTPUT_PATH is set')
+                call_command('collectstatic_js_reverse')
+
+    def test_script_prefix_noslash(self):
+        script_prefix = '/test/foo/bar'
+        with override_settings(JS_REVERSE_SCRIPT_PREFIX=script_prefix):
+            self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}/test_no_url_args/'.format(script_prefix))
 
     def test_script_prefix(self):
         script_prefix = '/test/foo/bar/'
@@ -266,14 +263,23 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
             self.assertEqualJSUrlEval('Urls.test_no_url_args()', '{0}test_no_url_args/'.format(script_prefix))
 
 
-@override_settings(ROOT_URLCONF='django_js_reverse.tests.test_urls')
+@override_settings(
+    ROOT_URLCONF='django_js_reverse.tests.test_urls',
+    TEMPLATE_CONTEXT_PROCESSORS=['django.core.context_processors.request'],
+)
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
     def test_tpl_tag_with_request_in_context(self):
-        context_instance = RequestContext(self.client.request)
+        request = RequestFactory().post('/jsreverse/')
+        request.urlconf = 'django_js_reverse.tests.test_urlconf_urls'
         tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
-        js_from_tag = tpl.render(context_instance)
-        js_from_view = smart_str(self.client.post('/jsreverse/').content)
-        self.assertEqual(js_from_tag, js_from_view)
+        js = tpl.render(RequestContext(request))
+        self.assertEqualJSEval(js, 'Urls.test_changed_urlconf()', '/test_changed_urlconf/')
+
+    def test_tpl_tag_with_dict_request_in_context(self):
+        request = {'urlconf': 'django_js_reverse.tests.test_urlconf_urls'}
+        tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
+        js = tpl.render(Context({'request': request}))
+        self.assertEqualJSEval(js, 'Urls.test_changed_urlconf()', '/test_changed_urlconf/')
 
     def test_tpl_tag_without_request_in_context(self):
         context_instance = Context()

@@ -143,7 +143,7 @@ def generate_js(default_urlresolver):
         if not script_prefix.endswith('/'):
             script_prefix = '{0}/'.format(script_prefix)
     else:
-        script_prefix = None
+        script_prefix = urlresolvers.get_script_prefix()
 
     data = generate_json(default_urlresolver, script_prefix)
     js_content = loader.render_to_string('django_js_reverse/urls_js.tpl', {
