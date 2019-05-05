@@ -57,6 +57,9 @@ _________
 
     New: Support for Django 2.2
 
+    New: Unit Tests Script prefix with no slash, changed URL Conf`#72 <https://github.com/ierror/django-js-reverse/issues/72>`__
+    Thank you `graingert <https://github.com/graingert>`__
+
     Fix: "ROOT_URLCONF not taken into account" `#73 <https://github.com/ierror/django-js-reverse/issues/73>`__ `#74 <https://github.com/ierror/django-js-reverse/issues/74>`__
     Thank you `LuukOost <https://github.com/LuukOost>`__ and `graingert <https://github.com/graingert>`__
 
