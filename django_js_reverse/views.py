@@ -17,8 +17,10 @@ def _urls_js(fn, type):
 
     return view
 
+
 def _generate_json(*args, **kwargs):
     return json.dumps(core.generate_json(*args, **kwargs))
 
-urls_js = _urls_js(core.generate_js, 'application/javascript');
-urls_json = _urls_js(_generate_json, 'application/json');
+
+urls_js = _urls_js(core.generate_js, 'application/javascript')
+urls_json = _urls_js(_generate_json, 'application/json')

@@ -25,7 +25,7 @@ Overview
 --------
 
 Django JS Reverse is a small django app that makes url handling of
-`named urls <https://docs.djangoproject.com/en/dev/topics/http/urls/#naming-url-patterns>`_ in javascript easy and non-annoying..
+`named urls <https://docs.djangoproject.com/en/dev/topics/http/urls/#naming-url-patterns>`__ in javascript easy and non-annoying..
 
 For example you can retrieve a named url:
 
@@ -57,19 +57,22 @@ _________
 
     New: Support for Django 2.2
 
-    Fix: "ROOT_URLCONF not taken into account" `#73 <https://github.com/ierror/django-js-reverse/issues/73>`_ `#74 <https://github.com/ierror/django-js-reverse/issues/74>`_
-    Thank you `LuukOost <https://github.com/LuukOost>`_ and `graingert <https://github.com/graingert>`_
+    Fix: "ROOT_URLCONF not taken into account" `#73 <https://github.com/ierror/django-js-reverse/issues/73>`__ `#74 <https://github.com/ierror/django-js-reverse/issues/74>`__
+    Thank you `LuukOost <https://github.com/LuukOost>`__ and `graingert <https://github.com/graingert>`__
+
+    Refactoring: "move template logic to view" `#64 <https://github.com/ierror/django-js-reverse/issues/64>`__
+    Thank you `graingert <https://github.com/graingert>`__
 
 0.8.2
-    Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`_
-    Thank you `kavdev <https://github.com/kavdev>`_
+    Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`__
+    Thank you `kavdev <https://github.com/kavdev>`__
 
 0.8.1
     Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ was still present in the build. => Added cleanup to the release make command.
 
 0.8.0
-    New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`_
-    Thank you `wlonk <https://github.com/wlonk>`_
+    New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`__
+    Thank you `wlonk <https://github.com/wlonk>`__
 
     Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
 
@@ -78,17 +81,17 @@ _________
 
     Chg: Renamed "production" branch to "master"
 
-    Fix: `#48 <https://github.com/ierror/django-js-reverse/issues/48>`_ - "Change False to 'window' in global object name in README."
-    Thank you `karamanolev <https://github.com/karamanolev>`_
+    Fix: `#48 <https://github.com/ierror/django-js-reverse/issues/48>`__ - "Change False to 'window' in global object name in README."
+    Thank you `karamanolev <https://github.com/karamanolev>`__
 
-    Fix: `PR #45 <https://github.com/ierror/django-js-reverse/pull/45>`_ - "Fix: collectstatic_js_reverse usage message"
-    Thank you `ghedsouza <https://github.com/ghedsouza>`_
+    Fix: `PR #45 <https://github.com/ierror/django-js-reverse/pull/45>`__ - "Fix: collectstatic_js_reverse usage message"
+    Thank you `ghedsouza <https://github.com/ghedsouza>`__
 
-    Fix: `PR #44 <https://github.com/ierror/django-js-reverse/pull/44>`_ - "Remove duplicate _get_url call"
-    Thank you `razh <https://github.com/razh>`_
+    Fix: `PR #44 <https://github.com/ierror/django-js-reverse/pull/44>`__ - "Remove duplicate _get_url call"
+    Thank you `razh <https://github.com/razh>`__
 
 
-`Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/master/CHANGELOG>`_
+`Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/master/CHANGELOG>`__
 
 
 Requirements
@@ -132,61 +135,6 @@ Add ``'django_js_reverse'`` to your ``INSTALLED_APPS`` setting.
         ...
         'django_js_reverse',
     )
-
-
-Usage with webpack
-------------------
-
-Install using ``npm``
-
-::
-
-    npm install --save django-js-reverse
-
-
-Include none-cached view …
-
-::
-
-    urlpatterns = patterns('',
-        url(r'^jsreverse.json$', 'django_js_reverse.views.urls_json', name='js_reverse'),
-    )
-
-… or a cached one that delivers the urls JSON
-
-::
-
-    from django_js_reverse import views
-    urlpatterns = patterns('',
-        url(r'^jsreverse.json$', cache_page(3600)(views.urls_json), name='js_reverse'),
-    )
-
-Include JavaScript in your bundle:
-
-::
-
-    // utils/djangoReverse.mjs
-    import _ from 'lodash/fp';
-    import djangoJsReverse from 'django-js-reverse';
-
-    export default _.once(
-      async () => {
-        const res = await fetch('/jsreverse.json');
-        const data = await res.json():
-        return djangoJsReverse(data);
-      }
-    )
-
-::
-
-    // somePlace.mjs
-    import djangoReverse from './utils/djangoReverse';
-
-    (async () => {
-      const urls = await djangoReverse;
-      const url = urls.someViewName('some-arg');
-      ...
-    })();
 
 
 Usage as static file
@@ -352,13 +300,13 @@ Running the test suite
 License
 -------
 
-`MIT <https://raw.github.com/ierror/django-js-reverse/develop/LICENSE>`_
+`MIT <https://raw.github.com/ierror/django-js-reverse/develop/LICENSE>`__
 
 
 Contact
 -------
 
-`@i_error <https://twitter.com/i_error>`_
+`@i_error <https://twitter.com/i_error>`__
 
 --------------
 

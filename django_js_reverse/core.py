@@ -154,10 +154,3 @@ def generate_js(default_urlresolver):
     if minfiy:
         js_content = rjsmin.jsmin(js_content)
     return js_content
-
-
-def generate_cjs_module():
-    return loader.render_to_string('django_js_reverse/urls_js.tpl', {
-        'data': json.dumps(False),
-        'js_name': 'module.exports',
-    })
