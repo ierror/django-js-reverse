@@ -57,6 +57,9 @@ _________
 
     New: Support for Django 2.2
 
+    Fix: "ROOT_URLCONF not taken into account" `#73 <https://github.com/ierror/django-js-reverse/issues/73>`_ `#74 <https://github.com/ierror/django-js-reverse/issues/74>`_
+    Thank you `LuukOost <https://github.com/LuukOost>`_ and `graingert <https://github.com/graingert>`_
+
 0.8.2
     Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`_
     Thank you `kavdev <https://github.com/kavdev>`_

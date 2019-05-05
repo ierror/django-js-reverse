@@ -226,7 +226,7 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         self.assertEqual(len(content1), len(content2), 'Static file don\'t match http response content_1')
         self.assertEqual(content1, content2, 'Static file don\'t match http response content_2')
 
-        # test for excpetion if STATIC_ROOT is not set
+        # test for exception if STATIC_ROOT is not set
         with override_settings(STATIC_ROOT=None):
             with self.assertRaises(ImproperlyConfigured):
                 call_command('collectstatic_js_reverse')
