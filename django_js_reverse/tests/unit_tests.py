@@ -25,6 +25,7 @@ from django.test import TestCase  # noqa: E402 isort:skip
 from django.test.client import Client  # noqa: E402 isort:skip
 from django.test.utils import override_settings  # noqa: E402 isort:skip
 
+
 class AbstractJSReverseTestCase(object):
     client = Client()
 

@@ -1,6 +1,8 @@
 0.9.0
     New: Support for Python 3.7
 
+    New: Support for Django 2.2
+
 0.8.2
     Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`_
     Thank you `kavdev <https://github.com/kavdev>`_
