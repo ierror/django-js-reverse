@@ -2,7 +2,7 @@
 import json
 import re
 import sys
-from distutils.version import StrictVersion
+from distutils.version import LooseVersion
 
 import django
 from django.conf import settings
@@ -90,7 +90,7 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
             args = [inner_ns_path, inner_urlresolver]
 
             # https://github.com/ierror/django-js-reverse/issues/65
-            if StrictVersion(django.get_version()) >= StrictVersion("2.0.6"):
+            if LooseVersion(django.get_version()) >= LooseVersion("2.0.6"):
                 args.append(tuple(urlresolver.pattern.converters.items()))
 
             inner_urlresolver = urlresolvers.get_ns_resolver(*args)

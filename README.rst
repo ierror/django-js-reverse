@@ -63,6 +63,9 @@ _________
     Refactoring: "move template logic to view" `#64 <https://github.com/ierror/django-js-reverse/issues/64>`__
     Thank you `graingert <https://github.com/graingert>`__
 
+    Fix: "Now using LooseVersion instead of StrictVersion to avoid issues with rc releases" `#67 <https://github.com/ierror/django-js-reverse/issues/64>`__
+    Thank you `kavdev <https://github.com/kavdev>`__
+
 0.8.2
     Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`__
     Thank you `kavdev <https://github.com/kavdev>`__
@@ -75,20 +78,6 @@ _________
     Thank you `wlonk <https://github.com/wlonk>`__
 
     Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
-
-0.7.3
-    New: Support for Django 1.10
-
-    Chg: Renamed "production" branch to "master"
-
-    Fix: `#48 <https://github.com/ierror/django-js-reverse/issues/48>`__ - "Change False to 'window' in global object name in README."
-    Thank you `karamanolev <https://github.com/karamanolev>`__
-
-    Fix: `PR #45 <https://github.com/ierror/django-js-reverse/pull/45>`__ - "Fix: collectstatic_js_reverse usage message"
-    Thank you `ghedsouza <https://github.com/ghedsouza>`__
-
-    Fix: `PR #44 <https://github.com/ierror/django-js-reverse/pull/44>`__ - "Remove duplicate _get_url call"
-    Thank you `razh <https://github.com/razh>`__
 
 
 `Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/master/CHANGELOG>`__

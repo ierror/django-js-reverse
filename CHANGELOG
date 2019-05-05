@@ -9,6 +9,9 @@
     Refactoring: "move template logic to view" `#64 <https://github.com/ierror/django-js-reverse/issues/64>`__
     Thank you `graingert <https://github.com/graingert>`__
 
+    Fix: "Now using LooseVersion instead of StrictVersion to avoid issues with rc releases" `#67 <https://github.com/ierror/django-js-reverse/issues/64>`__
+    Thank you `kavdev <https://github.com/kavdev>`__
+
 0.8.2
     Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`_
     Thank you `kavdev <https://github.com/kavdev>`_
