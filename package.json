@@ -1,0 +1,29 @@
+{
+  "author": "Bernhard Janetzki",
+  "bugs": {
+    "url": "https://github.com/ierror/django-js-reverse/issues"
+  },
+  "description": "JavaScript url handling for Django that doesn't hurt.",
+  "files": [
+    "index.js",
+    "index.mjs"
+  ],
+  "homepage": "https://github.com/ierror/django-js-reverse#readme",
+  "keywords": [
+    "django",
+    "js",
+    "reverse",
+    "url"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "django-js-reverse",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ierror/django-js-reverse.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.0"
+}

@@ -130,8 +130,63 @@ Add ``'django_js_reverse'`` to your ``INSTALLED_APPS`` setting.
 
     INSTALLED_APPS = (
         ...
-        'django_js_reverse',        
+        'django_js_reverse',
     )
+
+
+Usage with webpack
+------------------
+
+Install using ``npm``
+
+::
+
+    npm install --save django-js-reverse
+
+
+Include none-cached view …
+
+::
+
+    urlpatterns = patterns('',
+        url(r'^jsreverse.json$', 'django_js_reverse.views.urls_json', name='js_reverse'),
+    )
+
+… or a cached one that delivers the urls JSON
+
+::
+
+    from django_js_reverse import views
+    urlpatterns = patterns('',
+        url(r'^jsreverse.json$', cache_page(3600)(views.urls_json), name='js_reverse'),
+    )
+
+Include JavaScript in your bundle:
+
+::
+
+    // utils/djangoReverse.mjs
+    import _ from 'lodash/fp';
+    import djangoJsReverse from 'django-js-reverse';
+
+    export default _.once(
+      async () => {
+        const res = await fetch('/jsreverse.json');
+        const data = await res.json():
+        return djangoJsReverse(data);
+      }
+    )
+
+::
+
+    // somePlace.mjs
+    import djangoReverse from './utils/djangoReverse';
+
+    (async () => {
+      const urls = await djangoReverse;
+      const url = urls.someViewName('some-arg');
+      ...
+    })();
 
 
 Usage as static file
@@ -217,7 +272,7 @@ notation instead:
     Urls['betterliving-get-house']('house', 12)
     Urls['namespace:betterliving-get-house']('house', 12)
 
-You can also pass javascript objects to match keyword aguments like the 
+You can also pass javascript objects to match keyword aguments like the
 examples bellow:
 
 ::
