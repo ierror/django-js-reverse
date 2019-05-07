@@ -265,6 +265,7 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
 
 @override_settings(
     ROOT_URLCONF='django_js_reverse.tests.test_urls',
+
     TEMPLATE_CONTEXT_PROCESSORS=['django.core.context_processors.request'],
 )
 class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
@@ -288,6 +289,15 @@ class JSReverseTemplateTagTest(AbstractJSReverseTestCase, TestCase):
         js_from_view = smart_str(self.client.post('/jsreverse/').content)
         self.assertEqual(js_from_tag, js_from_view)
 
+    def test_tpl_tag_escape_entities(self):
+        context_instance = Context()
+        tpl = Template('{% load js_reverse %}{% js_reverse_inline %}')
+        js = tpl.render(context_instance)
+        self.assertIn(
+            '\\u003C/script\\u003E\\u003Cscript\\u003Econsole.log(\\u0026amp;)'
+            '\\u003C/script\\u003E\\u003C!--',
+            js,
+        )
 
 if __name__ == '__main__':
     unittest.main()

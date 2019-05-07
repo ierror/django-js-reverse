@@ -184,6 +184,10 @@ or, if you are using Django > 1.5
 Usage as template tag
 _____________________
 
+You can place the js_reverse JavaScript inline into your templates,
+however use of inline JavaScript is not recommended, because it
+will make it impossible to deploy a secure Content Security Policy.
+See `django-csp <https://django-csp.readthedocs.io/>`__
 
 ::
 
