@@ -1,6 +1,6 @@
 {{ js_name }} = (function () {
     "use strict";
-    var data = {{ data|safe }};
+    var data = {{ data }};
     function factory(d) {
         var url_patterns = d.urls;
         var url_prefix = d.prefix;

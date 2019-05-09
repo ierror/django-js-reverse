@@ -20,6 +20,7 @@ basic_patterns = [
 
     # test urls
     url(r'^test_no_url_args/$', dummy_view, name='test_no_url_args'),
+    url(r'^test_script/$', dummy_view, name='</script><script>console.log(&amp;)</script><!--'),
     url(r'^test_one_url_args/(?P<arg_one>[-\w]+)/$', dummy_view, name='test_one_url_args'),
     url(r'^test_two_url_args/(?P<arg_one>[-\w]+)-(?P<arg_two>[-\w]+)/$', dummy_view, name='test_two_url_args'),
     url(r'^test_optional_url_arg/(?:1_(?P<arg_one>[-\w]+)-)?2_(?P<arg_two>[-\w]+)/$', dummy_view,

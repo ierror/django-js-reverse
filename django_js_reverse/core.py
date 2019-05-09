@@ -8,6 +8,7 @@ import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
+from django.utils.safestring import mark_safe
 from django.utils.encoding import force_text
 
 from . import rjsmin
@@ -120,6 +121,16 @@ def generate_json(default_urlresolver, script_prefix=None):
     }
 
 
+def _safe_json(obj):
+    return mark_safe(
+        json
+        .dumps(obj)
+        .replace('>', '\\u003E')
+        .replace('<', '\\u003C')
+        .replace('&', '\\u0026')
+    )
+
+
 def generate_js(default_urlresolver):
     js_var_name = getattr(settings, 'JS_REVERSE_JS_VAR_NAME', JS_VAR_NAME)
     if not JS_IDENTIFIER_RE.match(js_var_name.upper()):
@@ -147,7 +158,7 @@ def generate_js(default_urlresolver):
 
     data = generate_json(default_urlresolver, script_prefix)
     js_content = loader.render_to_string('django_js_reverse/urls_js.tpl', {
-        'data': json.dumps(data),
+        'data': _safe_json(data),
         'js_name': '.'.join([js_global_object_name, js_var_name]),
     })
 
