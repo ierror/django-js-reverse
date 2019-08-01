@@ -291,7 +291,7 @@ Running the test suite
 
 ::
 
-    make test
+    tox
 
 License
 -------

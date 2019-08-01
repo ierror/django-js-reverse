@@ -1,3 +1,9 @@
+0.9.2 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
 0.9.1
     Fix: avoid XSS introduced in 0.9.0 when using js_reverse_inline. A low threat as content injected is likely to be trusted input from the urlconfig.
 

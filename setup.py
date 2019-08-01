@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 import codecs
 import os
-from distutils.core import setup
 
-from setuptools import find_packages
+from setuptools import setup, find_packages
 
 
 def read(*parts):
@@ -13,11 +12,9 @@ def read(*parts):
         return fp.read()
 
 
-version_tuple = __import__('django_js_reverse').VERSION
-version = '.'.join([str(v) for v in version_tuple])
 setup(
     name='django-js-reverse',
-    version=version,
+    version='0.9.2.dev0',
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
@@ -28,7 +25,7 @@ setup(
     ],
     license='MIT',
     description='Javascript url handling for Django that doesn\'t hurt.',
-    long_description=read('README.rst'),
+    long_description=read('README.rst') + '\n\n' + read('CHANGELOG.rst'),
     author='Bernhard Janetzki',
     author_email='boerni@gmail.com',
     url='https://github.com/ierror/django-js-reverse',
