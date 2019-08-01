@@ -1,5 +1,5 @@
-0.9.2 (unreleased)
-------------------
+0.10.0 (2019-08-01)
+-------------------
 
 - deprecate django_js_reverse.VERSION. It will now always be ``(0, 9, 2)``
 - deprecate js_reverse_inline
