@@ -16,6 +16,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
 from django.template import Context, RequestContext, Template
 from django.utils.encoding import smart_str
+import js2py
 from helper import is_django_ver_gte_2
 from utils import script_prefix
 
@@ -25,6 +26,20 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from django.test import TestCase, RequestFactory  # noqa: E402 isort:skip
 from django.test.client import Client  # noqa: E402 isort:skip
 from django.test.utils import override_settings  # noqa: E402 isort:skip
+
+
+def node_jseval(expr):
+    module = 'console.log({});'.format(expr)
+    stdout = (
+        subprocess
+        .check_output(['node', '-e', module.encode('utf8')])
+        .decode('utf8')
+    )
+    return re.sub(r'\n$', '', stdout)
+
+
+def js2py_jseval(expr):
+    return js2py.eval_js(expr)
 
 
 class AbstractJSReverseTestCase(object):
@@ -39,13 +54,15 @@ class AbstractJSReverseTestCase(object):
 
     def assertEqualJSEval(self, js, url_call, expected_url):
         script = '{}return {};'.format(js, url_call)
-        module = 'console.log(new Function({})());'.format(json.dumps(script))
-        stdout = (
-            subprocess
-            .check_output(['node', '-e', module.encode('utf8')])
-            .decode('utf8')
-        )
-        self.assertEqual(re.sub(r'\n$', '', stdout), expected_url)
+        module = 'new Function({})()'.format(json.dumps(script))
+
+        def url(jseval):
+            if not callable(expected_url):
+                return expected_url
+            return expected_url(jseval)
+
+        self.assertEqual(node_jseval(module), url(node_jseval))
+        self.assertEqual(js2py_jseval('(function () {{ {} }}())'.format(script)), url(js2py_jseval))
 
     def assertEqualJSUrlEval(self, *args, **kwargs):
         js = smart_str(self.client.post('/jsreverse/').content)
@@ -179,7 +196,18 @@ class JSReverseViewTestCaseMinified(AbstractJSReverseTestCase, TestCase):
 
     def test_float_args(self):
         self.assertEqualJSUrlEval('Urls.test_two_url_args(0, 5.5)', '/test_two_url_args/0-5.5/')
-        self.assertEqualJSUrlEval('Urls.test_two_url_args(0.00001, 5.5)', '/test_two_url_args/0.00001-5.5/')
+        def get_url(js_eval):
+            """
+            js2py doesn't follow the Number.prototype.toString ES5 spec
+            correctly.
+
+            https://github.com/PiotrDabkowski/Js2Py/issues/82
+
+            Assert on whatever a float becomes - not what a float should be.
+            """
+            return '/test_two_url_args/{}-5.5/'.format(js_eval('(0.00001).toString()'))
+
+        self.assertEqualJSUrlEval('Urls.test_two_url_args(0.00001, 5.5)', get_url)
 
     def test_django_path_syntax(self):
         if is_django_ver_gte_2():
