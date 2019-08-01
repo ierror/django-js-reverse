@@ -1,8 +1,9 @@
 0.9.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- deprecate django_js_reverse.VERSION. It will now always be ``(0, 9, 2)``
+- deprecate js_reverse_inline
+- use setuptools.setup
 
 0.9.1
 -----
