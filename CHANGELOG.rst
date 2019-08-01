@@ -39,14 +39,14 @@
 0.8.1
 -----
 
-- Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ was still present in the build. => Added cleanup to the release make command.
+- Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ was still present in the build. => Added cleanup to the release make command.
 
 0.8.0
 -----
 
 - New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`_
   Thank you `wlonk <https://github.com/wlonk>`_
-- Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`_ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
+- Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
 
 0.7.3
 -----
