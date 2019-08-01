@@ -1,7 +1,7 @@
 0.10.1 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- support webpack and other bundlers
 
 
 0.10.0 (2019-08-01)

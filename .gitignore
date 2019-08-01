@@ -14,3 +14,6 @@ django_js_reverse/tests/tmp/
 .project
 .pydevproject
 .settings/
+
+index.js
+index.mjs
