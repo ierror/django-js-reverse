@@ -13,7 +13,7 @@ Django JS Reverse
    :target: https://coveralls.io/r/ierror/django-js-reverse?branch=master
 
 .. image:: https://img.shields.io/github/license/ierror/django-js-reverse.svg
-    :target: https://raw.githubusercontent.com/ierror/django-js-reverse/develop/LICENSE
+    :target: https://raw.githubusercontent.com/ierror/django-js-reverse/master/LICENSE
 
 .. image:: https://img.shields.io/pypi/wheel/django-js-reverse.svg
 
@@ -296,7 +296,7 @@ Running the test suite
 License
 -------
 
-`MIT <https://raw.github.com/ierror/django-js-reverse/develop/LICENSE>`__
+`MIT <https://raw.github.com/ierror/django-js-reverse/master/LICENSE>`__
 
 
 Contact

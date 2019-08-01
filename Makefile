@@ -12,13 +12,12 @@ test:
 
 release: clean
 	git checkout master
-	git merge develop -m "bump v$(VERSION)"
+	git commit -m "bump v$(VERSION)"
 	git push origin master
 	git tag v$(VERSION)
 	git push origin v$(VERSION)
 	pip install wheel
 	python setup.py sdist bdist_wheel upload --sign --identity=99C3C059
-	git checkout develop
 
 optimizing_imports:
 	pip install -r django_js_reverse/tests/requirements.txt
