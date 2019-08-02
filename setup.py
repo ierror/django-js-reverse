@@ -14,7 +14,7 @@ def read(*parts):
 
 setup(
     name='django-js-reverse',
-    version='0.10.1a',
+    version='0.10.1a1.dev0',
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
