@@ -1,5 +1,5 @@
-0.10.1 (unreleased)
--------------------
+0.10.1a (2019-08-02)
+--------------------
 
 - support webpack and other bundlers
 
