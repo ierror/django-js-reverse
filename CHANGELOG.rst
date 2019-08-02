@@ -1,7 +1,13 @@
-0.10.1 (unreleased)
--------------------
+0.10.1a1 (unreleased)
+---------------------
 
 - Nothing changed yet.
+
+
+0.10.1a (2019-08-02)
+--------------------
+
+- support webpack and other bundlers
 
 
 0.10.0 (2019-08-01)

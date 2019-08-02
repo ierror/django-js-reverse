@@ -1,14 +1,18 @@
-sudo: true
-
-dist: xenial
-
+sudo: false
 language: python
 python:
   - "2.7"
   - "3.4"
   - "3.5"
   - "3.6"
-  - "3.7"
+  - "pypy"
+  - "pypy3"
+matrix:
+  include:
+    - language: python
+      python: "3.7"
+      dist: xenial
+      sudo: true
 
 install:
   - nvm install --lts
@@ -28,3 +32,23 @@ cache: pip
 notifications:
   email:
     - boerni@gmail.com
+
+before_deploy:
+  - git stash --all
+  - tox -e prepare_npm
+_deploy_provider: &_deploy_provider
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: ierror/django-js-reverse
+    python: "3.7"
+deploy:
+  - <<: *_deploy_provider
+    provider: pypi
+    distributions: sdist bdist_wheel
+    user: "@token"
+    password: $PYPI_TOKEN
+  - <<: *_deploy_provider
+    provider: npm
+    email: django-js-reverse@graingert.co.uk
+    api_key: $NPM_TOKEN
