@@ -48,44 +48,6 @@ Result:
     /betterliving/house/12/
 
 
-
-Changelog
-_________
-
-0.9.0
-    New: Support for Python 3.7
-
-    New: Support for Django 2.2
-
-    New: Unit Tests Script prefix with no slash, changed URL Conf`#72 <https://github.com/ierror/django-js-reverse/issues/72>`__
-    Thank you `graingert <https://github.com/graingert>`__
-
-    Fix: "ROOT_URLCONF not taken into account" `#73 <https://github.com/ierror/django-js-reverse/issues/73>`__ `#74 <https://github.com/ierror/django-js-reverse/issues/74>`__
-    Thank you `LuukOost <https://github.com/LuukOost>`__ and `graingert <https://github.com/graingert>`__
-
-    Refactoring: "move template logic to view" `#64 <https://github.com/ierror/django-js-reverse/issues/64>`__
-    Thank you `graingert <https://github.com/graingert>`__
-
-    Fix: "Now using LooseVersion instead of StrictVersion to avoid issues with rc releases" `#67 <https://github.com/ierror/django-js-reverse/issues/64>`__
-    Thank you `kavdev <https://github.com/kavdev>`__
-
-0.8.2
-    Fix: A bug fix in Django 2.0.6 has broken django-js-reverse `#65 <https://github.com/ierror/django-js-reverse/issues/65>`__
-    Thank you `kavdev <https://github.com/kavdev>`__
-
-0.8.1
-    Fix: The tests folder of the `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ was still present in the build. => Added cleanup to the release make command.
-
-0.8.0
-    New: Support for Django 2.0: `#58 <https://github.com/ierror/django-js-reverse/issues/58>`__
-    Thank you `wlonk <https://github.com/wlonk>`__
-
-    Fix: `#53 <https://github.com/ierror/django-js-reverse/issues/53>`__ - Don't install the tests folder as a separate folder.  Moved inside the django_js_reverse namespace.
-
-
-`Full changelog <https://raw.githubusercontent.com/ierror/django-js-reverse/master/CHANGELOG>`__
-
-
 Requirements
 ------------
 
