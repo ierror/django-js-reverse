@@ -39,7 +39,7 @@ in javascript like:
 
 ::
 
-    Urls.betterliving_get_house('house', 12)
+    Urls.betterlivingGetHouse('house', 12)
 
 Result:
 
@@ -261,7 +261,7 @@ you can access them by the Dot notation:
 
 ::
 
-    Urls.betterliving_get_house('house', 12)
+    Urls.betterlivingGetHouse('house', 12)
 
 If the named url contains invalid identifiers use the Square bracket
 notation instead:
