@@ -1,7 +1,7 @@
 0.10.1a1 (unreleased)
 ---------------------
 
-- Nothing changed yet.
+- Update pypi deploy username and token
 
 
 0.10.1a (2019-08-02)
