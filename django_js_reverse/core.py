@@ -48,35 +48,22 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     if namespace[:-1] in exclude_ns:
         return
 
-    include_only_allow = True  # include_only state variable
+    # Test urls without ns
+    in_on_empty_ns = namespace == '' and '' in include_only_ns
 
-    if include_only_ns != []:
-        # True mean that ns passed the test
-        in_on_empty_ns = False
-        in_on_is_in_list = False
-        in_on_null = False
+    # check if nestead ns isn't subns of include_only ns
+    # e.g. ns = "foo:bar" include_only = ["foo"] -> this ns will be used
+    # works for ns = "lorem:ipsum:dolor" include_only = ["lorem:ipsum"]
+    # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
+    in_on_is_in_list = include_only_ns and any(
+        ns != "" and namespace[:-1].startswith(ns)
+        for ns in include_only_ns
+    )
+    # Test if isn't used "\0" flag
+    # use "foo\0" to add urls just from "foo" not from subns "foo:bar"
+    in_on_null = namespace[:-1] + '\0' in include_only_ns
 
-        # Test urls without ns
-        if namespace == '' and '' in include_only_ns:
-            in_on_empty_ns = True
-
-        # check if nestead ns isn't subns of include_only ns
-        # e.g. ns = "foo:bar" include_only = ["foo"] -> this ns will be used
-        # works for ns = "lorem:ipsum:dolor" include_only = ["lorem:ipsum"]
-        # ns "lorem" will be ignored but "lorem:ipsum" & "lorem:ipsum:.." won't
-        for ns in include_only_ns:
-            if ns != "" and namespace[:-1].startswith(ns):
-                in_on_is_in_list = True
-                break
-
-        # Test if isn't used "\0" flag
-        # use "foo\0" to add urls just from "foo" not from subns "foo:bar"
-        if namespace[:-1] + '\0' in include_only_ns:
-            in_on_null = True
-
-        include_only_allow = in_on_empty_ns or in_on_is_in_list or in_on_null
-
-    if include_only_allow:
+    if in_on_empty_ns or in_on_is_in_list or in_on_null:
         for url_name in urlresolver.reverse_dict.keys():
             if isinstance(url_name, (text_type, str)):
                 url_patterns = []
