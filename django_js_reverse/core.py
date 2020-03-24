@@ -43,7 +43,7 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     if namespace[:-1] in exclude_ns:
         return
 
-    include_only_allow = True  # include_only state varible
+    include_only_allow = True  # include_only state variable
 
     if include_only_ns != []:
         # True mean that ns passed the test
