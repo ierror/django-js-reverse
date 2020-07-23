@@ -124,7 +124,7 @@ def generate_json(default_urlresolver, script_prefix=None):
 def _safe_json(obj):
     return mark_safe(
         json
-        .dumps(obj)
+        .dumps(obj, sort_keys=True)
         .replace('>', '\\u003E')
         .replace('<', '\\u003C')
         .replace('&', '\\u0026')
