@@ -9,6 +9,9 @@ import re
 import subprocess
 import sys
 import unittest
+import tempfile
+import contextlib
+import shutil
 
 import six
 import django
@@ -27,6 +30,15 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from django.test import TestCase, RequestFactory  # noqa: E402 isort:skip
 from django.test.client import Client  # noqa: E402 isort:skip
 from django.test.utils import override_settings  # noqa: E402 isort:skip
+
+
+@contextlib.contextmanager
+def mkdtemp(*args, **kwargs):
+    v = tempfile.mkdtemp(*args, **kwargs)
+    try:
+        yield v
+    finally:
+        shutil.rmtree(v)
 
 
 def node_jseval(expr):
@@ -264,8 +276,7 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
                 call_command('collectstatic_js_reverse')
 
     def test_reverse_js_file_save_with_output_path_option(self):
-        js_output_path = os.path.join(os.path.dirname(__file__), 'tmp', 'some_path')
-        with override_settings(JS_REVERSE_OUTPUT_PATH=js_output_path):
+        with mkdtemp(__name__) as js_output_path, override_settings(JS_REVERSE_OUTPUT_PATH=js_output_path):
             call_command('collectstatic_js_reverse')
 
             f = io.open(os.path.join(js_output_path, 'reverse.js'))
