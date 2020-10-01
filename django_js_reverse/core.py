@@ -10,7 +10,11 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 from django.utils.safestring import mark_safe
-from django.utils.encoding import force_str
+
+if sys.version_info <= (2, 7):
+    from django.utils.encoding import force_text
+else:
+    from django.utils.encoding import force_str as force_text
 
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
@@ -112,9 +116,9 @@ def generate_json(default_urlresolver, script_prefix=None):
     return collections.OrderedDict([
         ('urls', [
             [
-                force_str(name),
+                force_text(name),
                 [
-                    [force_str(path), [force_str(arg) for arg in args]]
+                    [force_text(path), [force_text(arg) for arg in args]]
                     for path, args in patterns
                 ],
             ] for name, patterns in urls
