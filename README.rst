@@ -129,7 +129,7 @@ Include JavaScript in your bundle:
     export default _.once(
       async () => {
         const res = await fetch('/jsreverse.json');
-        const data = await res.json():
+        const data = await res.json();
         return djangoJsReverse(data);
       }
     )

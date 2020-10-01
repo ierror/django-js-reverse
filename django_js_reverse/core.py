@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import collections
 import json
 import re
 import sys
@@ -105,10 +106,11 @@ def generate_json(default_urlresolver, script_prefix=None):
     if script_prefix is None:
         script_prefix = urlresolvers.get_script_prefix()
 
+    # Ensure consistent ouptut ordering
     urls = sorted(list(prepare_url_list(default_urlresolver)))
 
-    return {
-        'urls': [
+    return collections.OrderedDict([
+        ('urls', [
             [
                 force_str(name),
                 [
@@ -116,9 +118,9 @@ def generate_json(default_urlresolver, script_prefix=None):
                     for path, args in patterns
                 ],
             ] for name, patterns in urls
-        ],
-        'prefix': script_prefix,
-    }
+        ]),
+        ('prefix', script_prefix),
+    ])
 
 
 def _safe_json(obj):
