@@ -11,7 +11,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 from django.utils.safestring import mark_safe
 
-if sys.version_info <= (2, 7):
+if sys.version_info < (3, ):
     from django.utils.encoding import force_text
 else:
     from django.utils.encoding import force_str as force_text
