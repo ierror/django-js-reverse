@@ -10,6 +10,7 @@ import subprocess
 import sys
 import unittest
 
+import six
 import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -32,7 +33,7 @@ def node_jseval(expr):
     module = 'console.log({});'.format(expr)
     stdout = (
         subprocess
-        .check_output([b'node', b'-e', module.encode('utf8')])
+        .check_output(['node', '-e', six.ensure_str(module)])
         .decode('utf8')
     )
     return re.sub(r'\n$', '', stdout)
