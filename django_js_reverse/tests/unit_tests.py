@@ -32,7 +32,7 @@ def node_jseval(expr):
     module = 'console.log({});'.format(expr)
     stdout = (
         subprocess
-        .check_output(['node', '-e', module.encode('utf8')])
+        .check_output([b'node', b'-e', module.encode('utf8')])
         .decode('utf8')
     )
     return re.sub(r'\n$', '', stdout)
