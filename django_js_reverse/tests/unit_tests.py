@@ -279,8 +279,8 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         with mkdtemp(__name__) as js_output_path, override_settings(JS_REVERSE_OUTPUT_PATH=js_output_path):
             call_command('collectstatic_js_reverse')
 
-            f = io.open(os.path.join(js_output_path, 'reverse.js'))
-            content1 = f.read()
+            with io.open(os.path.join(js_output_path, 'reverse.js')) as f:
+                content1 = f.read()
 
             r2 = self.client.get('/jsreverse/')
             content2 = r2.content.decode()
