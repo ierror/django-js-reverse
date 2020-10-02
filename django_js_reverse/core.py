@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import collections
 import json
 import re
 import sys
@@ -9,7 +10,11 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.template import loader
 from django.utils.safestring import mark_safe
-from django.utils.encoding import force_text
+
+if sys.version_info < (3, ):
+    from django.utils.encoding import force_text
+else:
+    from django.utils.encoding import force_str as force_text
 
 from . import rjsmin
 from .js_reverse_settings import (JS_EXCLUDE_NAMESPACES, JS_GLOBAL_OBJECT_NAME,
@@ -43,7 +48,7 @@ def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     if namespace[:-1] in exclude_ns:
         return
 
-    include_only_allow = True  # include_only state varible
+    include_only_allow = True  # include_only state variable
 
     if include_only_ns != []:
         # True mean that ns passed the test
@@ -105,10 +110,11 @@ def generate_json(default_urlresolver, script_prefix=None):
     if script_prefix is None:
         script_prefix = urlresolvers.get_script_prefix()
 
+    # Ensure consistent ouptut ordering
     urls = sorted(list(prepare_url_list(default_urlresolver)))
 
-    return {
-        'urls': [
+    return collections.OrderedDict([
+        ('urls', [
             [
                 force_text(name),
                 [
@@ -116,9 +122,9 @@ def generate_json(default_urlresolver, script_prefix=None):
                     for path, args in patterns
                 ],
             ] for name, patterns in urls
-        ],
-        'prefix': script_prefix,
-    }
+        ]),
+        ('prefix', script_prefix),
+    ])
 
 
 def _safe_json(obj):

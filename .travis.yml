@@ -46,7 +46,7 @@ deploy:
   - <<: *_deploy_provider
     provider: pypi
     distributions: sdist bdist_wheel
-    user: "@token"
+    user: __token__
     password: $PYPI_TOKEN
   - <<: *_deploy_provider
     provider: npm
