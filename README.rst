@@ -165,6 +165,21 @@ After this add the file to your template
     <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 
 
+Usage as a static JSON file
+--------------------
+
+First generate static file by
+
+::
+
+    ./manage.py collectstatic_json_reverse
+
+If you change some urls or add an app and want to update the reverse.json file,
+run the command again.
+
+The file can be imported into your reactjs/angularjs/vue JS code directly.
+
+
 Usage with views
 ----------------
 
