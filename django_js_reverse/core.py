@@ -3,7 +3,8 @@ import collections
 import json
 import re
 import sys
-from distutils.version import LooseVersion
+#from distutils.version import LooseVersion
+from packaging.version import parse as LooseVersion
 
 import django
 from django.conf import settings

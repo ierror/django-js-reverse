@@ -1,6 +1,11 @@
 0.10.1a1 (unreleased)
 ---------------------
 
+- Update for Django 4.0 and 4.1, Python 3.8, 3.9, 3.10
+
+0.10.1a1 (unreleased)
+---------------------
+
 - Update pypi deploy username and token
 
 

@@ -15,10 +15,12 @@ try:
 except ImportError:
     from django.core.urlresolvers import get_resolver
 
+REQUIRES_SYSTEM_CHECKS = [False]
+
 
 class Command(BaseCommand):
     help = 'Creates a static urls-js file for django-js-reverse'
-    requires_system_checks = False
+    requires_system_checks = REQUIRES_SYSTEM_CHECKS
     def get_location(self):
         output_path = getattr(settings, 'JS_REVERSE_OUTPUT_PATH', JS_OUTPUT_PATH)
         if output_path:

@@ -25,5 +25,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.10.1-a-dev.1.0"
+  "version": "0.10.1-b-dev.1.0"
 }
