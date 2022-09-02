@@ -36,7 +36,7 @@ JS_IDENTIFIER_RE = re.compile(r'^[$A-Z_][\dA-Z_$]*$')
 
 def prepare_url_list(urlresolver, namespace_path='', namespace=''):
     """
-    returns list of tuples [(<url_name>, <url_patern_tuple> ), ...]
+    returns list of tuples [(<url_name>, <url_pattern_tuple> ), ...]
     """
     exclude_ns = getattr(settings, 'JS_REVERSE_EXCLUDE_NAMESPACES', JS_EXCLUDE_NAMESPACES)
     include_only_ns = getattr(settings, 'JS_REVERSE_INCLUDE_ONLY_NAMESPACES', JS_INCLUDE_ONLY_NAMESPACES)
@@ -110,7 +110,7 @@ def generate_json(default_urlresolver, script_prefix=None):
     if script_prefix is None:
         script_prefix = urlresolvers.get_script_prefix()
 
-    # Ensure consistent ouptut ordering
+    # Ensure consistent output ordering
     urls = sorted(list(prepare_url_list(default_urlresolver)))
 
     return collections.OrderedDict([
