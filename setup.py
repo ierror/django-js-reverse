@@ -2,8 +2,18 @@
 # -*- coding: utf-8 -*-
 import codecs
 import os
-
+import sys
 from setuptools import setup, find_packages
+
+if sys.version_info < (3, 7):
+    INSTALL_REQUIRES = [
+        'Django>=1.5',
+    ]
+else:
+    INSTALL_REQUIRES = [
+        'Django>=1.5',
+        'packaging>=21.3'
+    ]
 
 
 def read(*parts):
@@ -14,7 +24,7 @@ def read(*parts):
 
 setup(
     name='django-js-reverse',
-    version='0.10.1a1.dev0',
+    version='0.10.1b1.dev0',
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
@@ -36,7 +46,5 @@ setup(
             'templates/django_js_reverse/*',
         ]
     },
-    install_requires=[
-        'Django>=1.5',
-    ]
+    install_requires=INSTALL_REQUIRES
 )
