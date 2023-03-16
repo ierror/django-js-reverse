@@ -20,6 +20,15 @@ Django JS Reverse
 
 **Javascript url handling for Django that doesn’t hurt.**
 
+|
+|
+
+📣 This project is no longer maintained, and will not receive further updates. (https://github.com/jazzband/help/issues/247) 📣
+================================================================================================================================
+
+|
+|
+
 
 Overview
 --------
