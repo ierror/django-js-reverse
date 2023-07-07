@@ -261,9 +261,9 @@ class JSReverseStaticFileSaveTest(AbstractJSReverseTestCase, TestCase):
         call_command('collectstatic_js_reverse')
 
         path = os.path.join(settings.STATIC_ROOT, 'django_js_reverse', 'js', 'reverse.js')
-        f = io.open(path)
-        content1 = f.read()
-
+        with io.open(path) as f:
+            content1 = f.read()
+            
         r2 = self.client.get('/jsreverse/')
         content2 = r2.content.decode()
 
