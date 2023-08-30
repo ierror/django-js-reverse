@@ -23,8 +23,9 @@ Django JS Reverse
 |
 |
 
-📣 This project is no longer maintained, and will not receive further updates. (https://github.com/jazzband/help/issues/247) 📣
-================================================================================================================================
+📣 
+This package is now maintained by `Vinta Software <https://github.com/vintasoftware/django-js-reverse>` 📣
+==========================================================================================================
 
 |
 |
