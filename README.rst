@@ -23,9 +23,9 @@ Django JS Reverse
 |
 |
 
-📣 
-This package is now maintained by `Vinta Software <https://github.com/vintasoftware/django-js-reverse>` 📣
-==========================================================================================================
+=============================================================================================================
+📣 This package is now maintained by `Vinta Software https://github.com/vintasoftware/django-js-reverse` 📣
+=============================================================================================================
 
 |
 |
