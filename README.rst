@@ -243,7 +243,7 @@ notation instead:
     Urls['betterliving-get-house']('house', 12)
     Urls['namespace:betterliving-get-house']('house', 12)
 
-You can also pass javascript objects to match keyword aguments like the
+You can also pass javascript objects to match keyword arguments like the
 examples bellow:
 
 ::
@@ -269,7 +269,7 @@ used to access the named urls is attached to. Default is :code:`this`
     JS_REVERSE_JS_GLOBAL_OBJECT_NAME = 'window'
 
 
-Optionally, you can disable the minfication of the generated javascript file
+Optionally, you can disable the minification of the generated javascript file
 by django setting
 
 ::
@@ -292,7 +292,7 @@ To exclude any namespaces from the generated javascript file, add them to the `J
 If you want to include only specific namespaces add them to the `JS_REVERSE_INCLUDE_ONLY_NAMESPACES` setting
 tips:
 * Use "" (empty string) for urls without namespace
-* Use "foo\0" to include urls just from "foo" namaspace and not from any subnamespaces (e.g. "foo:bar")
+* Use "foo\0" to include urls just from "foo" namespace and not from any subnamespaces (e.g. "foo:bar")
 
 ::
 
